@@ -1,6 +1,9 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 {
@@ -29,21 +32,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             AddProductCategory(ComboPlateProducts, "Combo Plates");
             AddProductCategory(FamilyDinnerProducts, "Family Dinners");
 
-            HashSet<FoodProduct> products = new HashSet<FoodProduct>
-            (
-                AppetizerFoodProducts
-                    .Concat(MixedGreensProducts)
-                    .Concat(NoodlesProducts)
-                    .Concat(FriedRiceProducts)
-                    .Concat(ChopSueyProducts)
-                    .Concat(EggFooYungProducts)
-                    .Concat(SeaFoodProducts)
-                    .Concat(ChickenProducts)
-                    .Concat(BeefAndPorkProducts)
-                    .Concat(HotAndSpicyProducts)
-                    .Concat(ComboPlateProducts)
-                    .Concat(FamilyDinnerProducts)
-            );
+            HashSet<FoodProduct> products = DefaultProducts;
 
             // Add products to the database if there are none
             if (!context.FoodProducts.Any())
@@ -52,6 +41,93 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                 await context.SaveChangesAsync();
             }
         }
+
+        public static async Task<HashSet<FoodProduct>> InitializeJson()
+        {
+            //string ProductsFilePath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName, "Areas/Identity/Data", "foodProducts.json");
+
+            HashSet<FoodProduct> products;
+
+            if (!File.Exists(ProductsFilePath))
+            {
+                products = DefaultProducts;
+
+                AddProductCategory(AppetizerFoodProducts, "Soup & Appetizers");
+                AddProductCategory(MixedGreensProducts, "Mixed Greens");
+                AddProductCategory(NoodlesProducts, "Noodles");
+                AddProductCategory(FriedRiceProducts, "Fried Rice");
+                AddProductCategory(ChopSueyProducts, "Chop Suey");
+                AddProductCategory(EggFooYungProducts, "Egg Foo Yung");
+                AddProductCategory(SeaFoodProducts, "Sea Food");
+                AddProductCategory(ChickenProducts, "Chicken");
+                AddProductCategory(BeefAndPorkProducts, "Beef & Pork");
+                AddProductCategory(HotAndSpicyProducts, "Hot & Spicy");
+                AddProductCategory(ComboPlateProducts, "Combo Plates");
+                AddProductCategory(FamilyDinnerProducts, "Family Dinners");
+
+                Directory.CreateDirectory(Path.GetDirectoryName(ProductsFilePath));
+
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    ReferenceHandler = ReferenceHandler.Preserve
+                };
+
+                await File.WriteAllTextAsync(DefaultFoodProducts.ProductsFilePath, JsonSerializer.Serialize(products, options));
+            }
+            else
+            {
+                string json = File.ReadAllText(DefaultFoodProducts.ProductsFilePath);
+
+                products = JsonSerializer.Deserialize<HashSet<FoodProduct>>(json, new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve
+                });
+
+            }
+            
+            return products;
+        }
+
+        // Parent.Parent.Parent (net9.0 > debug > bin > Project Folder)
+        public static readonly string ProductsFilePath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName, "Areas/Identity/Data", "foodProducts.json");
+
+        //public static HashSet<FoodProduct> Products = LoadProducts();
+
+        //public static HashSet<FoodProduct>LoadProducts()
+        //{
+        //    if (!File.Exists(ProductsFilePath))
+        //    {
+        //        HashSet<FoodProduct> defaultProducts = DefaultProducts;
+
+        //        SaveProducts(defaultProducts);
+
+        //        return defaultProducts;
+        //    }
+
+        //    string json = File.ReadAllText(ProductsFilePath);
+
+        //    HashSet<FoodProduct> products = JsonSerializer.Deserialize<HashSet<FoodProduct>>(json, new JsonSerializerOptions
+        //    {
+        //        ReferenceHandler = ReferenceHandler.Preserve
+        //    });
+
+        //    return products;
+        //}
+
+        public static void SaveProducts(HashSet<FoodProduct> products)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(ProductsFilePath));
+
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+
+            File.WriteAllText(ProductsFilePath, JsonSerializer.Serialize(products, options));
+        }
+
         public static void AddProductCategory(HashSet<FoodProduct> products, string category)
         {
             foreach (FoodProduct product in products)
@@ -293,5 +369,21 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("F5", "For Five", 87.50m),
             new FoodProduct("F6", "For Six", 104.50m)
         };
+
+        public static HashSet<FoodProduct> DefaultProducts = new HashSet<FoodProduct>
+        (
+            AppetizerFoodProducts
+                .Concat(MixedGreensProducts)
+                .Concat(NoodlesProducts)
+                .Concat(FriedRiceProducts)
+                .Concat(ChopSueyProducts)
+                .Concat(EggFooYungProducts)
+                .Concat(SeaFoodProducts)
+                .Concat(ChickenProducts)
+                .Concat(BeefAndPorkProducts)
+                .Concat(HotAndSpicyProducts)
+                .Concat(ComboPlateProducts)
+                .Concat(FamilyDinnerProducts)
+        );
     }
 }

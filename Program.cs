@@ -26,6 +26,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// Seed default data to the database
 using (IServiceScope scope = app.Services.CreateScope())
 {
     IServiceProvider services = scope.ServiceProvider;
@@ -33,6 +34,7 @@ using (IServiceScope scope = app.Services.CreateScope())
     try
     {
         await DefaultUsers.Initialize(services);
+        await DefaultFoodProducts.InitializeJson();
     }
     catch (Exception ex)
     {

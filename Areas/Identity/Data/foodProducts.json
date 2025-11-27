@@ -1,0 +1,1315 @@
+{
+  "$id": "1",
+  "$values": [
+    {
+      "$id": "2",
+      "Id": "28f38a37-20dc-44cb-9b4a-f3d2c7dbf309",
+      "Code": "1",
+      "Name": "Deluxe Wonton Soup",
+      "Description": null,
+      "Price": 13.95,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "3",
+      "Id": "3e4e4d4d-fa17-4d01-bd97-1fc4ec3580bf",
+      "Code": "2",
+      "Name": "Wonton Soup",
+      "Description": null,
+      "Price": 6.95,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "4",
+      "Id": "d678d737-87cf-4566-85f6-ace8e68045da",
+      "Code": "3",
+      "Name": "Hot \u0026 Sour Soup",
+      "Description": null,
+      "Price": 13.95,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "5",
+      "Id": "cb726668-d082-48e0-b2bc-4413f1be4b2d",
+      "Code": "4",
+      "Name": "Consomme Soup",
+      "Description": null,
+      "Price": 3.45,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "6",
+      "Id": "7c3c6fec-7a56-4aa1-9d44-e526e931b57a",
+      "Code": "5",
+      "Name": "Barbecue Pork",
+      "Description": null,
+      "Price": 11.45,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "7",
+      "Id": "b359dc18-f62c-4f63-8eb7-c36d706cc8fb",
+      "Code": "6",
+      "Name": "Deep Fried Wontons",
+      "Description": null,
+      "Price": 6.50,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "8",
+      "Id": "07965d90-4fe5-415d-b454-e439e832eb5a",
+      "Code": "6A",
+      "Name": "Chicken Wings",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "9",
+      "Id": "347f6acf-22ed-4ef2-88af-dd5791017864",
+      "Code": "7",
+      "Name": "Egg Roll",
+      "Description": null,
+      "Price": 1.75,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "10",
+      "Id": "dc104853-162f-4d84-80cc-e9d11bfecfaa",
+      "Code": "7A",
+      "Name": "Spring Roll",
+      "Description": null,
+      "Price": 1.95,
+      "Category": 0,
+      "HasOptions": false
+    },
+    {
+      "$id": "11",
+      "Id": "f931866c-049f-4280-a79f-59062edb4d6c",
+      "Code": "8",
+      "Name": "Deluxe Mixed Greens",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "12",
+      "Id": "b6fda0b1-6a96-4573-9c19-4a7a77532d13",
+      "Code": "8A",
+      "Name": "Deluxe Snow Peas",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "13",
+      "Id": "5c3f62cd-7662-47f6-a9a3-45ae6ab07de4",
+      "Code": "9",
+      "Name": "Shrimp Mixed Greens",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "14",
+      "Id": "51529a6c-9945-48c0-beb7-76486322036f",
+      "Code": "9A",
+      "Name": "Shrimp with Snow Peas",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "15",
+      "Id": "08b4e12e-c8a2-4e46-b88d-1fc67ef582e3",
+      "Code": "9B",
+      "Name": "Fish with Snow Peas",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "16",
+      "Id": "7364f879-dd50-4a60-9b4d-1f9735670d44",
+      "Code": "9C",
+      "Name": "Squid with Snow Peas",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "17",
+      "Id": "ffc74693-7c68-4a55-99b9-6deb360be197",
+      "Code": "10",
+      "Name": "Mixed Greens with",
+      "Description": null,
+      "Price": 13.95,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "18",
+      "Id": "81cc7197-1f8b-4c87-b2d2-00c543c703c0",
+      "Code": "10A",
+      "Name": "Snow Peas with",
+      "Description": null,
+      "Price": 13.95,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "19",
+      "Id": "6160ada1-7f7c-4cbf-a7e5-02db00e0ed84",
+      "Code": "11",
+      "Name": "Vegetarian Mixed Greens",
+      "Description": null,
+      "Price": 10.95,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "20",
+      "Id": "750bb9a5-796b-4cd1-a20f-813aa1a00f99",
+      "Code": "11A",
+      "Name": "Tofu with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 13.95,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "21",
+      "Id": "999ba4c2-a39a-47b0-9fca-84f3b4c9cba9",
+      "Code": "12",
+      "Name": "Beef Broccoli",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "22",
+      "Id": "ed225592-deeb-4ec0-90b0-e09d22ba6b15",
+      "Code": "12A",
+      "Name": "Beef Gai Lan",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "23",
+      "Id": "2c1f1cc4-8dcb-415f-921a-e0413c18bbc3",
+      "Code": "12B",
+      "Name": "Gai Lan with Oyster Sauce",
+      "Description": null,
+      "Price": 13.95,
+      "Category": 1,
+      "HasOptions": false
+    },
+    {
+      "$id": "24",
+      "Id": "b61d1b49-2830-4e62-8f88-4e7bcd344a5a",
+      "Code": "13",
+      "Name": "Cantonese Chow Mein",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "25",
+      "Id": "9f86890f-cddc-4977-96cb-bb2e96b3ea62",
+      "Code": "14",
+      "Name": "Shrimp Chow Mein",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "26",
+      "Id": "1ebf1e38-36a4-479b-8aca-fd3f8a292af4",
+      "Code": "15",
+      "Name": "Chow Mein with",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "27",
+      "Id": "b9ae2704-2e3a-4a51-9e77-bc28dca59f17",
+      "Code": "16",
+      "Name": "Vegetarian Chow Mein",
+      "Description": null,
+      "Price": 12.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "28",
+      "Id": "b99c8ba8-b68b-4260-8461-4a9c8d72efe7",
+      "Code": "16A",
+      "Name": "Plain Lo Mein",
+      "Description": null,
+      "Price": 12.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "29",
+      "Id": "3c640630-fa0f-4e48-a276-b5692858899b",
+      "Code": "17",
+      "Name": "Deluxe Shangai Noodles",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "30",
+      "Id": "5b940e2d-d87c-465f-811a-dc31073cfb62",
+      "Code": "17B",
+      "Name": "Beef Shangai Noodles",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "31",
+      "Id": "bfda5db7-d2d2-416b-8982-47d16817cc6e",
+      "Code": "18",
+      "Name": "Deluxe Rice Noodles",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "32",
+      "Id": "f443ec7a-107e-4c57-b1ca-8e1a162424b2",
+      "Code": "18A",
+      "Name": "Beef Ho Fan",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "33",
+      "Id": "f3906328-44ad-468b-bac8-1dfe92f54954",
+      "Code": "18B",
+      "Name": "Beef Ho Fan with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "34",
+      "Id": "dd160aa6-0b65-4250-85ee-0acd4e7e8ece",
+      "Code": "19",
+      "Name": "Lo Mein with",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "35",
+      "Id": "4b211876-6f8f-419f-9002-ab18624ac2a7",
+      "Code": "19A",
+      "Name": "Deluxe Lo Mein",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "36",
+      "Id": "7be6eaf2-2d29-40c6-bc9c-9471ea3012a9",
+      "Code": "20",
+      "Name": "Deluxe Singapore Noodles",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 2,
+      "HasOptions": false
+    },
+    {
+      "$id": "37",
+      "Id": "5a0acaca-fc86-41b3-98d8-57b4c4604117",
+      "Code": "21",
+      "Name": "Deluxe Fried Rice",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "38",
+      "Id": "fdf04058-b5b9-49d2-ba0a-a0c1e91fdcfe",
+      "Code": "22",
+      "Name": "Shrimp Fried Rice",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "39",
+      "Id": "c56deb3c-f35b-47ae-a91b-112d212741f3",
+      "Code": "23",
+      "Name": "Fried Rice with",
+      "Description": null,
+      "Price": 11.50,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "40",
+      "Id": "cdcce34c-b908-4249-b81b-ecac2a677697",
+      "Code": "24",
+      "Name": "Vegetarian Fried Rice",
+      "Description": null,
+      "Price": 12.50,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "41",
+      "Id": "ee7dd4bb-9741-4067-9a7e-c2f9ea08c716",
+      "Code": "24A",
+      "Name": "Plain Fried Rice",
+      "Description": null,
+      "Price": 12.50,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "42",
+      "Id": "d5fcf1db-687c-4bdd-923d-277a9cbe7347",
+      "Code": "25S",
+      "Name": "Small Steamed Rice",
+      "Description": null,
+      "Price": 2.50,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "43",
+      "Id": "1d4635cb-5dc0-46cc-a73a-47f5c55a6e1c",
+      "Code": "25L",
+      "Name": "Large Steamed Rice",
+      "Description": null,
+      "Price": 5.00,
+      "Category": 3,
+      "HasOptions": false
+    },
+    {
+      "$id": "44",
+      "Id": "fae17a88-984b-4186-86c3-d09a3954350f",
+      "Code": "26",
+      "Name": "Deluxe Chop Suey",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 4,
+      "HasOptions": false
+    },
+    {
+      "$id": "45",
+      "Id": "c18ed6bb-ed14-42c7-adfc-1b9d8db62b80",
+      "Code": "27",
+      "Name": "Shrimp Chop Suey",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 4,
+      "HasOptions": false
+    },
+    {
+      "$id": "46",
+      "Id": "716600fd-83f0-485d-9f12-2de5be5afbf3",
+      "Code": "28",
+      "Name": "Chop Suey with",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 4,
+      "HasOptions": false
+    },
+    {
+      "$id": "47",
+      "Id": "62e258f2-8e73-4e5a-b1ab-6879195007ef",
+      "Code": "29",
+      "Name": "Vegetarian Chop Suey",
+      "Description": null,
+      "Price": 11.50,
+      "Category": 4,
+      "HasOptions": false
+    },
+    {
+      "$id": "48",
+      "Id": "925ff2a7-2bf9-404f-8970-4a62f7bd8f90",
+      "Code": "30",
+      "Name": "Deluxe Egg Foo Yung",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 5,
+      "HasOptions": false
+    },
+    {
+      "$id": "49",
+      "Id": "6ad18d15-f95e-4327-8219-13dc3fb3c755",
+      "Code": "31",
+      "Name": "Shrimp Egg Foo Yung",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 5,
+      "HasOptions": false
+    },
+    {
+      "$id": "50",
+      "Id": "45b3b69a-2ebd-468f-9257-42ce894bc54f",
+      "Code": "32",
+      "Name": "Egg Foo Yung with",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 5,
+      "HasOptions": false
+    },
+    {
+      "$id": "51",
+      "Id": "a66da2f3-7596-4938-941d-6cb5f0b556a7",
+      "Code": "33",
+      "Name": "Vegetarian Egg Foo Yung",
+      "Description": null,
+      "Price": 11.50,
+      "Category": 5,
+      "HasOptions": false
+    },
+    {
+      "$id": "52",
+      "Id": "e15b222d-720e-4193-8775-99c2c5efc48e",
+      "Code": "34",
+      "Name": "Breaded Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "53",
+      "Id": "632ab074-48c7-4c59-b18c-28a4f6a9e861",
+      "Code": "34A",
+      "Name": "Breaded Fish Fillet",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "54",
+      "Id": "a69d12a2-e4f1-40f4-a295-fe7196863d98",
+      "Code": "34B",
+      "Name": "Breaded Squid",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "55",
+      "Id": "e22714b4-7cc8-4b96-b475-0c736f9c4c60",
+      "Code": "35",
+      "Name": "Black Bean Garlic Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "56",
+      "Id": "24f1e32b-c895-4322-aba6-831316a37653",
+      "Code": "35A",
+      "Name": "Squid with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "57",
+      "Id": "231edd9c-8a08-4ac0-9f5f-5c18b02d6996",
+      "Code": "35B",
+      "Name": "Fish with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "58",
+      "Id": "48643085-0aef-4fe1-8903-736141ab33e7",
+      "Code": "36",
+      "Name": "Deep Fried Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "59",
+      "Id": "2ab01ce1-d3c8-4aad-a557-02513bc3938a",
+      "Code": "36A",
+      "Name": "Deep Fried Fish Fillet",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "60",
+      "Id": "8fed8019-abf5-4ac5-be70-6e5e023a3eb1",
+      "Code": "36B",
+      "Name": "Deep Fried Squid",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "61",
+      "Id": "8960054f-fab9-4394-bef4-7869203c495e",
+      "Code": "36C",
+      "Name": "Squid with Green Onions \u0026 Ginger",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "62",
+      "Id": "67b5491b-5328-4243-a9a3-36ef594de2d9",
+      "Code": "37",
+      "Name": "Sweet \u0026 Sour Shrimp",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "63",
+      "Id": "754280a8-9309-460c-83a9-fc3cbbfd213d",
+      "Code": "37A",
+      "Name": "Sweet \u0026 Sour Fish Fillet",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "64",
+      "Id": "f33d3f18-35e4-49b5-bfda-6e5b7f3be432",
+      "Code": "38",
+      "Name": "Pan Fried Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "65",
+      "Id": "2d171e25-9d62-4756-854a-4a6b014be49e",
+      "Code": "39",
+      "Name": "Spicy Garlic Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 6,
+      "HasOptions": false
+    },
+    {
+      "$id": "66",
+      "Id": "d30b1d81-b9c6-40db-87e0-2cb994363196",
+      "Code": "40",
+      "Name": "Sweet \u0026 Sour Chicken Balls",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "67",
+      "Id": "ca9626e3-19f2-45d8-8e87-022397278a14",
+      "Code": "41",
+      "Name": "Honey Garlic Chicken Balls",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "68",
+      "Id": "58a53ba2-768f-46de-bc04-6c889fa93d12",
+      "Code": "41A",
+      "Name": "Deep Fried Sliced Chicken with Honey Garlic Sauce",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "69",
+      "Id": "a3bfa5af-1a80-4b42-a444-8c19c0e640cf",
+      "Code": "42",
+      "Name": "Hot Honey Glazed Chicken Balls",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "70",
+      "Id": "da4e5eb5-793c-40f0-a69b-59b416cc7bd6",
+      "Code": "42A",
+      "Name": "Deep Fried Sliced Chicken with Hot Honey Garlic Sauce",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "71",
+      "Id": "589c2dbe-c8b2-4953-a716-ca9fe5911d94",
+      "Code": "43",
+      "Name": "Mushroom Chicken Balls",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "72",
+      "Id": "91e7c401-36c4-424b-b401-176b1c7e164f",
+      "Code": "44",
+      "Name": "Honey Lemon Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "73",
+      "Id": "af2240a9-c2d6-445d-b8ed-fe14409681f3",
+      "Code": "44A",
+      "Name": "Sliced Chicken with Mushroom",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "74",
+      "Id": "30b8b680-1165-43ce-b6ad-53b6c9d03658",
+      "Code": "45",
+      "Name": "Breaded Almond Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "75",
+      "Id": "57b53d55-cb0c-4e2e-b8d2-7b16086b1a3c",
+      "Code": "45A",
+      "Name": "Dry Breaded Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "76",
+      "Id": "2217cd7a-97b5-4d3c-9bef-794437e5cb4a",
+      "Code": "46",
+      "Name": "Sliced Chicken with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "77",
+      "Id": "2bda5c3e-f49d-446e-8c1f-2edf1279fe5d",
+      "Code": "46A",
+      "Name": "Sliced Chicken with Green Onions \u0026 Ginger",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 7,
+      "HasOptions": false
+    },
+    {
+      "$id": "78",
+      "Id": "008aa29d-66ea-4612-8bee-384d9fe90982",
+      "Code": "47",
+      "Name": "Breaded Veal",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "79",
+      "Id": "7f5fcdf5-cd8a-46e7-8a62-aa41996fc689",
+      "Code": "48",
+      "Name": "Hot Honey Glazed Veal",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "80",
+      "Id": "6e2f2471-e405-47bd-9592-334c7e4b8a9c",
+      "Code": "49",
+      "Name": "Honey Garlic Veal",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "81",
+      "Id": "9d43e669-90c0-4566-afa1-d79a3ee03d54",
+      "Code": "49A",
+      "Name": "Beef with Honey Garlic Sauce",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "82",
+      "Id": "d52b9fe1-4b17-42b9-bc17-251b97b41198",
+      "Code": "50",
+      "Name": "Breaded Pork",
+      "Description": null,
+      "Price": 11.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "83",
+      "Id": "45afb52e-cf10-44aa-9552-febf53ed3548",
+      "Code": "50A",
+      "Name": "Sweet \u0026 Sour Pork",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "84",
+      "Id": "678b6219-4586-4ea8-b1ff-831c01c772a5",
+      "Code": "51",
+      "Name": "Honey Garlic Pork",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "85",
+      "Id": "e52f9c2c-8364-49f5-b18e-73a044b59e09",
+      "Code": "52",
+      "Name": "Breaded Spareribs",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "86",
+      "Id": "94ff3531-4057-4d24-8fe6-42f5f17ca98f",
+      "Code": "53",
+      "Name": "Honey Garlic Spareribs",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "87",
+      "Id": "473ea937-15df-47af-98f2-4620a8fb337a",
+      "Code": "54",
+      "Name": "Sweet \u0026 Sour Spareribs",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "88",
+      "Id": "e213be0b-743c-4d10-9d23-3d61e2a8093c",
+      "Code": "55",
+      "Name": "Spareribs with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "89",
+      "Id": "108929cc-888b-4de1-82a5-2f2a69d995f0",
+      "Code": "55A",
+      "Name": "Pork with with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "90",
+      "Id": "c269d77d-219c-47c3-9d27-886bca572a00",
+      "Code": "56",
+      "Name": "Beef with Black Bean Garlic Sauce",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "91",
+      "Id": "e7752334-d94a-4269-9ff4-3afd87d8d317",
+      "Code": "56A",
+      "Name": "Beef with Green Onions \u0026 Ginger",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "92",
+      "Id": "822c9028-76bb-4374-bf53-98f0d28f8520",
+      "Code": "56B",
+      "Name": "Mushroom \u0026 Beef Stir-Fry",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "93",
+      "Id": "0477c964-e128-4174-bab5-60414ce52305",
+      "Code": "56C",
+      "Name": "Pork with Green Onions \u0026 Ginger",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 8,
+      "HasOptions": false
+    },
+    {
+      "$id": "94",
+      "Id": "fe4efbe3-b884-4929-97ad-c5d91db44058",
+      "Code": "57",
+      "Name": "Szechuan Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "95",
+      "Id": "073999bc-f9a6-46ee-a53c-a0fe29623ff1",
+      "Code": "57A",
+      "Name": "Szechuan Fish Fillet",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "96",
+      "Id": "be895e20-3266-47e3-b596-2acb7d933fee",
+      "Code": "57B",
+      "Name": "Szechuan Squid",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "97",
+      "Id": "bcd2ca2c-b7fc-43ff-8070-8e7bccd54cd5",
+      "Code": "58",
+      "Name": "Szechuan Beef",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "98",
+      "Id": "4dc164c8-18b9-4880-acd4-063c699aabe3",
+      "Code": "59",
+      "Name": "Szechuan Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "99",
+      "Id": "44758014-4713-4b79-823e-47ad80ae5d91",
+      "Code": "60",
+      "Name": "Ginger Beef",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "100",
+      "Id": "9a19d3f0-0658-41cc-95db-57c227926e89",
+      "Code": "61",
+      "Name": "Ginger Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "101",
+      "Id": "ff3e3756-5335-4d58-8f7f-0e00a1ef1f32",
+      "Code": "62",
+      "Name": "Curry Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "102",
+      "Id": "766f8585-932d-4153-afd0-9bbc3ffeafa9",
+      "Code": "62A",
+      "Name": "Curry Squid",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "103",
+      "Id": "3fc09c76-8c1c-4b90-8a9a-ba1453a28308",
+      "Code": "63",
+      "Name": "Curry Beef",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "104",
+      "Id": "f71ea734-79a2-46d7-ac7f-9ac5320e5d69",
+      "Code": "64",
+      "Name": "Curry Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "105",
+      "Id": "525775ea-a6bc-44c7-9bb6-8ee87e4358ef",
+      "Code": "65",
+      "Name": "Kung Pao Beef",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "106",
+      "Id": "a6678972-6681-49a6-93c2-afee58cb0202",
+      "Code": "66",
+      "Name": "Kung Pao Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "107",
+      "Id": "3cb93e3e-995b-4c08-b9b3-c02fe5a4351a",
+      "Code": "66A",
+      "Name": "Sesame Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "108",
+      "Id": "71e0c3cb-117a-498a-909a-92ec2688f83c",
+      "Code": "67",
+      "Name": "Salt \u0026 Pepper Chicken",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "109",
+      "Id": "69085e66-94ec-4989-8a02-84f34de6c569",
+      "Code": "67A",
+      "Name": "Salt \u0026 Pepper Fish Fillet",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "110",
+      "Id": "5b4ad5fb-396a-4973-b718-ac8fa228055c",
+      "Code": "67B",
+      "Name": "Salt \u0026 Pepper Squid",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "111",
+      "Id": "46697b13-88b2-47fc-a4d8-1a5006932746",
+      "Code": "68",
+      "Name": "Salt \u0026 Pepper Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "112",
+      "Id": "93344d48-0ecb-49a8-865d-df111376f93b",
+      "Code": "68A",
+      "Name": "Kung Pao Shrimp",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "113",
+      "Id": "1ae930b7-8827-49eb-8f81-401a783e2f2d",
+      "Code": "69",
+      "Name": "Salt \u0026 Pepper Tofu",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "114",
+      "Id": "7c2d8a1a-1bbb-4e29-8173-a67e7a19b796",
+      "Code": "70",
+      "Name": "Kung Pao Tofu",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "115",
+      "Id": "b30e9409-51f0-461e-978f-6b06a524c2cc",
+      "Code": "71",
+      "Name": "Tofu with Beef \u0026 Mixed Greens",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "116",
+      "Id": "b3088793-c122-4440-8105-d766662e2142",
+      "Code": "72",
+      "Name": "Beef in Satay Sauce",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "117",
+      "Id": "00037d0a-5660-4d37-9b7f-3482094caf0c",
+      "Code": "73",
+      "Name": "Chicken in Satay Sauce",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "118",
+      "Id": "337c8ff6-4132-45b7-8d8a-040ec49cacea",
+      "Code": "74",
+      "Name": "Pork in Satay Sauce",
+      "Description": null,
+      "Price": 13.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "119",
+      "Id": "80618b7b-1f99-4097-9ddc-f8cd255ddd26",
+      "Code": "75",
+      "Name": "Shrimp in Satay Sauce",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "120",
+      "Id": "421a7b9f-736e-4084-8c3d-3bf85282d5a9",
+      "Code": "76",
+      "Name": "Squid in Satay Sauce",
+      "Description": null,
+      "Price": 16.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "121",
+      "Id": "f8f9fc8d-1af2-4f56-9ec6-645e74b71a7e",
+      "Code": "77",
+      "Name": "Fish in Satay Sauce",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 9,
+      "HasOptions": false
+    },
+    {
+      "$id": "122",
+      "Id": "40533afc-bd2d-46bc-a436-162ba6a030d5",
+      "Code": "A",
+      "Name": "Combo A",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 10,
+      "HasOptions": false
+    },
+    {
+      "$id": "123",
+      "Id": "b9265311-0157-4111-8d1a-5a37754d4c8d",
+      "Code": "B",
+      "Name": "Combo B",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 10,
+      "HasOptions": false
+    },
+    {
+      "$id": "124",
+      "Id": "c00c8c02-d6b3-4888-9e8f-5c534677617b",
+      "Code": "C",
+      "Name": "Combo C",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 10,
+      "HasOptions": false
+    },
+    {
+      "$id": "125",
+      "Id": "63db5325-9850-4e63-b932-ba078bf37f26",
+      "Code": "D",
+      "Name": "Combo D",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 10,
+      "HasOptions": false
+    },
+    {
+      "$id": "126",
+      "Id": "0b2e7b75-44de-4154-98c1-70e28524d8d1",
+      "Code": "E",
+      "Name": "Combo E",
+      "Description": null,
+      "Price": 14.50,
+      "Category": 10,
+      "HasOptions": false
+    },
+    {
+      "$id": "127",
+      "Id": "6e91e3da-278f-4f06-a0f9-ba10bf3f6844",
+      "Code": "F",
+      "Name": "Combo F",
+      "Description": null,
+      "Price": 15.50,
+      "Category": 10,
+      "HasOptions": false
+    },
+    {
+      "$id": "128",
+      "Id": "8c948429-6a30-4e64-bbff-d16c53fead58",
+      "Code": "F2",
+      "Name": "For Two",
+      "Description": null,
+      "Price": 38.50,
+      "Category": 11,
+      "HasOptions": false
+    },
+    {
+      "$id": "129",
+      "Id": "e65ca273-d552-4790-8b8b-84fa5817a2ee",
+      "Code": "F3",
+      "Name": "For Three",
+      "Description": null,
+      "Price": 56.50,
+      "Category": 11,
+      "HasOptions": false
+    },
+    {
+      "$id": "130",
+      "Id": "8db11375-d946-4302-9dac-654d5166f6a0",
+      "Code": "F4",
+      "Name": "For Four",
+      "Description": null,
+      "Price": 71.50,
+      "Category": 11,
+      "HasOptions": false
+    },
+    {
+      "$id": "131",
+      "Id": "5f680804-d7cf-49d5-a2f7-f38bf505ade2",
+      "Code": "F5",
+      "Name": "For Five",
+      "Description": null,
+      "Price": 87.50,
+      "Category": 11,
+      "HasOptions": false
+    },
+    {
+      "$id": "132",
+      "Id": "930ee47a-2382-41c2-a4a5-733a5cefcddc",
+      "Code": "F6",
+      "Name": "For Six",
+      "Description": null,
+      "Price": 104.50,
+      "Category": 11,
+      "HasOptions": false
+    }
+  ]
+}
