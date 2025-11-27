@@ -1,10 +1,15 @@
-﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
+﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 {
     public class Cart
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+
+        public Guid UserId { get; set; }
+
+        public SystemUser User { get; set; } = null!;
 
         public Guid? CustomerId { get; set; }
 
