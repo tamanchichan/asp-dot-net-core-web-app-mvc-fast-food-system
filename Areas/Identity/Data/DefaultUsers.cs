@@ -11,7 +11,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string[] roles = new string[] { "Admin", "Staff" };
+            string[] roles = [ "Admin", "Staff" ];
 
             foreach (string role in roles)
             {
@@ -21,8 +21,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                 }
             }
 
-            async Task CreateUser(string userName, string userEmail, string userPassword, string role)
+            async Task CreateUser(string userName, string? userEmail, string userPassword, string role)
             {
+                // Creating a SystemUser manually and assigning a password hash directly.
+                // This bypasses Identity's password validation (useful for seeding users or testing purposes).
+                //if (await userManager.FindByNameAsync(userName) == null && await userManager.FindByEmailAsync(userEmail) == null)
+                //{
+                //    SystemUser user = new SystemUser();
+                //    user.UserName = userName;
+                //    user.PasswordHash = new PasswordHasher<SystemUser>().HashPassword(user, userPassword);
+                //    user.Cart = new Cart();
+
+                //    IdentityResult result = await userManager.CreateAsync(user, userPassword);
+
+                //    if (result.Succeeded)
+                //    {
+                //        if (roles.Contains(role))
+                //        {
+                //            await userManager.AddToRoleAsync(user, role);
+                //        }
+                //    }
+                //}
+
                 if (await userManager.FindByNameAsync(userName) == null && await userManager.FindByEmailAsync(userEmail) == null)
                 {
                     SystemUser user = new SystemUser
@@ -43,7 +63,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                         }
                     }
                 }
-            };
+            }
+            ;
 
             string adminUserName = "admin";
             string adminEmail = "admin@email.com";
