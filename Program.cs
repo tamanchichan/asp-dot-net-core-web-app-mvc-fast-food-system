@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,8 +27,11 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// 0.0.0.0 listen on all network interfaces
-app.Urls.Add("http://0.0.0.0:5000"); // Enable mobile access when publishing to an executable file
+if (!app.Environment.IsDevelopment())
+{
+    // 0.0.0.0 listen on all network interfaces
+    app.Urls.Add("http://0.0.0.0:5000"); // Enable mobile access when publishing to an executable file
+}
 
 
 // Seed default data to the database
