@@ -13,7 +13,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         public string PhoneNumber { get; set; } = null!;
         public string? Address { get; set; } = null!;
 
-        public List<Dictionary<DateTime, string>>? Observations { get; set; } = new List<Dictionary<DateTime, string>>();
+        public List<CustomerRemarks> Remarks { get; set; } = new List<CustomerRemarks>();
 
         public HashSet<Order>? Orders { get; set; } = new HashSet<Order>();
 
@@ -24,14 +24,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             string? name,
             string phoneNumber,
             string? Address,
-            List<Dictionary<DateTime, string>>? observations,
+            List<CustomerRemarks> remarks,
             HashSet<Order>? orders
         )
         {
             Name = name;
             PhoneNumber = phoneNumber;
             Address = Address;
-            Observations = observations;
+            Remarks = remarks;
             Orders = orders;
         }
     }
