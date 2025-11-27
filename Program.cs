@@ -26,6 +26,10 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// 0.0.0.0 listen on all network interfaces
+app.Urls.Add("http://0.0.0.0:5000"); // Enable mobile access when publishing to an executable file
+
+
 // Seed default data to the database
 using (IServiceScope scope = app.Services.CreateScope())
 {
@@ -49,9 +53,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+
+    // Only redicret to https if it is in production (can access http request from mobile)
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
