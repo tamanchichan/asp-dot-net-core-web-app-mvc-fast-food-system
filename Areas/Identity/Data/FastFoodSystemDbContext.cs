@@ -15,6 +15,24 @@ public class FastFoodSystemDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(builder);
 
+        // Configure decimal precision for Cart properties
+        builder.Entity<Cart>()
+            .Property(c => c.AdditionalCharge)
+            .HasPrecision(18, 2);
+
+        builder.Entity<Cart>()
+            .Property(c => c.DeliveryFee)
+            .HasPrecision(18, 2);
+
+        builder.Entity<Cart>()
+            .Property(c => c.Discount)
+            .HasPrecision(18, 2);
+
+        // Configure decimal precision for Product properties
+        builder.Entity<Product>()
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
+
         // Rename ASP.NET Identity tables if needed
         builder.Entity<IdentityUser>().ToTable("Users");
         builder.Entity<IdentityRole>().ToTable("Roles");

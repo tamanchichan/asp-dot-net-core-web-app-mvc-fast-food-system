@@ -1,4 +1,6 @@
-﻿namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 {
     public abstract class CartProduct
     {
@@ -16,6 +18,7 @@
 
         public string? Instructions { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal AdditionalPrice { get; set; } = 0m;
 
         public decimal Price
