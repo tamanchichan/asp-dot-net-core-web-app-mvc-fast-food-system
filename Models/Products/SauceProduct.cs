@@ -9,6 +9,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products
 
         public SauceProduct() { }
 
+        public SauceProduct(string code, string name, decimal price, bool hasOptions = false) : base(code, name, price, hasOptions) { }
+
         public SauceProduct
         (
             string code,

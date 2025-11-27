@@ -29,6 +29,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public Product() { }
 
+        public Product(string code, string name, decimal price, bool hasOptions = false)
+        {
+            Code = code;
+            Name = name;
+            Price = price;
+        }
+
         public Product
         (
             string code,

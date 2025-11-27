@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("FastFoodSystemDbContextConnection") ?? throw new InvalidOperationException("Connection string 'FastFoodSystemDbContextConnection' not found.");;
 
 builder.Services.AddDbContext<FastFoodSystemDbContext>(options => options.UseSqlServer(connectionString));
