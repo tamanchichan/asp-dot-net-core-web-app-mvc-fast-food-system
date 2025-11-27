@@ -1,0 +1,15 @@
+{
+  "$id": "1",
+  "$values": [
+    {
+      "$id": "2",
+      "Id": "0b594ba7-690c-476c-a983-4a4a96665c0f",
+      "Code": "Beverage",
+      "Name": "Beverage",
+      "Description": null,
+      "Price": 2.25,
+      "Category": 12,
+      "HasOptions": false
+    }
+  ]
+}

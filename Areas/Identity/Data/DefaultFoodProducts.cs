@@ -73,11 +73,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                     ReferenceHandler = ReferenceHandler.Preserve
                 };
 
-                await File.WriteAllTextAsync(DefaultFoodProducts.ProductsFilePath, JsonSerializer.Serialize(products, options));
+                await File.WriteAllTextAsync(ProductsFilePath, JsonSerializer.Serialize(products, options));
             }
             else
             {
-                string json = File.ReadAllText(DefaultFoodProducts.ProductsFilePath);
+                string json = File.ReadAllText(ProductsFilePath);
 
                 products = JsonSerializer.Deserialize<HashSet<FoodProduct>>(json, new JsonSerializerOptions
                 {

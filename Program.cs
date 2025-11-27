@@ -43,6 +43,7 @@ using (IServiceScope scope = app.Services.CreateScope())
     {
         await DefaultUsers.Initialize(services);
         await DefaultFoodProducts.InitializeJson();
+        await DefaultBeverageProducts.InitializeJson();
     }
     catch (Exception ex)
     {
