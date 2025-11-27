@@ -34,6 +34,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Code = code;
             Name = name;
             Price = price;
+            HasOptions = hasOptions;
         }
 
         public Product
@@ -52,6 +53,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Description = description; // Nullable
             Price = price;
             Category = category;
+            HasOptions = hasOptions;
         }
     }
 }

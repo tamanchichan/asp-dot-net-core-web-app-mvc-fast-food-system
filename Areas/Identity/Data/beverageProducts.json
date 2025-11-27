@@ -3,13 +3,13 @@
   "$values": [
     {
       "$id": "2",
-      "Id": "0b594ba7-690c-476c-a983-4a4a96665c0f",
+      "Id": "2719778e-a520-4348-8bd8-9f4b686c2301",
       "Code": "Beverage",
       "Name": "Beverage",
       "Description": null,
       "Price": 2.25,
       "Category": 12,
-      "HasOptions": false
+      "HasOptions": true
     }
   ]
 }
