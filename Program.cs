@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,10 @@ var connectionString = builder.Configuration.GetConnectionString("FastFoodSystem
 
 // Register the DbContext using Sqlite
 builder.Services.AddDbContext<FastFoodSystemDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(connectionString));
 
 
-builder.Services.AddDefaultIdentity<IdentityUser>
+builder.Services.AddDefaultIdentity<SystemUser>
     (options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
@@ -68,6 +69,26 @@ if (!app.Environment.IsDevelopment())
 
     // Only redicret to https if it is in production (can access http request from mobile)
     app.UseHttpsRedirection();
+}
+
+// GET request to run only at Development Environment
+if (app.Environment.IsDevelopment())
+{
+    app.MapGet("users/", async ([FromServices]UserManager<SystemUser> userManager) =>
+    {
+        try
+        {
+            HashSet<SystemUser> users = await userManager.Users.ToHashSetAsync();
+
+            if (users == null || users.Count == 0) throw new Exception("users");
+
+            return Results.Ok(users);
+        }
+        catch (Exception ex)
+        {
+            return Results.NotFound(ex.Message);
+        }
+    });
 }
 
 app.UseRouting();
