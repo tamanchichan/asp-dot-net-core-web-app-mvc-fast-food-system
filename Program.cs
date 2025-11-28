@@ -5,9 +5,16 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load the SQL Server connection string from appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("FastFoodSystemDbContextConnection") ?? throw new InvalidOperationException("Connection string 'FastFoodSystemDbContextConnection' not found."); ;
 
-builder.Services.AddDbContext<FastFoodSystemDbContext>(options => options.UseSqlServer(connectionString));
+// Register the DbContext using SQL Server
+//builder.Services.AddDbContext<FastFoodSystemDbContext>(options => options.UseSqlServer(connectionString));
+
+// Register the DbContext using Sqlite
+builder.Services.AddDbContext<FastFoodSystemDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>
     (options =>
