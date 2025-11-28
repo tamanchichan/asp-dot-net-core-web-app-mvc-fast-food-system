@@ -38,7 +38,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             Cart cart,
             Guid productId,
             SauceProduct product,
-            SauceOption option,
+            SauceOption? option,
             int quantity,
             string? instructions,
             decimal? aditionalPrice) : base(cartId, cart, productId, product, quantity, instructions, aditionalPrice

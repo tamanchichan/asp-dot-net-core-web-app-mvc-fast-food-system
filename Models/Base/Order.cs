@@ -8,9 +8,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public int Number { get; set; }
 
-        public Guid CartId { get; set; }
-
-        public Cart Cart { get; set; } = null!;
+        public HashSet<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
 
         public Guid? CustomerId { get; set; }
 
@@ -39,8 +37,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         public Order
         (
             int number,
-            Guid cartId,
-            Cart cart,
+            HashSet<OrderProduct> orderProducts,
             Guid? customerId,
             Customer? customer,
             string? customerName,
@@ -52,8 +49,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         )
         {
             Number = number;
-            CartId = cartId;
-            Cart = cart;
+            OrderProducts = orderProducts;
             CustomerId = customerId;
             Customer = customer;
             CustomerName = customerName;

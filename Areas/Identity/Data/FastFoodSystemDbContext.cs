@@ -1,5 +1,6 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -58,6 +59,12 @@ public class FastFoodSystemDbContext : IdentityDbContext<IdentityUser>
     public DbSet<CartFoodProduct> CartFoodProducts { get; set; } = default!;
 
     public DbSet<CartSauceProduct> CartSauceProducts { get; set; } = default!;
+
+    public DbSet<OrderBeverageProduct> OrderBeverageProducts { get; set; } = default!;
+
+    public DbSet<OrderFoodProduct> OrderFoodProducts { get; set; } = default!;
+
+    public DbSet<OrderSauceProduct> OrderSauceProducts { get; set; } = default!;
 
     public DbSet<BeverageProduct> BeverageProducts { get; set; } = default!;
 
