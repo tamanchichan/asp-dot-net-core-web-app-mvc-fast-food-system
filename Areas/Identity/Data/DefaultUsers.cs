@@ -49,14 +49,20 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                     {
                         UserName = userName,
                         Email = userEmail,
-                        EmailConfirmed = true,
-                        Cart = new Cart()
+                        EmailConfirmed = true
                     };
 
                     IdentityResult result = await userManager.CreateAsync(user, userPassword);
 
                     if (result.Succeeded)
                     {
+                        Cart cart = new Cart()
+                        {
+                            UserId = user.Id,
+                            User = user
+                        };
+
+
                         if (roles.Contains(role))
                         {
                             await userManager.AddToRoleAsync(user, role);
