@@ -14,10 +14,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 
             if (!context.SauceProducts.Any())
             {
-                context.SauceProducts.AddRange
+                await context.SauceProducts.AddRangeAsync
                 (
                     new SauceProduct("Sauce", "Sauce", 1.75m, true)
                 );
+
+                await context.SaveChangesAsync();
             }
         }
     }
