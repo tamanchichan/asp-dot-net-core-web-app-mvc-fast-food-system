@@ -7,7 +7,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
     {
         public async static Task Initialize(IServiceProvider serviceProvider)
         {
-            UserManager<IdentityUser> userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            UserManager<SystemUser> userManager = serviceProvider.GetRequiredService<UserManager<SystemUser>>();
 
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 

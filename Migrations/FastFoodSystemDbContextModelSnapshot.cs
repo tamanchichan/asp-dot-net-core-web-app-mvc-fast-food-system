@@ -259,7 +259,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Customer", b =>
@@ -280,7 +280,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CustomerRemarks", b =>
@@ -310,7 +310,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerRemarks");
+                    b.ToTable("CustomerRemarks", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Order", b =>
@@ -353,7 +353,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.OrderProduct", b =>
@@ -388,7 +388,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProduct", (string)null);
 
                     b.HasDiscriminator().HasValue("OrderProduct");
 
@@ -429,7 +429,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
 
                     b.HasDiscriminator().HasValue("Product");
 
@@ -466,7 +466,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartBeverageProducts");
+                    b.ToTable("CartBeverageProducts", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartFoodProduct", b =>
@@ -502,7 +502,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartFoodProducts");
+                    b.ToTable("CartFoodProducts", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartSauceProduct", b =>
@@ -535,7 +535,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartSauceProducts");
+                    b.ToTable("CartSauceProducts", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data.SystemUser", b =>
@@ -571,7 +571,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Property<int?>("Size")
                         .HasColumnType("INTEGER");
 
-                    b.ToTable("OrderProduct", t =>
+                    b.ToTable("OrderProduct", null, t =>
                         {
                             t.Property("Option")
                                 .HasColumnName("OrderFoodProduct_Option");
@@ -587,7 +587,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Property<int?>("Option")
                         .HasColumnType("INTEGER");
 
-                    b.ToTable("OrderProduct", t =>
+                    b.ToTable("OrderProduct", null, t =>
                         {
                             t.Property("Option")
                                 .HasColumnName("OrderSauceProduct_Option");

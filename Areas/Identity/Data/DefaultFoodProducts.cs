@@ -13,31 +13,30 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
         {
             // This method can be used to initialize default food products in the database.
             // Implementation can be added as needed.
-
             FastFoodSystemDbContext context = new FastFoodSystemDbContext
             (
                 serviceProvider.GetRequiredService<DbContextOptions<FastFoodSystemDbContext>>()
             );
 
-            AddProductCategory(AppetizerFoodProducts, "Soup & Appetizers");
-            AddProductCategory(MixedGreensProducts, "Mixed Greens");
-            AddProductCategory(NoodlesProducts, "Noodles");
-            AddProductCategory(FriedRiceProducts, "Fried Rice");
-            AddProductCategory(ChopSueyProducts, "Chop Suey");
-            AddProductCategory(EggFooYungProducts, "Egg Foo Yung");
-            AddProductCategory(SeaFoodProducts, "Sea Food");
-            AddProductCategory(ChickenProducts, "Chicken");
-            AddProductCategory(BeefAndPorkProducts, "Beef & Pork");
-            AddProductCategory(HotAndSpicyProducts, "Hot & Spicy");
-            AddProductCategory(ComboPlateProducts, "Combo Plates");
-            AddProductCategory(FamilyDinnerProducts, "Family Dinners");
-
-            HashSet<FoodProduct> products = DefaultProducts;
-
             // Add products to the database if there are none
             if (!context.FoodProducts.Any())
             {
-                context.FoodProducts.AddRange(products);
+                AddProductCategory(AppetizerFoodProducts, "Soup & Appetizers");
+                AddProductCategory(MixedGreensProducts, "Mixed Greens");
+                AddProductCategory(NoodlesProducts, "Noodles");
+                AddProductCategory(FriedRiceProducts, "Fried Rice");
+                AddProductCategory(ChopSueyProducts, "Chop Suey");
+                AddProductCategory(EggFooYungProducts, "Egg Foo Yung");
+                AddProductCategory(SeaFoodProducts, "Sea Food");
+                AddProductCategory(ChickenProducts, "Chicken");
+                AddProductCategory(BeefAndPorkProducts, "Beef & Pork");
+                AddProductCategory(HotAndSpicyProducts, "Hot & Spicy");
+                AddProductCategory(ComboPlateProducts, "Combo Plates");
+                AddProductCategory(FamilyDinnerProducts, "Family Dinners");
+
+                HashSet<FoodProduct> products = DefaultProducts;
+
+                await context.FoodProducts.AddRangeAsync(products);
                 await context.SaveChangesAsync();
             }
         }
@@ -191,7 +190,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             }
         }
 
-        public static readonly HashSet<FoodProduct> AppetizerFoodProducts = new HashSet<FoodProduct>()
+        public static HashSet<FoodProduct> AppetizerFoodProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("1", "Deluxe Wonton Soup", 13.95m),
             new FoodProduct("2", "Wonton Soup", 6.95m),
@@ -265,7 +264,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("33", "Vegetarian Egg Foo Yung", 11.50m)
         };
 
-        public static HashSet<FoodProduct> SeaFoodProducts = new HashSet<FoodProduct>()
+        public static readonly HashSet<FoodProduct> SeaFoodProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("34", "Breaded Shrimp", 16.50m),
             new FoodProduct("34A", "Breaded Fish Fillet", 14.50m),
@@ -283,7 +282,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("39", "Spicy Garlic Shrimp", 16.50m)
         };
 
-        public static HashSet<FoodProduct> ChickenProducts = new HashSet<FoodProduct>()
+        public static readonly HashSet<FoodProduct> ChickenProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("40", "Sweet & Sour Chicken Balls", 14.50m),
             new FoodProduct("41", "Honey Garlic Chicken Balls", 14.50m),
@@ -299,7 +298,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("46A", "Sliced Chicken with Green Onions & Ginger", 14.50m)
         };
 
-        public static HashSet<FoodProduct> BeefAndPorkProducts = new HashSet<FoodProduct>()
+        public static readonly HashSet<FoodProduct> BeefAndPorkProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("47", "Breaded Veal", 15.50m),
             new FoodProduct("48", "Hot Honey Glazed Veal", 15.50m),
@@ -319,7 +318,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("56C", "Pork with Green Onions & Ginger", 13.50m)
         };
 
-        public static HashSet<FoodProduct> HotAndSpicyProducts = new HashSet<FoodProduct>()
+        public static readonly HashSet<FoodProduct> HotAndSpicyProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("57", "Szechuan Shrimp", 16.50m),
             new FoodProduct("57A", "Szechuan Fish Fillet", 14.50m),
@@ -351,7 +350,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("77", "Fish in Satay Sauce", 14.50m)
         };
 
-        public static HashSet<FoodProduct> ComboPlateProducts = new HashSet<FoodProduct>()
+        public static readonly HashSet<FoodProduct> ComboPlateProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("A", "Combo A", 15.50m),
             new FoodProduct("B", "Combo B", 14.50m),
@@ -361,7 +360,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("F", "Combo F", 15.50m)
         };
 
-        public static HashSet<FoodProduct> FamilyDinnerProducts = new HashSet<FoodProduct>()
+        public static readonly HashSet<FoodProduct> FamilyDinnerProducts = new HashSet<FoodProduct>()
         {
             new FoodProduct("F2", "For Two", 38.50m),
             new FoodProduct("F3", "For Three", 56.50m),
@@ -370,7 +369,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("F6", "For Six", 104.50m)
         };
 
-        public static HashSet<FoodProduct> DefaultProducts = new HashSet<FoodProduct>
+        public static readonly HashSet<FoodProduct> DefaultProducts = new HashSet<FoodProduct>
         (
             AppetizerFoodProducts
                 .Concat(MixedGreensProducts)
@@ -384,6 +383,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                 .Concat(HotAndSpicyProducts)
                 .Concat(ComboPlateProducts)
                 .Concat(FamilyDinnerProducts)
-        );
+        ) { };
     }
 }

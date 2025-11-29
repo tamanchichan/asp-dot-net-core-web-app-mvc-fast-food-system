@@ -50,8 +50,12 @@ using (IServiceScope scope = app.Services.CreateScope())
     try
     {
         await DefaultUsers.Initialize(services);
-        await DefaultFoodProducts.InitializeJson();
-        await DefaultBeverageProducts.InitializeJson();
+        await DefaultFoodProducts.Initialize(services);
+        await DefaultBeverageProducts.Initialize(services);
+
+        // Initialize default food products by creating a JSON file
+        //await DefaultFoodProducts.InitializeJson();
+        //await DefaultBeverageProducts.InitializeJson();
     }
     catch (Exception ex)
     {
@@ -90,6 +94,18 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
+
+app.MapGet("products/", async (FastFoodSystemDbContext context) => {
+    try
+    {
+        HashSet<FoodProduct> products = await context.FoodProducts.ToHashSetAsync();
+        return Results.Ok(products);
+    }
+    catch (Exception ex)
+    {
+        return Results.NotFound(ex.Message);
+    }
+});
 
 app.UseRouting();
 
