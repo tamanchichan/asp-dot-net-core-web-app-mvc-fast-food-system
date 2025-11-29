@@ -1,5 +1,8 @@
 using System.Diagnostics;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
@@ -8,14 +11,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly UserManager<SystemUser> _userManager;
+
+        private readonly FastFoodSystemDbContext _context;
+
+        public HomeController(ILogger<HomeController> logger, UserManager<SystemUser> userManager, FastFoodSystemDbContext context)
         {
             _logger = logger;
+            _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Route("pos")]
+        public IActionResult POS()
+        {
+            HashSet<Product> products = _context.Products.ToHashSet();
+
+            return View(products);
         }
 
         public IActionResult Privacy()
