@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 {
@@ -10,6 +11,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             UserManager<SystemUser> userManager = serviceProvider.GetRequiredService<UserManager<SystemUser>>();
 
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            FastFoodSystemDbContext context = new FastFoodSystemDbContext
+            (
+                serviceProvider.GetRequiredService<DbContextOptions<FastFoodSystemDbContext>>()
+            );
 
             string[] roles = [ "Admin", "Staff" ];
 
@@ -58,10 +64,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                     {
                         Cart cart = new Cart()
                         {
-                            UserId = user.Id,
-                            User = user
+                            // Only set FK (UserId)
+                            UserId = user.Id
+                            //User = user
                         };
 
+                        context.Carts.Add(cart);
+                        await context.SaveChangesAsync();
 
                         if (roles.Contains(role))
                         {
@@ -69,8 +78,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                         }
                     }
                 }
-            }
-            ;
+            };
 
             string adminUserName = "admin";
             string adminEmail = "admin@email.com";
