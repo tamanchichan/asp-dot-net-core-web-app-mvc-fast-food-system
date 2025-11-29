@@ -9,6 +9,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 {
     public static class DefaultFoodProducts
     {
+        // Seeds the database with default BeverageProducts if none exist.  
+        // Creates a DbContext using DI, checks for existing records, and inserts the default list when empty.
         public async static Task Initialize(IServiceProvider serviceProvider)
         {
             // This method can be used to initialize default food products in the database.
@@ -41,6 +43,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             }
         }
 
+        // Loads BeverageProduct data from a JSON file.
+        // If the file doesn't exist, it creates the directory, writes default
+        // products to JSON, and then returns those defaults.
         public static async Task<HashSet<FoodProduct>> InitializeJson()
         {
             //string ProductsFilePath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName, "Areas/Identity/Data", "foodProducts.json");
