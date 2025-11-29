@@ -1,4 +1,5 @@
-﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
+﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 {
@@ -9,6 +10,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         public int Number { get; set; }
 
         public HashSet<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+
+        public string UserId { get; set; }
+
+        public SystemUser User { get; set; }
 
         public Guid? CustomerId { get; set; }
 
@@ -38,6 +43,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         (
             int number,
             HashSet<OrderProduct> orderProducts,
+            string userId,
+            SystemUser user,
             Guid? customerId,
             Customer? customer,
             string? customerName,
@@ -50,6 +57,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         {
             Number = number;
             OrderProducts = orderProducts;
+            UserId = userId;
+            User = user;
             CustomerId = customerId;
             Customer = customer;
             CustomerName = customerName;
