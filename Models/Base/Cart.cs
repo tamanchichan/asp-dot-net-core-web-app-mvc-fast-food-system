@@ -7,7 +7,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         public SystemUser User { get; set; } = null!;
 
@@ -85,6 +85,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public Cart
         (
+            string userId,
+            SystemUser user,
             Guid? customerId,
             Customer? customer,
             string? customerName,
@@ -95,6 +97,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             HashSet<CartSauceProduct>? cartSauceProducts
         )
         {
+            UserId = userId;
+            User = user;
             CustomerId = customerId;
             Customer = customer;
             CustomerName = customerName;
