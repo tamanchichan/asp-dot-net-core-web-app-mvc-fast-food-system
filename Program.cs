@@ -75,38 +75,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
-// GET request to run only at Development Environment
-if (app.Environment.IsDevelopment())
-{
-    app.MapGet("users/", async ([FromServices]UserManager<SystemUser> userManager) =>
-    {
-        try
-        {
-            HashSet<SystemUser> users = await userManager.Users.ToHashSetAsync();
-
-            if (users == null || users.Count == 0) throw new Exception("users");
-
-            return Results.Ok(users);
-        }
-        catch (Exception ex)
-        {
-            return Results.NotFound(ex.Message);
-        }
-    });
-}
-
-app.MapGet("products/", async (FastFoodSystemDbContext context) => {
-    try
-    {
-        HashSet<FoodProduct> products = await context.FoodProducts.ToHashSetAsync();
-        return Results.Ok(products);
-    }
-    catch (Exception ex)
-    {
-        return Results.NotFound(ex.Message);
-    }
-});
-
 app.UseRouting();
 
 app.UseAuthorization();
