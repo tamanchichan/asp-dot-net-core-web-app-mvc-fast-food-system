@@ -2,6 +2,7 @@ using System.Diagnostics;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return View();
         }
 
+        [Authorize]
         [Route("pos")]
         public IActionResult POS()
         {

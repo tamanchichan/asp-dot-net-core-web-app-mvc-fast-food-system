@@ -21,66 +21,37 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Pages.Acc
     public class LoginModel : PageModel
     {
         private readonly SignInManager<SystemUser> _signInManager;
+
+        private readonly UserManager<SystemUser> _userManager;
+
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<SystemUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<SystemUser> signInManager, UserManager<SystemUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Display(Name = "Username or Email")]
+            public string UserNameOrEmail { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
@@ -110,9 +81,37 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Pages.Acc
 
             if (ModelState.IsValid)
             {
+                if (Input.UserNameOrEmail == null || string.IsNullOrEmpty(Input.UserNameOrEmail))
+                {
+                    ModelState.AddModelError(string.Empty, "You must enter a username or e-mail.");
+                }
+
+                // Try find user by email first
+                SystemUser user = await _userManager.FindByEmailAsync(Input.UserNameOrEmail);
+
+                // If not found, try by username
+                if (user == null)
+                {
+                    user = await _userManager.FindByNameAsync(Input.UserNameOrEmail);
+                }
+
+                // If still not found, invalid login
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                // PasswordSignInAsync only works with username
+                var result = await _signInManager.PasswordSignInAsync
+                (
+                    user.UserName, // always pass the username
+                    Input.Password,
+                    Input.RememberMe,
+                    lockoutOnFailure: false
+                );
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
