@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 
-public class FastFoodSystemDbContext : IdentityDbContext<IdentityUser>
+public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
 {
     public FastFoodSystemDbContext(DbContextOptions<FastFoodSystemDbContext> options) : base(options) { }
 
@@ -35,7 +35,7 @@ public class FastFoodSystemDbContext : IdentityDbContext<IdentityUser>
             .HasPrecision(18, 2);
 
         // Rename ASP.NET Identity tables if needed
-        builder.Entity<IdentityUser>().ToTable("Users");
+        builder.Entity<SystemUser>().ToTable("Users");
         builder.Entity<IdentityRole>().ToTable("Roles");
         builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
         builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
