@@ -16,7 +16,6 @@ var connectionString = builder.Configuration.GetConnectionString("FastFoodSystem
 builder.Services.AddDbContext<FastFoodSystemDbContext>(options =>
     options.UseSqlite(connectionString));
 
-
 builder.Services.AddDefaultIdentity<SystemUser>
     (options =>
     {
@@ -28,7 +27,13 @@ builder.Services.AddDefaultIdentity<SystemUser>
         options.Password.RequiredLength = 3;
     })
     .AddRoles<IdentityRole>() // Enable Roles
-    .AddEntityFrameworkStores<FastFoodSystemDbContext>(); // Use the FastFoodSystemDbContext for Identity
+    .AddEntityFrameworkStores<FastFoodSystemDbContext>() // Use the FastFoodSystemDbContext for Identity
+    .AddDefaultTokenProviders(); // no AddDefaultUI
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/login";
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -87,6 +92,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapRazorPages();
+app.MapRazorPages(); // ASP.NET Identity's default Razor Pages UI, which maps /Identity/Account/Login
 
 app.Run();

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -25,14 +26,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        [Authorize]
-        [Route("pos")]
-        public IActionResult POS()
-        {
-            HashSet<Product> products = _context.Products.ToHashSet();
+            HashSet<Product>? products = _context.Products.ToHashSet();
 
             return View(products);
         }
