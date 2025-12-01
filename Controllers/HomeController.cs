@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
         public IActionResult Index()
         {
-            HashSet<Product>? products = _context.Products.ToHashSet();
+            HashSet<Product>? products = _context.Products
+                .Where(p => p.Category == ProductCategory.Appetizers)
+                .OrderBy(p => p.Code)
+                .ToHashSet();
 
             return View(products);
         }
