@@ -1,0 +1,26 @@
+﻿.products {
+    column-gap: 30px;
+    display: grid;
+    grid-template-columns: 360px 360px 360px;
+    justify-content: center;
+    row-gap: 15px;
+}
+
+.product-category {
+    text-align: center;
+}
+
+.product {
+    border-bottom: 1px dotted #000;
+    justify-content: space-between;
+}
+
+.product > * {
+    margin: 5px 10px;
+}
+
+.product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
