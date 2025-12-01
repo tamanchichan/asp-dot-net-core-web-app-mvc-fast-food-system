@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models;
@@ -6,6 +5,8 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -27,10 +28,35 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
         public IActionResult Index()
         {
-            HashSet<Product>? products = _context.Products
-                .Where(p => p.Category == ProductCategory.Appetizers)
-                .OrderBy(p => p.Code)
-                .ToHashSet();
+            Dictionary<ProductCategory, List<Product>>? products = _context.Products
+                .GroupBy(p => p.Category)
+                //.ToDictionary(g => g.Key, g => g.ToList());
+                //.ToDictionary(g => g.Key, g => g.OrderBy(p => p.Code).ToList());
+                // Sort codes naturally: numbers first (1, 2, 3, ...),
+                // then number+letter codes (6A, 7A, ...), 
+                // then letter+number codes (F1, F2, ...)
+                .ToDictionary(g => g.Key, g => g.OrderBy(p =>
+                {
+                    string code = p.Code;
+                    int i = 0;
+
+                    while (i < code.Length && char.IsDigit(code[i]))
+                    {
+                        i++;
+
+                    }
+                    if (i > 0)
+                    {
+                        int number = int.Parse(code.Substring(0, i));
+                        string letter = code.Substring(i);
+
+                        return (0, number, letter);
+                    }
+                    else
+                    {
+                        return (1, 0, code);
+                    }
+                }).ToList());
 
             return View(products);
         }

@@ -2,17 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
-@model IEnumerable<Product>;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
+@model Dictionary<ProductCategory, List<Product>>
 
 <div class="home-page">
     <h2>Products Available</h2>
     <div class="products">
-        @foreach(Product product in Model)
+        @* @foreach(Product product in Model)
         {
-            <div class="product">
-                <p>@product.Code</p>
-                <p>@product.Name</p>
-                <p>@product.Price</p>
+            if (product.Category == ProductCategory.Appetizers)
+            {
+                <div class="product">
+                    <p>@product.Code</p>
+                    <p>@product.Name</p>
+                    <p>@product.Price</p>
+                </div>
+            }
+            else if (product.Category == ProductCategory.MixedGreens)
+            {
+                
+            }
+        } *@
+
+        @foreach (KeyValuePair<ProductCategory, List<Product>> productCategory in Model)
+        {
+            <div class="product-category">
+                <h3>@productCategory.Key</h3>
+
+            @foreach (Product product in productCategory.Value)
+            {
+                <div class="product">
+                    <p>@product.Code</p>
+                    <p>@product.Name</p>
+                    <p>@product.Price</p>
+                </div>
+            }
             </div>
         }
     </div>
