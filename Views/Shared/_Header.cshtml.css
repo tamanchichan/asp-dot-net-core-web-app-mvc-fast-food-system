@@ -1,0 +1,8 @@
+﻿.header {
+    display: flex;
+}
+
+.header nav ul {
+    display: flex;
+    justify-content: space-between;
+}
