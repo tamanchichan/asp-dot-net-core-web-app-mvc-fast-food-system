@@ -1,8 +1,15 @@
 ﻿.header {
-    display: flex;
+    justify-content: center;
 }
 
 .header nav ul {
-    display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+
+.header nav ul li {
+    font-size: 30px;
+    font-weight: 300;
+    margin-left: 30px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
 }

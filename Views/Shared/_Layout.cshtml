@@ -9,19 +9,16 @@
     <link rel="stylesheet" href="~/asp_dot_net_core_web_app_mvc_fast_food_system.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="asp-dot-net-core-web-app-mvc-fast-food-system.styles.css" /> @* CSS ISOLATION *@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tamanchichan/cdn/reset.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tamanchichan/cdn/classes.css" />
 </head>
 <body>
     <header>
-        <partial name="_LoginPartial" />
         <partial name="_Header" />
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <footer>
         <div class="container">
             &copy; 2025 - asp_dot_net_core_web_app_mvc_fast_food_system - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
