@@ -15,15 +15,22 @@
                 @* <h2>@productCategory.Key</h2> *@
                 <h2>@Html.DisplayFor(model => productCategory.Key)</h2> @* Uses the '[Display(Name = "...")]' data annotation *@
 
-            @foreach (ProductVM product in productCategory.Value)
-            {
-                <div class="flex product">
-                    <p class="product-code">@product.Product.Code</p>
-                    <p class="product-name">@product.Product.Name</p>
-                    <p class="product-price">@product.Product.Price.ToString("C", new CultureInfo("en-CA"))</p>
-                    <p class="product-quantity @(product.Quantity == 0 ? "hidden" : "")">@(product.Quantity)</p>
-                </div>
-            }
+                @foreach (ProductVM product in productCategory.Value)
+                {
+                    <div class="flex product">
+                        @if (product.Product.Category == ProductCategory.Extras)
+                        {
+                            <span class="product-code"></span>
+                        }
+                        else
+                        {
+                            <span class="product-code">@product.Product.Code</span>
+                        }
+                        <span class="product-name">@product.Product.Name</span>
+                        <span class="product-price">@product.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                        <span class="product-quantity @(product.Quantity == 0 ? "hide" : "")">@(product.Quantity)</span>
+                    </div>
+                }
             </div>
         }
     </div>

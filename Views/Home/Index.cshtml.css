@@ -12,11 +12,15 @@
 
 .product {
     border-bottom: 1px dotted #000;
-    justify-content: space-between;
+    column-gap: 5px;
+    display: grid;
+    grid-template-columns: 45px 200px 85px 15px;
+    width: 360px;
+    padding: 10px 0px;
 }
 
-.product > * {
-    margin: 5px 10px;
+.product-code {
+    text-align: left;
 }
 
 .product-name {
