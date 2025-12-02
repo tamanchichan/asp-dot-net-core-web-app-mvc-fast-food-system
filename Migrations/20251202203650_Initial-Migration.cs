@@ -274,7 +274,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartProduct",
+                name: "CartProducts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -291,15 +291,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartProduct", x => x.Id);
+                    table.PrimaryKey("PK_CartProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CartProduct_Carts_CartId",
+                        name: "FK_CartProducts_Carts_CartId",
                         column: x => x.CartId,
                         principalTable: "Carts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartProduct_Products_ProductId",
+                        name: "FK_CartProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -319,7 +319,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
                     BeverageOption = table.Column<int>(type: "INTEGER", nullable: true),
                     FoodOption = table.Column<int>(type: "INTEGER", nullable: true),
-                    Size = table.Column<int>(type: "INTEGER", nullable: true),
+                    FoodSize = table.Column<int>(type: "INTEGER", nullable: true),
                     SauceOption = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -340,13 +340,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartProduct_CartId",
-                table: "CartProduct",
+                name: "IX_CartProducts_CartId",
+                table: "CartProducts",
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartProduct_ProductId",
-                table: "CartProduct",
+                name: "IX_CartProducts_ProductId",
+                table: "CartProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -427,7 +427,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartProduct");
+                name: "CartProducts");
 
             migrationBuilder.DropTable(
                 name: "CustomerRemarks");

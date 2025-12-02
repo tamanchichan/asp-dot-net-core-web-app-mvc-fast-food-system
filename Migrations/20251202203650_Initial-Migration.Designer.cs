@@ -11,7 +11,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 {
     [DbContext(typeof(FastFoodSystemDbContext))]
-    [Migration("20251202052650_Initial-Migration")]
+    [Migration("20251202203650_Initial-Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -292,7 +292,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartProduct");
+                    b.ToTable("CartProducts");
 
                     b.HasDiscriminator().HasValue("CartProduct");
 
@@ -529,7 +529,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Property<int?>("FoodOption")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Size")
+                    b.Property<int?>("FoodSize")
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("OrderFoodProduct");

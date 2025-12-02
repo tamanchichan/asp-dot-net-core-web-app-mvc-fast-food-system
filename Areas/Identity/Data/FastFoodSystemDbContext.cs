@@ -50,6 +50,8 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
 
     public DbSet<Order> Orders { get; set; } = default!;
 
+    public DbSet<CartProduct> CartProducts { get; set; } = default!; // Check if it will need to add migration
+
     public DbSet<CartBeverageProduct> CartBeverageProducts { get; set; } = default!;
 
     public DbSet<CartFoodProduct> CartFoodProducts { get; set; } = default!;
