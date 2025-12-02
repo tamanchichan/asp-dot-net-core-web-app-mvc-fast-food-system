@@ -6,17 +6,17 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
 {
     public class OrderFoodProduct : OrderProduct
     {
-        private FoodOption? _option;
+        private FoodOption? _foodOption;
 
-        public FoodOption? Option
+        public FoodOption? FoodOption
         {
             get
             {
-                return Product.HasOptions ? _option : null;
+                return Product.HasOptions ? _foodOption : null;
             }
             set
             {
-                _option = Product.HasOptions ? value : null;
+                _foodOption = Product.HasOptions ? value : null;
             }
         }
 
@@ -39,7 +39,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
             decimal? additionalPrice
         ) : base(orderId, order, productId, product, quantity, instructions, additionalPrice)
         {
-            _option = option;
+            _foodOption = option;
             _size = size;
         }
     }

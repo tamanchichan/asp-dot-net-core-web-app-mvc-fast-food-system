@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -40,7 +40,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,27 +58,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CustomerName = table.Column<string>(type: "TEXT", nullable: true),
-                    CustomerPhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    CustomerAddress = table.Column<string>(type: "TEXT", nullable: true),
-                    AdditionalCharge = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true),
-                    DeliveryFee = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true),
-                    Discount = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Carts_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,32 +105,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Number = table.Column<int>(type: "INTEGER", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CustomerName = table.Column<string>(type: "TEXT", nullable: true),
-                    CustomerPhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    CustomerAddress = table.Column<string>(type: "TEXT", nullable: true),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    Observations = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ReadyTime = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -151,154 +126,64 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartBeverageProducts",
+                name: "Carts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Option = table.Column<int>(type: "INTEGER", nullable: true),
-                    CartId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Instructions = table.Column<string>(type: "TEXT", nullable: true),
-                    AdditionalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CustomerName = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerPhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerAddress = table.Column<string>(type: "TEXT", nullable: true),
+                    AdditionalCharge = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true),
+                    DeliveryFee = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true),
+                    Discount = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartBeverageProducts", x => x.Id);
+                    table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CartBeverageProducts_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartBeverageProducts_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CartFoodProducts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Option = table.Column<int>(type: "INTEGER", nullable: true),
-                    Size = table.Column<int>(type: "INTEGER", nullable: true),
-                    CartId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Instructions = table.Column<string>(type: "TEXT", nullable: true),
-                    AdditionalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartFoodProducts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CartFoodProducts_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartFoodProducts_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CartSauceProducts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Option = table.Column<int>(type: "INTEGER", nullable: true),
-                    CartId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Instructions = table.Column<string>(type: "TEXT", nullable: true),
-                    AdditionalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartSauceProducts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CartSauceProducts_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartSauceProducts_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
-                    CartId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
+                        name: "FK_Carts_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Carts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderProduct",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OrderId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    Instructions = table.Column<string>(type: "TEXT", nullable: true),
-                    AdditionalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
-                    Option = table.Column<int>(type: "INTEGER", nullable: true),
-                    OrderFoodProduct_Option = table.Column<int>(type: "INTEGER", nullable: true),
-                    Size = table.Column<int>(type: "INTEGER", nullable: true),
-                    OrderSauceProduct_Option = table.Column<int>(type: "INTEGER", nullable: true)
+                    Number = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    CustomerName = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerPhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    CustomerAddress = table.Column<string>(type: "TEXT", nullable: true),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    Observations = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ReadyTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProduct", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderProduct_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_OrderProduct_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -388,24 +273,80 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CartProduct",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CartId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Instructions = table.Column<string>(type: "TEXT", nullable: true),
+                    AdditionalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
+                    BeverageOption = table.Column<int>(type: "INTEGER", nullable: true),
+                    FoodOption = table.Column<int>(type: "INTEGER", nullable: true),
+                    FoodSize = table.Column<int>(type: "INTEGER", nullable: true),
+                    SauceOption = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartProduct_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartProduct_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderProduct",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    OrderId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Instructions = table.Column<string>(type: "TEXT", nullable: true),
+                    AdditionalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
+                    BeverageOption = table.Column<int>(type: "INTEGER", nullable: true),
+                    FoodOption = table.Column<int>(type: "INTEGER", nullable: true),
+                    Size = table.Column<int>(type: "INTEGER", nullable: true),
+                    SauceOption = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_CartBeverageProducts_CartId",
-                table: "CartBeverageProducts",
+                name: "IX_CartProduct_CartId",
+                table: "CartProduct",
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartBeverageProducts_ProductId",
-                table: "CartBeverageProducts",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartFoodProducts_CartId",
-                table: "CartFoodProducts",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartFoodProducts_ProductId",
-                table: "CartFoodProducts",
+                name: "IX_CartProduct_ProductId",
+                table: "CartProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -414,14 +355,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartSauceProducts_CartId",
-                table: "CartSauceProducts",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartSauceProducts_ProductId",
-                table: "CartSauceProducts",
-                column: "ProductId");
+                name: "IX_Carts_UserId",
+                table: "Carts",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerRemarks_CustomerId",
@@ -442,6 +379,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -475,12 +417,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CartId",
-                table: "Users",
-                column: "CartId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "Users",
                 column: "NormalizedUserName",
@@ -491,13 +427,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartBeverageProducts");
-
-            migrationBuilder.DropTable(
-                name: "CartFoodProducts");
-
-            migrationBuilder.DropTable(
-                name: "CartSauceProducts");
+                name: "CartProduct");
 
             migrationBuilder.DropTable(
                 name: "CustomerRemarks");
@@ -521,22 +451,22 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
+                name: "Carts");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

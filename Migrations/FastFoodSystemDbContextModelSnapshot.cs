@@ -257,6 +257,45 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("AdditionalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Instructions")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartProduct");
+
+                    b.HasDiscriminator().HasValue("CartProduct");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Customer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -439,111 +478,42 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartBeverageProduct", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                    b.HasBaseType("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct");
 
-                    b.Property<decimal>("AdditionalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("CartId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Instructions")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("Option")
+                    b.Property<int?>("BeverageOption")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartBeverageProducts");
+                    b.HasDiscriminator().HasValue("CartBeverageProduct");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartFoodProduct", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                    b.HasBaseType("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct");
 
-                    b.Property<decimal>("AdditionalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("CartId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Instructions")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("Option")
+                    b.Property<int?>("FoodOption")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("FoodSize")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Size")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartFoodProducts");
+                    b.HasDiscriminator().HasValue("CartFoodProduct");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartSauceProduct", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                    b.HasBaseType("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct");
 
-                    b.Property<decimal>("AdditionalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("CartId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Instructions")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("Option")
+                    b.Property<int?>("SauceOption")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartSauceProducts");
+                    b.HasDiscriminator().HasValue("CartSauceProduct");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts.OrderBeverageProduct", b =>
                 {
                     b.HasBaseType("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.OrderProduct");
 
-                    b.Property<int?>("Option")
+                    b.Property<int?>("BeverageOption")
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("OrderBeverageProduct");
@@ -553,17 +523,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 {
                     b.HasBaseType("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.OrderProduct");
 
-                    b.Property<int?>("Option")
+                    b.Property<int?>("FoodOption")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("Size")
                         .HasColumnType("INTEGER");
-
-                    b.ToTable("OrderProduct", t =>
-                        {
-                            t.Property("Option")
-                                .HasColumnName("OrderFoodProduct_Option");
-                        });
 
                     b.HasDiscriminator().HasValue("OrderFoodProduct");
                 });
@@ -572,14 +536,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                 {
                     b.HasBaseType("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.OrderProduct");
 
-                    b.Property<int?>("Option")
+                    b.Property<int?>("SauceOption")
                         .HasColumnType("INTEGER");
-
-                    b.ToTable("OrderProduct", t =>
-                        {
-                            t.Property("Option")
-                                .HasColumnName("OrderSauceProduct_Option");
-                        });
 
                     b.HasDiscriminator().HasValue("OrderSauceProduct");
                 });
@@ -673,6 +631,25 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct", b =>
+                {
+                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Cart", "Cart")
+                        .WithMany("CartProducts")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Product", "Product")
+                        .WithMany("CartProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CustomerRemarks", b =>
                 {
                     b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Customer", "Customer")
@@ -720,63 +697,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartBeverageProduct", b =>
-                {
-                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Cart", "Cart")
-                        .WithMany("CartBeverageProducts")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartFoodProduct", b =>
-                {
-                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Cart", "Cart")
-                        .WithMany("CartFoodProducts")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts.CartSauceProduct", b =>
-                {
-                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Cart", "Cart")
-                        .WithMany("CartSauceProducts")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data.SystemUser", b =>
                 {
                     b.Navigation("Cart");
@@ -786,11 +706,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Cart", b =>
                 {
-                    b.Navigation("CartBeverageProducts");
-
-                    b.Navigation("CartFoodProducts");
-
-                    b.Navigation("CartSauceProducts");
+                    b.Navigation("CartProducts");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Customer", b =>
@@ -803,6 +719,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Order", b =>
                 {
                     b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Product", b =>
+                {
+                    b.Navigation("CartProducts");
                 });
 #pragma warning restore 612, 618
         }

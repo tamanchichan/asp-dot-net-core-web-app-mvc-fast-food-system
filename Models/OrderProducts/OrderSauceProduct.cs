@@ -6,9 +6,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
 {
     public class OrderSauceProduct : OrderProduct
     {
-        public SauceOption? _option;
+        public SauceOption? _sauceOption;
 
-        public SauceOption? Option { get => Product.HasOptions ? _option : null; set => _option = Product.HasOptions ? value : null; }
+        public SauceOption? SauceOption { get => Product.HasOptions ? _sauceOption : null; set => _sauceOption = Product.HasOptions ? value : null; }
 
         public OrderSauceProduct() { }
 
@@ -25,7 +25,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
             decimal? aditionalPrice) : base(orderId, order, productId, product, quantity, instructions, aditionalPrice
         )
         {
-            _option = option;
+            _sauceOption = option;
         }
     }
 }

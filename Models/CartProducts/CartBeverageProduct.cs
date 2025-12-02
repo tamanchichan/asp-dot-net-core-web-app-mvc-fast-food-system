@@ -6,16 +6,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 {
     public class CartBeverageProduct : CartProduct
     {
-        private BeverageOption? _option;
+        private BeverageOption? _beverageOption;
 
-        public BeverageOption? Option // Coke, CokeZero, GingerAle, etc.
+        public BeverageOption? BeverageOption // Coke, CokeZero, GingerAle, etc.
         {
             // Using ternaty operator to simplify the code
             get
             {
                 if (Product.HasOptions)
                 {
-                    return _option;
+                    return _beverageOption;
                 }
                 else
                 {
@@ -25,7 +25,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             // Using ternaty operator to simplify the code
             set
             {
-                _option = Product.HasOptions ? value : null;
+                _beverageOption = Product.HasOptions ? value : null;
             }
         }
 
@@ -44,7 +44,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             decimal? additionalPrice) : base(cartId, cart, productId, product, quantity, instructions, additionalPrice
         )
         {
-            _option = option;
+            _beverageOption = option;
         }
     }
 }

@@ -15,7 +15,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products
             string? description,
             decimal price,
             ProductCategory category,
+            HashSet<CartProduct> cartProducts,
             bool hasOptions = false
-        ) : base(code, name, description, price, category, hasOptions) { }
+        ) : base(code, name, description, price, category, cartProducts, hasOptions) { }
     }
 }

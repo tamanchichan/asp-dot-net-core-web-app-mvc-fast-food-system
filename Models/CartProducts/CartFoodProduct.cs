@@ -6,15 +6,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 {
     public class CartFoodProduct : CartProduct
     {
-        private FoodOption? _option;
-        public FoodOption? Option  // Beef, Chicken, Fish, Mushroom, etc.
+        private FoodOption? _foodOption;
+        public FoodOption? FoodOption  // Beef, Chicken, Fish, Mushroom, etc.
         {
             // Using traditional if-else statements for clarity
             get
             {
                 if (Product.HasOptions)
                 {
-                    return _option;
+                    return _foodOption;
                 }
                 else
                 {
@@ -26,18 +26,18 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             {
                 if (Product.HasOptions)
                 {
-                    _option = value;
+                    _foodOption = value;
                 }
                 else
                 {
-                    _option = null;
+                    _foodOption = null;
                 }
             }
         }
 
         private FoodSize? _size;
 
-        public FoodSize? Size // Small, Medium, Large
+        public FoodSize? FoodSize // Small, Medium, Large
         {
             // Using ternaty operator to simplify the code
             get
@@ -66,7 +66,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             decimal? additionalPrice) : base(cartId, cart, productId, product, quantity, instructions, additionalPrice
         )
         {
-            _option = option;
+            _foodOption = option;
             _size = size;
         }
     }

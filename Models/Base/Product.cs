@@ -25,6 +25,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         [Required]
         public ProductCategory Category { get; set; } // Appetizer, MixedGreens, Noodles, etc.
 
+        public HashSet<CartProduct>? CartProducts { get; set; } = new HashSet<CartProduct>();
+
         public bool HasOptions { get; set; } = false;
 
         public Product() { }
@@ -44,6 +46,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             string? description,
             decimal price,
             ProductCategory category,
+            HashSet<CartProduct> cartProducts,
             bool hasOptions = false
         )
         {
@@ -53,6 +56,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Description = description; // Nullable
             Price = price;
             Category = category;
+            CartProducts = cartProducts;
             HasOptions = hasOptions;
         }
     }

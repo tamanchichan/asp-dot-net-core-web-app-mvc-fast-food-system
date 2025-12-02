@@ -6,16 +6,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 {
     public class CartSauceProduct : CartProduct
     {
-        public SauceOption? _option;
+        public SauceOption? _sauceOption;
 
-        public SauceOption? Option
+        public SauceOption? SauceOption
         {
             // Using traditional if-else statements for clarity
             get
             {
                 if (Product.HasOptions)
                 {
-                    return _option;
+                    return _sauceOption;
                 }
                 else
                 {
@@ -25,7 +25,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             // Using ternaty operator to simplify the code
             set
             {
-                _option = Product.HasOptions ? value : null;
+                _sauceOption = Product.HasOptions ? value : null;
             }
         }
 
@@ -44,7 +44,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             decimal? aditionalPrice) : base(cartId, cart, productId, product, quantity, instructions, aditionalPrice
         )
         {
-            _option = option;
+            _sauceOption = option;
         }
     }
 }

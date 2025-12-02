@@ -21,21 +21,25 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public string? CustomerAddress { get; set; }
 
-        public HashSet<CartFoodProduct>? CartFoodProducts { get; set; } = new HashSet<CartFoodProduct>();
+        public HashSet<CartProduct>? CartProducts { get; set; } = new HashSet<CartProduct>();
 
-        public HashSet<CartBeverageProduct>? CartBeverageProducts { get; set; } = new HashSet<CartBeverageProduct>();
+        //public HashSet<CartFoodProduct>? CartFoodProducts { get; set; } = new HashSet<CartFoodProduct>();
 
-        public HashSet<CartSauceProduct>? CartSauceProducts { get; set; } = new HashSet<CartSauceProduct>();
+        //public HashSet<CartBeverageProduct>? CartBeverageProducts { get; set; } = new HashSet<CartBeverageProduct>();
+
+        //public HashSet<CartSauceProduct>? CartSauceProducts { get; set; } = new HashSet<CartSauceProduct>();
 
         public int Quantity
         {
             get
             {
-                int foodQuantity = CartFoodProducts?.Sum(cfp => cfp.Quantity) ?? 0;
-                int beverageQuantity = CartBeverageProducts?.Sum(cbp => cbp.Quantity) ?? 0;
-                int sauceQuantity = CartSauceProducts?.Sum(csp => csp.Quantity) ?? 0;
+                //int foodQuantity = CartFoodProducts?.Sum(cfp => cfp.Quantity) ?? 0;
+                //int beverageQuantity = CartBeverageProducts?.Sum(cbp => cbp.Quantity) ?? 0;
+                //int sauceQuantity = CartSauceProducts?.Sum(csp => csp.Quantity) ?? 0;
 
-                return foodQuantity + beverageQuantity;
+                //return foodQuantity + beverageQuantity + sauceQuantity;
+
+                return CartProducts?.Sum(cp => cp.Quantity) ?? 0;
             }
         }
 
@@ -47,9 +51,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             {
                 return
                     (AdditionalCharge ?? 0) +
-                    (CartFoodProducts?.Sum(cfp => cfp.Price) ?? 0) +
-                    (CartBeverageProducts?.Sum(cbp => cbp.Price) ?? 0) +
-                    (CartSauceProducts?.Sum(csp => csp.Price) ?? 0);
+                    (CartProducts?.Sum(cp => cp.Price) ?? 0);
+                    //(CartFoodProducts?.Sum(cfp => cfp.Price) ?? 0) +
+                    //(CartBeverageProducts?.Sum(cbp => cbp.Price) ?? 0) +
+                    //(CartSauceProducts?.Sum(csp => csp.Price) ?? 0);
             }
         }
 
@@ -92,9 +97,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             string? customerName,
             string? customerPhoneNumber,
             string? customerAddress,
-            HashSet<CartFoodProduct>? cartFoodProducts,
-            HashSet<CartBeverageProduct>? cartBeverageProducts,
-            HashSet<CartSauceProduct>? cartSauceProducts
+            HashSet<CartProduct> cartProducts
+            //HashSet<CartFoodProduct>? cartFoodProducts,
+            //HashSet<CartBeverageProduct>? cartBeverageProducts,
+            //HashSet<CartSauceProduct>? cartSauceProducts
         )
         {
             UserId = userId;
@@ -104,9 +110,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             CustomerName = customerName;
             CustomerPhoneNumber = customerPhoneNumber;
             CustomerAddress = customerAddress;
-            CartFoodProducts = cartFoodProducts;
-            CartBeverageProducts = cartBeverageProducts;
-            CartSauceProducts = cartSauceProducts;
+            CartProducts = cartProducts;
+            //CartFoodProducts = cartFoodProducts;
+            //CartBeverageProducts = cartBeverageProducts;
+            //CartSauceProducts = cartSauceProducts;
         }
     }
 }

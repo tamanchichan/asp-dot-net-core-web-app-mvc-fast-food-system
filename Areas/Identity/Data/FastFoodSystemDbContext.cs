@@ -46,13 +46,9 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
 
     public DbSet<Cart> Carts { get; set; } = default!;
 
-    //public DbSet<CartProduct> CartProducts { get; set; } = default!;
-
     public DbSet<Customer> Customers { get; set; } = default!;
 
     public DbSet<Order> Orders { get; set; } = default!;
-
-    //public DbSet<Product> Products { get; set; } = default!;
 
     public DbSet<CartBeverageProduct> CartBeverageProducts { get; set; } = default!;
 
