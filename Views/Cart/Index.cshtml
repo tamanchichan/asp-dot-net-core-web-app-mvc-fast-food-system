@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Cart Page";
+}
+
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+
+@model Cart
+
+<div class="container">
+    @if (Model == null)
+    {
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    }
+    else if (Model.CartProducts == null || Model.CartProducts.Count == 0)
+    {
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    }
+    else
+    {
+        <div class="cart-products">
+            @foreach (CartProduct cartProduct in Model.CartProducts)
+            {
+                <div class="cart-product">
+                    @if (cartProduct.Product.Category == ProductCategory.Extras)
+                    {
+                        <span class="cart-product-code"></span>
+                    }
+                    else
+                    {
+                        <span class="cart-product-code">@cartProduct.Product.Code</span>
+                    }
+                    <span class="cart-product-name">@cartProduct.Product.Name</span>
+                    <span class="cart-product-additional-price">@cartProduct.AdditionalPrice</span>
+                    <span class="cart-product-price">@cartProduct.Product.Price</span>
+                    <span class="cart-product-quantity">@cartProduct.Quantity</span>
+                </div>
+            }
+        </div>
+    }
+</div>
