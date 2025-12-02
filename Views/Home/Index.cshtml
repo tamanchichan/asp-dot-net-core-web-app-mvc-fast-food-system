@@ -4,22 +4,24 @@
 @using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
-@model Dictionary<ProductCategory, List<Product>>
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.VM
+@model Dictionary<ProductCategory, List<ProductVM>>
 
 <div class="container home-page">
     <div class="products">
-        @foreach (KeyValuePair<ProductCategory, List<Product>> productCategory in Model)
+        @foreach (KeyValuePair<ProductCategory, List<ProductVM>> productCategory in Model)
         {
             <div class="product-category">
                 @* <h2>@productCategory.Key</h2> *@
                 <h2>@Html.DisplayFor(model => productCategory.Key)</h2> @* Uses the '[Display(Name = "...")]' data annotation *@
 
-            @foreach (Product product in productCategory.Value)
+            @foreach (ProductVM product in productCategory.Value)
             {
                 <div class="flex product">
-                    <p class="product-code">@product.Code</p>
-                    <p class="product-name">@product.Name</p>
-                    <p class="product-price">@product.Price.ToString("C", new CultureInfo("en-CA"))</p>
+                    <p class="product-code">@product.Product.Code</p>
+                    <p class="product-name">@product.Product.Name</p>
+                    <p class="product-price">@product.Product.Price.ToString("C", new CultureInfo("en-CA"))</p>
+                    <p class="product-quantity @(product.Quantity == 0 ? "hidden" : "")">@(product.Quantity)</p>
                 </div>
             }
             </div>
