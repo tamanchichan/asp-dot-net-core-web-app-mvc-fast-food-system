@@ -15,21 +15,23 @@
                 @* <h2>@productCategory.Key</h2> *@
                 <h2>@Html.DisplayFor(model => productCategory.Key)</h2> @* Uses the '[Display(Name = "...")]' data annotation *@
 
-                @foreach (ProductVM product in productCategory.Value)
+                @foreach (ProductVM productVM in productCategory.Value)
                 {
-                    <div class="product">
-                        @if (product.Product.Category == ProductCategory.Extras)
-                        {
-                            <span class="product-code"></span>
-                        }
-                        else
-                        {
-                            <span class="product-code">@product.Product.Code</span>
-                        }
-                        <span class="product-name">@product.Product.Name</span>
-                        <span class="product-price">@product.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
-                        <span class="product-quantity @(product.Quantity == 0 ? "hide" : "")">@(product.Quantity)</span>
-                    </div>
+                    <a asp-action="AddProductToCart" asp-controller="Cart" asp-route-id="@productVM.Product.Id">
+                        <div class="product">
+                            @if (productVM.Product.Category == ProductCategory.Extras)
+                            {
+                                <span class="product-code"></span>
+                            }
+                            else
+                            {
+                                <span class="product-code">@productVM.Product.Code</span>
+                            }
+                            <span class="product-name">@productVM.Product.Name</span>
+                            <span class="product-price">@productVM.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                            <span class="product-quantity @(productVM.Quantity == 0 ? "hide" : "")">@(productVM.Quantity)</span>
+                        </div>
+                    </a>
                 }
             </div>
         }
