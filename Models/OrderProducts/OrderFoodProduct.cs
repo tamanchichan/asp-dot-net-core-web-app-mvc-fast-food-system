@@ -20,9 +20,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
             }
         }
 
-        private FoodSize? _size;
+        private FoodSize? _foodSize;
 
-        public FoodSize? Size { get => Product.HasOptions ? _size : null; set => _size = Product.HasOptions ? value : null; }
+        public FoodSize? FoodSize { get => Product.HasOptions ? _foodSize : null; set => _foodSize = Product.HasOptions ? value : null; }
 
         public OrderFoodProduct() { }
 
@@ -40,7 +40,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
         ) : base(orderId, order, productId, product, quantity, instructions, additionalPrice)
         {
             _foodOption = option;
-            _size = size;
+            _foodSize = size;
         }
     }
 }

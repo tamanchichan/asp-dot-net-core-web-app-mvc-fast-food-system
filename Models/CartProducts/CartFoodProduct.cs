@@ -35,18 +35,18 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             }
         }
 
-        private FoodSize? _size;
+        private FoodSize? _foodSize;
 
         public FoodSize? FoodSize // Small, Medium, Large
         {
             // Using ternaty operator to simplify the code
             get
             {
-                return Product.HasOptions ? _size : null;
+                return Product.HasOptions ? _foodSize : null;
             }
             set
             {
-                _size = Product.HasOptions ? value : null;
+                _foodSize = Product.HasOptions ? value : null;
             }
         }
 
@@ -67,7 +67,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
         )
         {
             _foodOption = option;
-            _size = size;
+            _foodSize = size;
         }
     }
 }
