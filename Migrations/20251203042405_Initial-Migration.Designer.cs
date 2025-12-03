@@ -11,7 +11,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 {
     [DbContext(typeof(FastFoodSystemDbContext))]
-    [Migration("20251202203650_Initial-Migration")]
+    [Migration("20251203042405_Initial-Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -431,7 +431,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProducts");
 
                     b.HasDiscriminator().HasValue("OrderProduct");
 

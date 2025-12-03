@@ -428,7 +428,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProducts");
 
                     b.HasDiscriminator().HasValue("OrderProduct");
 
