@@ -2,6 +2,7 @@
     ViewData["Title"] = "Cart Page";
 }
 
+@using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 
@@ -31,8 +32,8 @@
                         <span class="cart-product-code">@cartProduct.Product.Code</span>
                     }
                     <span class="cart-product-name">@cartProduct.Product.Name</span>
-                    <span class="cart-product-additional-price">@cartProduct.AdditionalPrice</span>
-                    <span class="cart-product-price">@cartProduct.Product.Price</span>
+                    <span class="cart-product-additional-price">@cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                    <span class="cart-product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
                     <span class="cart-product-quantity">@cartProduct.Quantity</span>
                 </div>
             }
