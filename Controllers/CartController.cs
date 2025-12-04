@@ -204,5 +204,33 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return Redirect(returnUrl);
         }
+
+        public IActionResult ClearCartProducts()
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            Cart cart = _context.Carts
+                .Include(c => c.CartProducts)
+                .ThenInclude(cp => cp.Product)
+                .FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
+
+            if (cart == null)
+            {
+                return NotFound(cart);
+            }
+
+            if (cart.CartProducts.Any())
+            {
+                foreach (CartProduct cartProduct in cart.CartProducts)
+                {
+                    cart.CartProducts.Remove(cartProduct);
+                }
+
+                _context.Carts.Update(cart);
+                _context.SaveChanges();
+            }
+
+            return Redirect(returnUrl);
+        }
     }
 }

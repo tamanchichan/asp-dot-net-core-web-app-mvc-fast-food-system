@@ -8,7 +8,7 @@
 
 @model Cart
 
-<div class="container">
+<div class="container cart-page">
     @if (Model == null)
     {
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
@@ -19,6 +19,11 @@
     }
     else
     {
+        <div class="clear-cart">
+            <a asp-action="ClearCartProducts" asp-controller="Cart">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </div>
         <div class="cart-products">
             <div class="head">
                 <span class="head-code">Code</span>

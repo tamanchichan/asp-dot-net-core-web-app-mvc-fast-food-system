@@ -1,4 +1,15 @@
-﻿.head, .cart-product {
+﻿.clear-cart {
+    font-size: 30px;
+    position: absolute;
+    top: 130px;
+    right: 90px;
+}
+
+.fa-trash {
+    display: flex;
+}
+
+.head, .cart-product {
     display: grid;
     align-items: center; /* center items vertically (y-position) */
     gap: 10px;
