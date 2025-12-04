@@ -165,5 +165,44 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return Redirect(returnUrl);
         }
+
+        public IActionResult DecrementProduct(Guid id, int quantity = 1)
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            Cart cart = _context.Carts?.FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
+
+            if (cart == null)
+            {
+                return NotFound(cart);
+            }
+
+            CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
+
+            if (cartProduct == null)
+            {
+                return NotFound(cartProduct);
+            }
+
+            if (quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than zero.");
+            }
+
+            if (cartProduct.Quantity == 1 || (cartProduct.Quantity - quantity) <= 0)
+            {
+                cart.CartProducts.Remove(cartProduct);
+                _context.CartProducts.Remove(cartProduct);
+            }
+            else
+            {
+                cartProduct.Quantity -= quantity;
+                _context.CartProducts.Update(cartProduct);
+            }
+
+            _context.SaveChanges();
+
+            return Redirect(returnUrl);
+        }
     }
 }
