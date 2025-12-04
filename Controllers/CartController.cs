@@ -54,6 +54,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         (
             Guid id,
             string? instructions = null,
+            decimal? additionalPrice = null,
             BeverageOption? beverageOption = null,
             FoodOption? foodOption = null,
             FoodSize? foodSize = null,
@@ -93,6 +94,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         ProductId = product.Id,
                         Product = product,
                         Instructions = instructions,
+                        AdditionalPrice = (decimal)additionalPrice,
                         FoodOption = foodOption,
                         FoodSize = foodSize,
                         Quantity = 1
