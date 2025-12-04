@@ -1,13 +1,30 @@
 ﻿.head, .cart-product {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    align-items: center; /* center items vertically (y-position) */
+    gap: 10px;
+    grid-template-columns: repeat(6, 1fr) 50px 50px;
     padding: 10px 0px;
     text-align: center;
 }
-
 .head {
     font-size: 20px;
     font-weight: 400;
     letter-spacing: 1.5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.button {
+    display: block;
+}
+
+.cart-product-increment {
+    background-color: #28a745;
+}
+
+.cart-product-decrement {
+    background-color: #dc3545;
+}
+
+.cart-product-increment:hover, .cart-product-decrement:hover {
+    color: #fff;
 }
