@@ -2,3 +2,12 @@
     height: 100px;
     line-height: 100px;
 }
+
+main {
+    min-height: calc(100dvh - 100px);
+}
+
+footer {
+    text-align: center;
+    align-content: center;
+}
