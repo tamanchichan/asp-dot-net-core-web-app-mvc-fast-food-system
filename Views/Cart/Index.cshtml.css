@@ -1,6 +1,6 @@
 ﻿.head, .cart-product {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     padding: 10px 0px;
     text-align: center;
 }
@@ -10,4 +10,9 @@
     font-weight: 400;
     letter-spacing: 1.5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.button {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 10px 15px;
 }

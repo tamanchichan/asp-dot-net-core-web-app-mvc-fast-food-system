@@ -27,6 +27,7 @@
                 <span class="head-price">Price</span>
                 <span class="head-quantity">Quantity</span>
                 <span class="head-total-price">Total Price</span>
+                <span class="head-increment-button"></span>
             </div>
             @foreach (CartProduct cartProduct in Model.CartProducts)
             {
@@ -44,6 +45,7 @@
                     <span class="cart-product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
                     <span class="cart-product-quantity">@cartProduct.Quantity</span>
                     <span class="cart-product-total-price">@cartProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                    <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@cartProduct.Id"><span class="button cart-product-increment">+</span></a>
                 </div>
             }
         </div>
