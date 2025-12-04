@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function keepScrollPosition() {
+    // Save scroll position before leaving or reloading the page
+    window.addEventListener("beforeunload", () => {
+        sessionStorage.setItem("scrollPosition", window.scrollY);
+    });
 
-// Write your JavaScript code.
+    // Restore scroll position after page load
+    window.addEventListener("DOMContentLoaded", () => {
+        const scrollY = sessionStorage.getItem("scrollPosition");
+        if (scrollY !== null) {
+            window.scrollTo(0, parseInt(scrollY, 10));
+            sessionStorage.removeItem("scrollPosition");
+        }
+    });
+}
+
+// Call the function to activate it
+keepScrollPosition();
