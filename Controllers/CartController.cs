@@ -60,6 +60,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             SauceOption? sauceOption = null
         )
         {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
             Cart cart = _context.Carts?
                 .Include(c => c.CartProducts)
                 .ThenInclude(cp => cp.Product)
@@ -99,6 +101,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 // add the rest of the derived class
 
                 cart.CartProducts.Add(cartProduct);
+                _context.CartProducts.Add(cartProduct);
             }
             else
             {
@@ -107,7 +110,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Cart");
+            return Redirect(returnUrl);
         }
     }
 }
