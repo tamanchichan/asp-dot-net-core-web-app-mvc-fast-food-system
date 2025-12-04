@@ -94,13 +94,40 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         ProductId = product.Id,
                         Product = product,
                         Instructions = instructions,
-                        AdditionalPrice = (decimal)additionalPrice,
+                        AdditionalPrice = additionalPrice ?? 0m,
                         FoodOption = foodOption,
                         FoodSize = foodSize,
                         Quantity = 1
                     };
                 }
-                // add the rest of the derived class
+                else if (product is BeverageProduct)
+                {
+                    cartProduct = new CartBeverageProduct()
+                    {
+                        CartId = cart.Id,
+                        Cart = cart,
+                        ProductId = product.Id,
+                        Product = product,
+                        Instructions = instructions,
+                        AdditionalPrice = additionalPrice ?? 0m,
+                        BeverageOption = beverageOption,
+                        Quantity = 1
+                    };
+                }
+                else if (product is SauceProduct)
+                {
+                    cartProduct = new CartSauceProduct()
+                    {
+                        CartId = cart.Id,
+                        Cart = cart,
+                        ProductId = product.Id,
+                        Product = product,
+                        Instructions = instructions,
+                        AdditionalPrice = additionalPrice ?? 0m,
+                        SauceOption = sauceOption,
+                        Quantity = 1
+                    };
+                }
 
                 cart.CartProducts.Add(cartProduct);
                 _context.CartProducts.Add(cartProduct);
