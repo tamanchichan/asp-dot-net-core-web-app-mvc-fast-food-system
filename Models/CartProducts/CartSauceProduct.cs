@@ -13,7 +13,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             // Using traditional if-else statements for clarity
             get
             {
-                if (Product.HasOptions)
+                if (Product != null && Product.HasOptions)
                 {
                     return _sauceOption;
                 }
@@ -22,10 +22,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
                     return null;
                 }
             }
-            // Using ternaty operator to simplify the code
+            // Using ternary operator to simplify the code
             set
             {
-                _sauceOption = Product.HasOptions ? value : null;
+                _sauceOption = (Product != null && Product.HasOptions) ? value : null;
             }
         }
 

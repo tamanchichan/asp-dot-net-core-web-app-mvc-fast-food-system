@@ -12,7 +12,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             // Using traditional if-else statements for clarity
             get
             {
-                if (Product.HasOptions)
+                if (Product != null && Product.HasOptions)
                 {
                     return _foodOption;
                 }
@@ -24,7 +24,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             }
             set
             {
-                if (Product.HasOptions)
+                if (Product != null && Product.HasOptions)
                 {
                     _foodOption = value;
                 }
@@ -39,14 +39,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 
         public FoodSize? FoodSize // Small, Medium, Large
         {
-            // Using ternaty operator to simplify the code
+            // Using ternary operator to simplify the code
             get
             {
-                return Product.HasOptions ? _foodSize : null;
+                return (Product != null && Product.HasOptions) ? _foodSize : null;
             }
             set
             {
-                _foodSize = Product.HasOptions ? value : null;
+                _foodSize = (Product != null && Product.HasOptions) ? value : null;
             }
         }
 
