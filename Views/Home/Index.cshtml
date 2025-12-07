@@ -8,6 +8,7 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.VM
 @model Dictionary<ProductCategory, List<ProductVM>>
 
+<partial name="_AddProductToCartInput" />
 <div class="container home-page">
     <div class="products">
         @foreach (KeyValuePair<ProductCategory, List<ProductVM>> productCategory in Model)

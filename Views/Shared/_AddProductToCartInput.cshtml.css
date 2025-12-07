@@ -1,0 +1,14 @@
+﻿.add-product-to-cart-input {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+input[type=text] {
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    border-radius: 30px;
+    font-size: 20px;
+    padding: 10px 30px;
+    text-align: center;
+}
