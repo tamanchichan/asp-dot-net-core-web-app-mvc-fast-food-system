@@ -1,0 +1,10 @@
+﻿.login-page {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+}
+
+.login-button {
+    margin-top: 10px;
+}

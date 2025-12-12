@@ -1,0 +1,20 @@
+.login-form {
+    display: grid;
+    row-gap: 10px;
+    text-align: right;
+}
+
+.login-form label {
+    letter-spacing: 2.5px;
+}
+
+.input-text {
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    border-radius: 30px;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.checkbox-input {
+    appearance: checkbox;
+}
