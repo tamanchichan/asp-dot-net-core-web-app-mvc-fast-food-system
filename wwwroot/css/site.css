@@ -8,6 +8,11 @@
     letter-spacing: 2.5px;
 }
 
+.loginPartial-view {
+    position: absolute;
+    right: 50px;
+}
+
 .input-text {
     border: 1px solid rgba(0, 0, 0, 0.75);
     border-radius: 30px;

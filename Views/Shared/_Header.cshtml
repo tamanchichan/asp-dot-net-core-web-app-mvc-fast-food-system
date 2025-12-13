@@ -1,5 +1,5 @@
 ﻿<div class="container header flex">
-    <nav>
+    <nav class="flex">
         <ul class="flex">
             <a asp-action="Index" asp-controller="Home"><li>Home</li></a>
             <a asp-action="Index" asp-controller="Cart"><li>Cart</li></a>
@@ -7,6 +7,6 @@
             <li>Customers</li>
             <li>Products</li>
         </ul>
+    <partial name="_LoginPartial" /> @* Update _LoginPartial's View *@
     </nav>
-    @* <partial name="_LoginPartial" /> *@ @* Update _LoginPartial's View*@
 </div>
