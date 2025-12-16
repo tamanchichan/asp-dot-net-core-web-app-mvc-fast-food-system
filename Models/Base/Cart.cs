@@ -11,34 +11,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public SystemUser User { get; set; } = null!;
 
-        public Guid? CustomerId { get; set; }
-
-        public Customer? Customer { get; set; }
-
-        public string? CustomerName { get; set; }
-
-        public string? CustomerPhoneNumber { get; set; }
-
-        public string? CustomerAddress { get; set; }
-
         public HashSet<CartProduct>? CartProducts { get; set; } = new HashSet<CartProduct>();
-
-        //public HashSet<CartFoodProduct>? CartFoodProducts { get; set; } = new HashSet<CartFoodProduct>();
-
-        //public HashSet<CartBeverageProduct>? CartBeverageProducts { get; set; } = new HashSet<CartBeverageProduct>();
-
-        //public HashSet<CartSauceProduct>? CartSauceProducts { get; set; } = new HashSet<CartSauceProduct>();
 
         public int Quantity
         {
             get
             {
-                //int foodQuantity = CartFoodProducts?.Sum(cfp => cfp.Quantity) ?? 0;
-                //int beverageQuantity = CartBeverageProducts?.Sum(cbp => cbp.Quantity) ?? 0;
-                //int sauceQuantity = CartSauceProducts?.Sum(csp => csp.Quantity) ?? 0;
-
-                //return foodQuantity + beverageQuantity + sauceQuantity;
-
                 return CartProducts?.Sum(cp => cp.Quantity) ?? 0;
             }
         }
@@ -52,9 +30,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
                 return
                     (AdditionalCharge ?? 0) +
                     (CartProducts?.Sum(cp => cp.Price) ?? 0);
-                    //(CartFoodProducts?.Sum(cfp => cfp.Price) ?? 0) +
-                    //(CartBeverageProducts?.Sum(cbp => cbp.Price) ?? 0) +
-                    //(CartSauceProducts?.Sum(csp => csp.Price) ?? 0);
             }
         }
 
@@ -98,22 +73,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             string? customerPhoneNumber,
             string? customerAddress,
             HashSet<CartProduct> cartProducts
-            //HashSet<CartFoodProduct>? cartFoodProducts,
-            //HashSet<CartBeverageProduct>? cartBeverageProducts,
-            //HashSet<CartSauceProduct>? cartSauceProducts
         )
         {
             UserId = userId;
             User = user;
-            CustomerId = customerId;
-            Customer = customer;
-            CustomerName = customerName;
-            CustomerPhoneNumber = customerPhoneNumber;
-            CustomerAddress = customerAddress;
             CartProducts = cartProducts;
-            //CartFoodProducts = cartFoodProducts;
-            //CartBeverageProducts = cartBeverageProducts;
-            //CartSauceProducts = cartSauceProducts;
         }
     }
 }
