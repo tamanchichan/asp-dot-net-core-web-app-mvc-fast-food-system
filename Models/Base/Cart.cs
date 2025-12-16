@@ -28,8 +28,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             get
             {
                 return
-                    (AdditionalCharge ?? 0) +
-                    (CartProducts?.Sum(cp => cp.Price) ?? 0);
+                    ((AdditionalCharge ?? 0) +
+                    (CartProducts?.Sum(cp => cp.Price * cp.Quantity) ?? 0));
             }
         }
 
