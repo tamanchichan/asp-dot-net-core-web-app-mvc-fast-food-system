@@ -35,13 +35,52 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public DateTime ReadyTime { get; set; }
 
+        public decimal? AdditionalCharge { get; set; } = 0m;
+
+        public decimal SubTotalPrice
+        {
+            get
+            {
+                return
+                    (AdditionalCharge ?? 0) +
+                    (OrderProducts?.Sum(cp => cp.Price) ?? 0);
+            }
+        }
+
+        public decimal Gst
+        {
+            get
+            {
+                return SubTotalPrice * 0.05m;
+            }
+        }
+
+        public decimal Pst
+        {
+            get
+            {
+                return SubTotalPrice * 0.07m;
+            }
+        }
+
+        public decimal? DeliveryFee { get; set; } = 0m;
+
+        public decimal? Discount { get; set; } = 0m;
+
+        public decimal TotalPrice
+        {
+            get
+            {
+                return ((SubTotalPrice + Gst + Pst) + DeliveryFee ?? 0) - (Discount ?? 0);
+            }
+        }
+
         //public OrderStatus? Status { get; set; }
 
         public Order() { }
 
         public Order
         (
-            int number,
             HashSet<OrderProduct> orderProducts,
             string userId,
             SystemUser user,
@@ -52,10 +91,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             string? customerAddress,
             OrderType type,
             string? observations,
-            DateTime readyTime
+            DateTime readyTime,
+            decimal? additionalCharge,
+            decimal? deliveryFee,
+            decimal? discount
+
         )
         {
-            Number = number;
             OrderProducts = orderProducts;
             UserId = userId;
             User = user;
@@ -67,6 +109,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Type = type;
             Observations = observations;
             ReadyTime = readyTime;
+            AdditionalCharge = additionalCharge;
+            DeliveryFee = deliveryFee;
+            Discount = discount;
         }
     }
 }
