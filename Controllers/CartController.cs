@@ -2,6 +2,7 @@
 using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -231,6 +232,119 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             }
 
             return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? deliveryFee, string? discount)
+        {
+            Cart cart = _context.Carts
+                .Include(c => c.CartProducts)
+                .ThenInclude(cp => cp.Product)
+                .FirstOrDefault();
+
+            HashSet<CartProduct> cartProducts = cart.CartProducts;
+
+            Order order = new Order()
+            {
+                UserId = _userManager.GetUserId(User),
+                User = await _userManager.GetUserAsync(User),
+                CustomerName = customerName,
+                CustomerPhoneNumber = customerPhoneNumber,
+                CustomerAddress = customerAddress,
+                Type = orderType,
+                Observations = observations,
+                ReadyTime = readyTime,
+                //ReadyTime = DateTime.Now.AddMinutes(15),
+                DeliveryFee = Decimal.TryParse(deliveryFee, out decimal fee) ? fee : 0m,
+                Discount = Decimal.TryParse(discount, out decimal d) ? d : 0m
+            };
+
+            foreach (CartProduct cartProduct in cartProducts)
+            {
+                if (cartProduct is CartFoodProduct cartFoodProduct)
+                {
+                    OrderFoodProduct orderFoodProduct = new OrderFoodProduct()
+                    {
+                        OrderId = order.Id,
+                        Order = order,
+                        Product = cartFoodProduct.Product,
+                        ProductId = cartFoodProduct.ProductId,
+                        FoodOption = cartFoodProduct.FoodOption,
+                        FoodSize = cartFoodProduct.FoodSize,
+                        Quantity = cartFoodProduct.Quantity,
+                        Instructions = cartFoodProduct.Instructions,
+                        AdditionalPrice = cartFoodProduct.AdditionalPrice,
+                    };
+
+                    order.OrderProducts.Add(orderFoodProduct);
+                    _context.OrderProducts.Add(orderFoodProduct);
+                }
+                else if (cartProduct is CartBeverageProduct cartBeverageProduct)
+                {
+                    OrderBeverageProduct orderBeverageProduct = new OrderBeverageProduct()
+                    {
+                        OrderId = order.Id,
+                        Order = order,
+                        Product = cartBeverageProduct.Product,
+                        ProductId = cartBeverageProduct.ProductId,
+                        BeverageOption = cartBeverageProduct.BeverageOption,
+                        Quantity = cartBeverageProduct.Quantity,
+                        Instructions = cartBeverageProduct.Instructions,
+                        AdditionalPrice = cartBeverageProduct.AdditionalPrice,
+                    };
+
+                    order.OrderProducts.Add(orderBeverageProduct);
+                    _context.OrderProducts.Add(orderBeverageProduct);
+                }
+                else if (cartProduct is CartSauceProduct cartSauceProduct)
+                {
+                    OrderSauceProduct orderSauceProduct = new OrderSauceProduct()
+                    {
+                        OrderId = order.Id,
+                        Order = order,
+                        Product = cartSauceProduct.Product,
+                        ProductId = cartSauceProduct.ProductId,
+                        SauceOption = cartSauceProduct.SauceOption,
+                        Quantity = cartSauceProduct.Quantity,
+                        Instructions = cartSauceProduct.Instructions,
+                        AdditionalPrice = cartSauceProduct.AdditionalPrice,
+                    };
+
+                    order.OrderProducts.Add(orderSauceProduct);
+                    _context.OrderProducts.Add(orderSauceProduct);
+                }
+            }
+
+            if (!String.IsNullOrEmpty(customerPhoneNumber))
+            {
+                customerPhoneNumber = customerPhoneNumber.Trim();
+
+                Customer customer = _context.Customers.FirstOrDefault(c => c.PhoneNumber == customerPhoneNumber);
+
+                if (customer == null)
+                {
+                    customer = new Customer()
+                    {
+                        Name = customerName,
+                        PhoneNumber = customerPhoneNumber,
+                        Address = customerAddress
+                    };
+
+                    _context.Customers.Add(customer);
+                }
+
+                order.Customer = customer;
+            }
+
+            // Increment Order Number
+            int lastNumber = _context.Orders.Any() ? _context.Orders.Max(o => o.Number) : 1000;
+
+            order.Number = lastNumber + 1;
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
