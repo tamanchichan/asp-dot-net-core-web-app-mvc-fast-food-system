@@ -1,5 +1,6 @@
 ﻿<div class="container add-product-to-cart-input">
     <form asp-action="AddProductToCart" asp-controller="Shared" autocomplete="off" method="post">
-        <input type="text" name="input" />
+        <label for="addProductToCartInput" hidden></label>
+        <input type="text" name="input" id="addProductToCartInput" placeholder="CODE x QUANTITY" />
     </form>
 </div>
