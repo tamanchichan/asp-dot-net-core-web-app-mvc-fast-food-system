@@ -6,6 +6,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.VM;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -30,10 +31,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
         public IActionResult Index()
         {
+            Cart cart = _context.Carts.Include(c => c.CartProducts).ThenInclude(cp => cp.Product).FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
+
             HashSet<ProductVM> productsVM = _context.Products.Select(p => new ProductVM
             {
                 Product = p,
-                Quantity = p.CartProducts.Sum(cp => cp.Quantity)
+                Quantity = p.CartProducts
+                    .Where(cp => cp.Cart == cart)
+                    .Sum(cp => cp.Quantity)
             }).ToHashSet();
 
             List<ProductCategory> categoryOrder = new List<ProductCategory>
