@@ -67,11 +67,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         (
             string userId,
             SystemUser user,
-            Guid? customerId,
-            Customer? customer,
-            string? customerName,
-            string? customerPhoneNumber,
-            string? customerAddress,
             HashSet<CartProduct> cartProducts
         )
         {
