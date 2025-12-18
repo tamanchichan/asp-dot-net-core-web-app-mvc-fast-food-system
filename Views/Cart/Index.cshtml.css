@@ -67,8 +67,22 @@
 }
 
 .observations textarea {
-    padding: 15px;
+    padding: 10px 15px;
     resize: none;
+}
+
+.customer-phone-number {
+    position: relative;
+}
+
+.customers-phone-number {
+    background-color: #fff;
+    display: block;
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    text-align: center;
+    width: 200px;
 }
 
 #additionalCharge, #deliveryFee, #discount {
