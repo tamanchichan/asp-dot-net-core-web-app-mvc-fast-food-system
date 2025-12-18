@@ -235,7 +235,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? deliveryFee, string? discount)
+        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, decimal? additionalCharge, decimal? deliveryFee, decimal? discount)
         {
             Cart cart = _context.Carts
                 .Include(c => c.CartProducts)
@@ -254,9 +254,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 Type = orderType,
                 Observations = observations,
                 ReadyTime = readyTime,
-                //ReadyTime = DateTime.Now.AddMinutes(15),
-                DeliveryFee = Decimal.TryParse(deliveryFee, out decimal fee) ? fee : 0m,
-                Discount = Decimal.TryParse(discount, out decimal d) ? d : 0m
+                AdditionalCharge = additionalCharge,
+                DeliveryFee = deliveryFee,
+                Discount = discount
             };
 
             foreach (CartProduct cartProduct in cartProducts)

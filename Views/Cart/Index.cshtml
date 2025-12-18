@@ -119,6 +119,10 @@
                     <label for="customerAddress">Address:</label>
                     <input type="text" name="customerAddress" id="customerAddress" />
                 </div>
+                <div class="flex additional-charge">
+                    <label for="additionalCharge">Additional Charge:</label>
+                    <input type="number" min="0" name="additionalCharge" id="additionalCharge" />
+                </div>
                 <div class="flex sub-total">
                     <span>
                         SubTotal:
@@ -169,24 +173,32 @@
 <script>
     const subTotalPriceElement = document.getElementById("subTotalPrice");
     const subTotalPrice = parseFloat(subTotalPriceElement.dataset.value) || 0;
-    console.log(subTotalPrice);
-    const totalPrice = document.getElementById("totalPrice");
+    const totalPriceElement = document.getElementById("totalPrice");
+    const additionalChargeInput = document.getElementById("additionalCharge");
     const deliveryFeeInput = document.getElementById("deliveryFee");
     const discountInput = document.getElementById("discount");
 
     function updateTotalPrice() {
+        const additionalCharge = parseFloat(additionalChargeInput.value) || 0;
         const deliveryFee = parseFloat(deliveryFeeInput.value) || 0;
         const discount = parseFloat(discountInput.value) || 0;
         const gst = subTotalPrice * 0.05;
         const pst = subTotalPrice * 0.07;
+        const subTotal = additionalCharge + subTotalPrice;
         const total = ((subTotalPrice + gst + pst) + deliveryFee) - discount;
 
-        totalPrice.textContent = total.toLocaleString("en-CA", {
+        subTotalPriceElement.textContent = subTotal.toLocaleString("en-CA", {
+            style: "currency",
+            currency: "CAD"
+        });
+
+        totalPriceElement.textContent = total.toLocaleString("en-CA", {
             style: "currency",
             currency: "CAD"
         });
     }
 
+    additionalCharge.addEventListener("input", updateTotalPrice);
     deliveryFeeInput.addEventListener("input", updateTotalPrice);
     discountInput.addEventListener("input", updateTotalPrice);
 </script>
