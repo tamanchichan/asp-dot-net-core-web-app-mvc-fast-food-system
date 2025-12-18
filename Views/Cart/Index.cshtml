@@ -103,19 +103,19 @@
                         <label for="delivery">Delivery</label>
                     </div>
                 </div>
-                <div class="flex">
+                <div class="flex customer-name">
                     <label for="customerName">Customer:</label>
                     <input type="text" name="customerName" id="customerName" />
                 </div>
-                <div class="flex">
+                <div class="flex customer-phone-number">
                     <label for="customerPhoneNumber">Phone Number:</label>
                     <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="customerPhoneNumber" id="customerPhoneNumber" />
                 </div>
-                <div class="flex">
+                <div class="flex customer-address">
                     <label for="customerAddress">Address:</label>
                     <input type="text" name="customerAddress" id="customerAddress" />
                 </div>
-                <div class="flex">
+                <div class="flex sub-total">
                     <span>
                         SubTotal:
                         <span id="subTotalPrice"
@@ -124,25 +124,25 @@
                         </span>
                     </span>
                 </div>
-                <div class="flex">
+                <div class="flex gst">
                     <span>
                         GST: @Model.Gst.ToString("C", new CultureInfo("en-CA"))
                     </span>
                 </div>
-                <div class="flex">
+                <div class="flex pst">
                     <span>
                         PST: @Model.Pst.ToString("C", new CultureInfo("en-CA"))
                     </span>
                 </div>
-                <div class="flex">
+                <div class="flex delivery-fee">
                     <label for="deliveryFee">Delivery Fee:</label>
                     <input type="number" min="0" name="deliveryFee" id="deliveryFee" />
                 </div>
-                <div class="flex">
+                <div class="flex discount">
                     <label for="discount">Discount:</label>
                     <input type="number" min="0" name="discount" id="discount" />
                 </div>
-                <div class="flex">
+                <div class="flex total">
                     <span>
                         Total: 
                         <span id="totalPrice">
@@ -152,9 +152,9 @@
                 </div>
                 <div class="flex ready-time">
                     <label for="readyTime">Ready In:</label>
-                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm")" name="readyTime" step="900" value=@DateTime.Now.AddMinutes(15).ToString("yyyy-mm-ddTHH:mm") />
+                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm")" name="readyTime" step="900" value=@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm") />
                 </div>
-                <div class="cart-form-button">
+                <div class="flex place-cart-order-button">
                     <button type="submit">Place Order</button>
                 </div>
             </form>
