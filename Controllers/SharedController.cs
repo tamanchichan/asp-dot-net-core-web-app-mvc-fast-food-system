@@ -5,6 +5,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -59,6 +60,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         [HttpPost]
         public IActionResult AddProductToCart(string input) // 'productOption' only works for FoodProduct ATM
         {
+            input.ToUpper();
+
             string returnUrl = Request.Headers["Referer"].ToString();
             string code;
             int quantity;
@@ -79,7 +82,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             string productCode = code;
             char? productOption = null;
 
-            Cart cart = _context.Carts.FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
+            Cart cart = _context.Carts
+                .Include(c => c.CartProducts)
+                .ThenInclude(cp => cp.Product)
+                .FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
 
             if (cart == null)
             {
@@ -106,7 +112,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 }
             }
 
-            CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.ProductId == product.Id);
+            CartProduct cartProduct = _context.CartProducts
+                .Where(cp => cp.CartId == cart.Id)
+                .FirstOrDefault(cp => cp.ProductId == product.Id);
 
             if (cartProduct == null)
             {
