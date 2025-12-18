@@ -1,5 +1,4 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
-using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 {
