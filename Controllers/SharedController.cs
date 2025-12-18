@@ -175,5 +175,19 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return Redirect(returnUrl);
         }
+
+        public IActionResult SearchCustomers(string phoneNumber)
+        {
+            var customers = _context.Customers
+                .Where(c => c.PhoneNumber.StartsWith(phoneNumber))
+                .Select(c => new
+                {
+                    c.Address,
+                    c.Name,
+                    c.PhoneNumber
+                }).ToList();
+
+            return Json(customers);
+        }
     }
 }
