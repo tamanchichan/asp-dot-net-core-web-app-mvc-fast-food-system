@@ -40,6 +40,16 @@
     color: #fff;
 }
 
+.cart-page input, .cart-page textarea {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 7.5px 5px;
+    padding-left: 15px;
+    margin-left: 5px;
+    font-size: 15px;
+    width: 200px;
+}
+
 .cart-page .order-type input {
     appearance: radio;
     margin-left: 5px;
@@ -49,18 +59,21 @@
     margin: 0px 10px;
 }
 
-.cart-page input {
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 7.5px 5px;
-    padding-left: 15px;
-    margin-left: 5px;
-    font-size: 15px;
+.order-type div input {
     width: fit-content;
 }
 
+.observations label {
+    align-self: self-start;
+}
+
+.observations textarea {
+    padding: 15px;
+    resize: none;
+}
+
 #deliveryFee, #discount {
-    width: 50px;
+    width: 75px;
     border: 1px solid #000;
     text-align: center;
 }
