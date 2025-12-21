@@ -37,7 +37,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             Printer printer = new Printer("POS-80");
 
             #region Header
-            Bitmap bmp = new Bitmap(80, 100); // width = paper width in pixels
+            Bitmap bmp = new Bitmap(300, 100); // width = paper width in pixels
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
