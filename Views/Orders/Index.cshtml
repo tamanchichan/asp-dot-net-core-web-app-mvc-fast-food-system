@@ -27,7 +27,7 @@
                                 <span>(@order.CustomerPhoneNumber)</span>
                             }
                         </h3>
-                        <h3>Ready at: @order.ReadyTime</h3>
+                        <h3>Ready at: <span class="order-ready-time">@order.ReadyTime</span></h3>
                     </div>
                     <div class="flex order-type">
                         <h3>@Html.DisplayFor(m => @order.Type)</h3>
