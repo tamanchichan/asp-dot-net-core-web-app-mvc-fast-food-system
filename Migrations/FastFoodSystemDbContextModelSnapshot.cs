@@ -240,7 +240,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct", b =>
@@ -275,7 +275,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartProducts");
+                    b.ToTable("CartProducts", (string)null);
 
                     b.HasDiscriminator().HasValue("CartProduct");
 
@@ -300,7 +300,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CustomerRemarks", b =>
@@ -330,7 +330,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerRemarks");
+                    b.ToTable("CustomerRemarks", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Order", b =>
@@ -388,7 +388,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.OrderProduct", b =>
@@ -423,7 +423,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderProducts", (string)null);
 
                     b.HasDiscriminator().HasValue("OrderProduct");
 
@@ -464,7 +464,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasDiscriminator().HasValue("Product");
 
