@@ -19,7 +19,7 @@
 
                 @foreach (ProductVM productVM in productCategory.Value)
                 {
-                    <a asp-action="AddProductToCart" asp-controller="Cart" asp-route-id="@productVM.Product.Id">
+                    <a asp-action="AddProductToCart" asp-controller="Cart" asp-route-id="@productVM.Product.Id" class="save-scroll-position">
                         <div class="product">
                             @if (productVM.Product.Category == ProductCategory.Extras)
                             {
