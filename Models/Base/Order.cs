@@ -11,6 +11,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public HashSet<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
 
+        public int Quantity
+        {
+            get
+            {
+                return OrderProducts?.Sum(op => op.Quantity) ?? 0;
+            }
+        }
+
         public string UserId { get; set; }
 
         public SystemUser User { get; set; }
@@ -43,7 +51,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             {
                 return
                     (AdditionalCharge ?? 0) +
-                    (OrderProducts?.Sum(cp => cp.Price) ?? 0);
+                    (OrderProducts?.Sum(op => op.Price * op.Quantity) ?? 0);
             }
         }
 
@@ -109,9 +117,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Type = type;
             Observations = observations;
             ReadyTime = readyTime;
-            AdditionalCharge = additionalCharge;
-            DeliveryFee = deliveryFee;
-            Discount = discount;
+            AdditionalCharge = additionalCharge ?? 0m;
+            DeliveryFee = deliveryFee ?? 0m;
+            Discount = discount ?? 0m;
         }
     }
 }

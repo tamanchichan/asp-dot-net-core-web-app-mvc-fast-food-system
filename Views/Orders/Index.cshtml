@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Orders Page";
+}
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+
+@model HashSet<Order>
+
+<div class="container orders-page">
+    @if (Model == null)
+    {
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    }
+    else
+    {
+        <h2>Orders</h2>
+        <div class="orders">
+            @foreach (Order order in Model)
+            {
+                <div class="order">
+                    <div class="flex">
+                        <h3>
+                            Order nº: @order.Number
+                            @if (!String.IsNullOrEmpty(order.CustomerPhoneNumber))
+                            {
+                                <span>(@order.CustomerPhoneNumber)</span>
+                            }
+                        </h3>
+                        <h3>Ready at: @order.ReadyTime</h3>
+                    </div>
+                    <div class="flex order-type">
+                        <h3>@Html.DisplayFor(m => @order.Type)</h3>
+                    </div>
+                    <div class="flex">
+                        <span>Nº of Items: @order.Quantity</span>
+                        <span class="order-total-price">Total Price: @order.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,21 @@
+﻿.orders-page h2 {
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+
+.order {
+    box-shadow: 0px 1px 0px #000;
+    padding: 15px;
+}
+
+.order .flex {
+    justify-content: space-between;
+}
+
+.order-type {
+    justify-content: right !important;
+}
+
+.order-total-price {
+    font-weight: 500;
+}
