@@ -317,6 +317,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     order.OrderProducts.Add(orderSauceProduct);
                     _context.OrderProducts.Add(orderSauceProduct);
                 }
+
+                //cart.CartProducts.Remove(cartProduct);
+                //_context.Carts.Update(cart);
             }
 
             if (!String.IsNullOrEmpty(customerPhoneNumber))
@@ -340,12 +343,18 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 order.Customer = customer;
             }
 
-            // Increment Order Number
+            // Increment Order's number
             int lastNumber = _context.Orders.Any() ? _context.Orders.Max(o => o.Number) : 1000;
-
             order.Number = lastNumber + 1;
 
+            // Add the order to the database
             _context.Orders.Add(order);
+
+            // Clear cart products
+            cart.CartProducts.Clear();
+            _context.Carts.Update(cart);
+
+            // Save changes to the database
             _context.SaveChanges();
 
             _printer.PrintReceiptUSB(order);
