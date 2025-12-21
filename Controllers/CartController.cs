@@ -4,6 +4,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
+using asp_dot_net_core_web_app_mvc_fast_food_system.POS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +23,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
         private readonly FastFoodSystemDbContext _context;
 
-        public CartController(ILogger<CartController> logger, UserManager<SystemUser> userManager, FastFoodSystemDbContext context)
+        private readonly ThermalPrinterService _printer;
+
+        public CartController(ILogger<CartController> logger, UserManager<SystemUser> userManager, FastFoodSystemDbContext context, ThermalPrinterService printer)
         {
             _logger = logger;
             _userManager = userManager;
             _context = context;
+            _printer = printer;
         }
 
         public IActionResult Index()
@@ -235,12 +239,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, decimal? additionalCharge, decimal? deliveryFee, decimal? discount)
+        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, decimal? additionalCharge = 0, decimal? deliveryFee = 0, decimal? discount = 0)
         {
             Cart cart = _context.Carts
                 .Include(c => c.CartProducts)
                 .ThenInclude(cp => cp.Product)
-                .FirstOrDefault();
+                .FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
 
             HashSet<CartProduct> cartProducts = cart.CartProducts;
 
@@ -254,9 +258,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 Type = orderType,
                 Observations = observations,
                 ReadyTime = readyTime,
-                AdditionalCharge = additionalCharge,
-                DeliveryFee = deliveryFee,
-                Discount = discount
+                AdditionalCharge = additionalCharge ?? 0m,
+                DeliveryFee = deliveryFee ?? 0m,
+                Discount = discount ?? 0m
             };
 
             foreach (CartProduct cartProduct in cartProducts)
@@ -343,6 +347,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             _context.Orders.Add(order);
             _context.SaveChanges();
+
+            _printer.PrintReceiptUSB(order);
 
             return RedirectToAction("Index", "Home");
         }

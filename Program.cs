@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Mvc;
+using asp_dot_net_core_web_app_mvc_fast_food_system.POS;
+using System.Text;
+
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +33,8 @@ builder.Services.AddDefaultIdentity<SystemUser>
     .AddRoles<IdentityRole>() // Enable Roles
     .AddEntityFrameworkStores<FastFoodSystemDbContext>() // Use the FastFoodSystemDbContext for Identity
     .AddDefaultTokenProviders(); // no AddDefaultUI
+
+builder.Services.AddScoped<ThermalPrinterService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
