@@ -1,6 +1,16 @@
-﻿.orders-page h2 {
-    font-weight: 400;
-    letter-spacing: 1.5px;
+﻿.orders-filter-date {
+    display: flex;
+    justify-content: center;
+}
+
+.orders-filter-date label, .orders-filter-date input {
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.orders-filter-date input {
+    width: 215px;
+    padding: 0px 5px;
 }
 
 .order {

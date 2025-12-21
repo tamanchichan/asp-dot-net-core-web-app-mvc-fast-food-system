@@ -14,7 +14,12 @@
     }
     else
     {
-        <h2>Orders</h2>
+        <form asp-action="Index" method="get" class="orders-filter-form">
+            <div class="orders-filter-date">
+                <label for="date">Orders for:</label>
+                <input type="date" id="date" name="date" value="@ViewBag.SelectedDate.ToString("yyyy-MM-dd")" />
+            </div>
+        </form>
         <div class="orders">
             @foreach (Order order in Model)
             {
@@ -27,7 +32,7 @@
                                 <span>(@order.CustomerPhoneNumber)</span>
                             }
                         </h3>
-                        <h3>Ready at: <span class="order-ready-time">@order.ReadyTime</span></h3>
+                        <h3>Ready at: <span class="order-ready-time">@order.ReadyTime.ToString("t")</span></h3>
                     </div>
                     <div class="flex order-type">
                         <h3>@Html.DisplayFor(m => @order.Type)</h3>
@@ -41,3 +46,17 @@
         </div>
     }
 </div>
+
+<script>
+    const dateInput = document.getElementById("date");
+    dateInput.addEventListener("change", () => {
+        const selectedDate = dateInput.value;
+
+        if (!selectedDate) return;
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("date", selectedDate);
+
+        window.location.href = url.toString();
+    });
+</script>

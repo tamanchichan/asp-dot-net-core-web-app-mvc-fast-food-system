@@ -21,14 +21,27 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(DateTime? date)
         {
+            if (date == null)
+            {
+                date = DateTime.Today;
+            }
+
+            DateTime startDate = date.Value.Date;
+            DateTime endDate = startDate.AddDays(1);
+
             HashSet<Order> orders = _context.Orders
                 .Include(o => o.OrderProducts)
                 .ThenInclude(op => op.Product)
                 .Include(o => o.User)
-                .OrderByDescending(o => o.Number)
+                .Where(o => o.ReadyTime.Date >= startDate && o.ReadyTime < endDate)
+                .OrderByDescending(o => o.ReadyTime)
+                .ThenByDescending(o => o.Number)
                 .ToHashSet();
+
+            // Pass the current date being filtered/shown to the view
+            ViewBag.SelectedDate = date.Value;
 
             return View(orders);
         }
