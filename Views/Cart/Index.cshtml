@@ -161,7 +161,7 @@
                 </div>
                 <div class="flex ready-time">
                     <label for="readyTime">Ready In:</label>
-                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm")" name="readyTime" step="900" value=@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm") />
+                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime" value=@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm") />
                 </div>
                 <div class="flex place-cart-order-button">
                     <button type="submit">Place Order</button>
