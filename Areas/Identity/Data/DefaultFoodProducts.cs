@@ -330,7 +330,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("57B", "Szechuan Squid", 16.95m),
             new FoodProduct("58", "Szechuan Beef", 15.95m),
             new FoodProduct("59", "Szechuan Chicken", 14.95m),
-            new FoodProduct("60", "Ginger Beef", 15.50m),
+            new FoodProduct("60", "Ginger Beef", 15.95m),
             new FoodProduct("61", "Ginger Chicken", 14.95m),
             new FoodProduct("62", "Curry Shrimp", 16.96m),
             new FoodProduct("62A", "Curry Squid", 16.95m),
