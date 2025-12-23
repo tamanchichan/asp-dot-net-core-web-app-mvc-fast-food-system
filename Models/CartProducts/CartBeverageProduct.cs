@@ -8,24 +8,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
     {
         private BeverageOption? _beverageOption;
 
-        public BeverageOption? BeverageOption // Coke, CokeZero, GingerAle, etc.
+        public BeverageOption? BeverageOption
         {
-            // Using ternaty operator to simplify the code
             get
             {
-                if (Product != null && Product.HasOptions)
-                {
-                    return _beverageOption;
-                }
-                else
-                {
-                    return null;
-                }
+                return _beverageOption;
             }
-            // Using ternary operator to simplify the code
             set
             {
-                _beverageOption = (Product != null && Product.HasOptions) ? value : null;
+                _beverageOption = value;
             }
         }
 

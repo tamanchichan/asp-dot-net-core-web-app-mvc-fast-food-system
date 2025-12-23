@@ -9,29 +9,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
         private FoodOption? _foodOption;
         public FoodOption? FoodOption  // Beef, Chicken, Fish, Mushroom, etc.
         {
-            // Using traditional if-else statements for clarity
             get
             {
-                if (Product != null && Product.HasOptions)
-                {
-                    return _foodOption;
-                }
-                else
-                {
-                    return null;
-                }
-
+                return _foodOption;
             }
             set
             {
-                if (Product != null && Product.HasOptions)
-                {
-                    _foodOption = value;
-                }
-                else
-                {
-                    _foodOption = null;
-                }
+                _foodOption = value;
             }
         }
 
@@ -39,15 +23,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 
         public FoodSize? FoodSize // Small, Medium, Large
         {
-            // Using ternary operator to simplify the code
-            get
-            {
-                return (Product != null && Product.HasOptions) ? _foodSize : null;
-            }
-            set
-            {
-                _foodSize = (Product != null && Product.HasOptions) ? value : null;
-            }
+            get => _foodSize;
+            set => _foodSize = value;
         }
 
         public CartFoodProduct() { }

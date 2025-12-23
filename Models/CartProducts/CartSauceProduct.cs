@@ -10,22 +10,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 
         public SauceOption? SauceOption
         {
-            // Using traditional if-else statements for clarity
             get
             {
-                if (Product != null && Product.HasOptions)
-                {
-                    return _sauceOption;
-                }
-                else
-                {
-                    return null;
-                }
+                return _sauceOption;
             }
-            // Using ternary operator to simplify the code
             set
             {
-                _sauceOption = (Product != null && Product.HasOptions) ? value : null;
+                _sauceOption = value;
             }
         }
 
