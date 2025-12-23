@@ -5,6 +5,7 @@
 @using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 
 @model Cart
 
@@ -75,9 +76,27 @@
                     }
                     else
                     {
-                        <span class="cart-product-code">@cartProduct.Product.Code</span>
+                        <span class="cart-product-code">
+                            @cartProduct.Product.Code
+                            @if (cartProduct is CartFoodProduct cfp)
+                            {
+                                @(cfp.FoodOption.HasValue ? cfp.FoodOption.Value.ToString().Substring(0, 1) : null)
+                            }
+                        </span>
                     }
-                    <span class="cart-product-name">@cartProduct.Product.Name</span>
+                    <span class="cart-product-name">
+                        @if (cartProduct is CartFoodProduct cartFoodProduct)
+                        {
+                            @cartFoodProduct.Product.Name
+                            @if (cartFoodProduct.Product.HasOptions)
+                            {
+                                @($" {cartFoodProduct.FoodOption.Value.ToString()}")
+                            }
+                        }
+                        else if (cartProduct is CartSauceProduct cartSauceProduct) {
+                            @Html.DisplayFor(model => cartSauceProduct.SauceOption)
+                        }
+                    </span>
                     <span class="cart-product-additional-price">@cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))</span>
                     <span class="cart-product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
                     <span class="cart-product-quantity">@cartProduct.Quantity</span>
@@ -145,7 +164,7 @@
                 </div>
                 <div class="flex delivery-fee">
                     <label for="deliveryFee">Delivery Fee:</label>
-                    <input type="number" min="0" name="deliveryFee" id="deliveryFee" />
+                    <input type="number" min="0" step="0.1" name="deliveryFee" id="deliveryFee" />
                 </div>
                 <div class="flex discount">
                     <label for="discount">Discount:</label>
@@ -161,7 +180,8 @@
                 </div>
                 <div class="flex ready-time">
                     <label for="readyTime">Ready In:</label>
-                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime" value=@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm") />
+                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime"
+                           value=@(new DateTime(2025, 12, 24, 14, 0, 0).ToString("yyyy-MM-ddTHH:mm")) />
                 </div>
                 <div class="flex place-cart-order-button">
                     <button type="submit">Place Order</button>

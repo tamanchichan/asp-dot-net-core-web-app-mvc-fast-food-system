@@ -21,31 +21,39 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        private static SauceOption? GetSauceOption(string option)
         {
-            return NotFound();
-        }
+            option = option.ToUpperInvariant();
 
-        //public Array GetEnum(Product product)
-        //{
-        //    if (product is FoodProduct && product.HasOptions)
-        //    {
-        //        return Enum.GetValues<FoodOption>();
-        //    }
-        //    else if (product is BeverageOption && product.HasOptions)
-        //    {
-        //        return Enum.GetValues<BeverageOption>();
-        //    }
-        //    else if (product is SauceOption && product.HasOptions)
-        //    {
-        //        return Enum.GetValues<SauceOption>();
-        //    }
-            
-        //    return Array.Empty<object>();
-        //}
+            switch (option)
+            {
+                case "S.S.":
+                    return SauceOption.SoySauce;
+                case "P.S.":
+                    return SauceOption.PlumSauce;
+                case "H.S.":
+                    return SauceOption.HotSauce;
+                case "S.S.S.":
+                    return SauceOption.SweetAndSourSauce;
+                case "H.L.S.":
+                    return SauceOption.HoneyLemonSauce;
+                case "H.G.S.":
+                    return SauceOption.HoneyGarlicSauce;
+                case "H.H.G.S.":
+                    return SauceOption.HotHoneyGarlicSauce;
+                case "B.B.G.S.":
+                    return SauceOption.BlackBeanGarlicSauce;
+                case "C.S.":
+                    return SauceOption.CurrySauce;
+                default:
+                    return null;
+            }
+        }
 
         private static FoodOption GetFoodOption(char c)
         {
+            c = char.ToUpperInvariant(c);
+
             foreach (FoodOption foodOption in Enum.GetValues<FoodOption>())
             {
                 if (foodOption.ToString()[0] == c)
@@ -58,9 +66,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProductToCart(string input) // 'productOption' only works for FoodProduct ATM
+        public IActionResult AddProductToCart(string input)
         {
-            input.ToUpper();
+            input = input.ToUpperInvariant();
 
             string returnUrl = Request.Headers["Referer"].ToString();
             string code;
@@ -89,13 +97,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             if (cart == null)
             {
-                cart = new Cart()
-                {
-                    UserId = _userManager.GetUserId(User)
-                };
+                ModelState.AddModelError(string.Empty, "No active cart found for the user.");
             }
 
             Product product = _context.Products.FirstOrDefault(p => p.Code == productCode);
+
+            CartProduct cartProduct = null;
 
             if (product == null)
             {
@@ -106,15 +113,33 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 if (product == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid code. Please double-check the code entered");
+                    // if productCode not found, assume it is sauce product
+                    product = _context.Products.FirstOrDefault(p => p.Code == "Sauce");
 
-                    return Redirect(returnUrl);
+                    if (product == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid code. Please double-check the code entered");
+
+                        return Redirect(returnUrl);
+                    }
                 }
             }
 
-            CartProduct cartProduct = _context.CartProducts
-                .Where(cp => cp.CartId == cart.Id)
-                .FirstOrDefault(cp => cp.ProductId == product.Id);
+            if (product is FoodProduct)
+            {
+                cartProduct = _context.CartProducts
+                    .OfType<CartFoodProduct>()
+                    .Where(cp => cp.CartId == cart.Id)
+                    .FirstOrDefault(cp => cp.ProductId == product.Id && cp.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null));
+            }
+            else if (product is SauceProduct)
+            {
+                cartProduct = _context.CartProducts
+                    .OfType<CartSauceProduct>()
+                    .Where(cp => cp.CartId == cart.Id)
+                    .FirstOrDefault(cp => cp.ProductId == product.Id && cp.SauceOption == GetSauceOption(input));
+            }
+
 
             if (cartProduct == null)
             {
@@ -138,7 +163,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     {
                         cartProduct = new CartFoodProduct()
                         {
-                            FoodOption = productOption.HasValue ? GetFoodOption(productOption.Value) : null,
+                            FoodOption = productOption.HasValue ? GetFoodOption((char)productOption) : null,
                         };
                     }
                 }
@@ -146,7 +171,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 {
                     cartProduct = new CartSauceProduct()
                     {
-                        //SauceOption =
+                        SauceOption = GetSauceOption(input),
                     };
                 }
 
