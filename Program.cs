@@ -5,6 +5,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Mvc;
 using asp_dot_net_core_web_app_mvc_fast_food_system.POS;
 using System.Text;
+using System.Text.Json.Serialization;
 
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -39,6 +40,11 @@ builder.Services.AddScoped<ThermalPrinterService>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/login";
+});
+
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
 // Add services to the container.
