@@ -1,4 +1,6 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using ESC_POS_USB_NET.EpsonCommands;
 using ESC_POS_USB_NET.Printer;
 using ESCPOS_NET;
@@ -74,7 +76,131 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             // Send to printer
             printer.PrintDocument();
         }
-        
+
+        // Prints all orders at a specific time, aggregating quantities of the same products
+        public void PrintAllOrdersAt(HashSet<Order> orders, DateTime time)
+        {
+            Printer printer = new Printer("POS-80");
+
+            int ordersCount = orders.Count;
+
+            HashSet<OrderProduct> orderProducts = new HashSet<OrderProduct>() { };
+
+            foreach (Order order in orders)
+            {
+                foreach (OrderProduct orderProduct in order.OrderProducts)
+                {
+                    OrderProduct existingOrderProduct = orderProducts
+                        .FirstOrDefault(op => op.ProductId == orderProduct.ProductId);
+
+                    if (existingOrderProduct != null)
+                    {
+                        existingOrderProduct.Quantity += orderProduct.Quantity;
+                    }
+                    else
+                    {
+                        OrderProduct newOrderProduct;
+
+                        if (orderProduct is OrderBeverageProduct)
+                        {
+                            newOrderProduct = new OrderBeverageProduct()
+                            {
+                                ProductId = orderProduct.ProductId,
+                                Product = orderProduct.Product,
+                                Quantity = orderProduct.Quantity,
+                                AdditionalPrice = orderProduct.AdditionalPrice,
+                                Instructions = orderProduct.Instructions,
+                                BeverageOption = (orderProduct as OrderBeverageProduct).BeverageOption
+                            };
+                        }
+                        else if (orderProduct is OrderFoodProduct)
+                        {
+                            newOrderProduct = new OrderFoodProduct()
+                            {
+                                ProductId = orderProduct.ProductId,
+                                Product = orderProduct.Product,
+                                Quantity = orderProduct.Quantity,
+                                AdditionalPrice = orderProduct.AdditionalPrice,
+                                Instructions = orderProduct.Instructions,
+                                FoodOption = (orderProduct as OrderFoodProduct).FoodOption
+                            };
+                        }
+                        else
+                        {
+                            newOrderProduct = new OrderSauceProduct()
+                            {
+                                ProductId = orderProduct.ProductId,
+                                Product = orderProduct.Product,
+                                Quantity = orderProduct.Quantity,
+                                AdditionalPrice = orderProduct.AdditionalPrice,
+                                Instructions = orderProduct.Instructions,
+                                SauceOption = (orderProduct as OrderSauceProduct).SauceOption
+                            };
+                        }
+
+                        orderProducts.Add(newOrderProduct);
+                    }
+                }
+            }
+
+            Bitmap header = new Bitmap(300, 45); // width = paper width in pixels
+            using (Graphics g = Graphics.FromImage(header))
+            {
+                g.Clear(System.Drawing.Color.White);
+                //g.DrawString($"{ordersCount} Orders at {time.ToString("HH:mm")}", new Font("Arial", 26, FontStyle.Bold), Brushes.Black, 0, 0);
+                g.DrawString($"({ordersCount}) {time.ToString("HH:mm")}", new Font("Arial", 26, FontStyle.Bold), Brushes.Black, 0, 0);
+            }
+
+            printer.Image(header);
+            //printer.Append($"Orders at {time.ToString("HH:mm")}");
+            printer.Separator();
+
+            Bitmap productXquantity = new Bitmap(300, 40);
+            Font fontProductXquantity = new Font("Arial", 25, FontStyle.Bold);
+            Brush brush = Brushes.Black;
+
+            foreach (OrderProduct orderProduct in orderProducts.OrderBy(op => op.Product.Code))
+            {
+                if (orderProduct is OrderBeverageProduct obp)
+                {
+                    using (Graphics g = Graphics.FromImage(productXquantity))
+                    {
+                        g.Clear(System.Drawing.Color.White);
+                        g.DrawString($"{obp.BeverageOption}. x {obp.Quantity}", fontProductXquantity, brush, 0, 0);
+                    }
+
+                    printer.Image(productXquantity);
+                    //printer.Append($"{obp.BeverageOption}. x {obp.Quantity}");
+                }
+                else if (orderProduct is OrderFoodProduct ofp)
+                {
+                    using (Graphics g = Graphics.FromImage(productXquantity))
+                    {
+                        g.Clear(System.Drawing.Color.White);
+                        g.DrawString($"{ofp.Product.Code}{(ofp.Product.HasOptions ? ofp.FoodOption.ToString().Substring(0, 1) : null)}. x {ofp.Quantity}", fontProductXquantity, brush, 0, 0);
+                    }
+
+                    printer.Image(productXquantity);
+                    //printer.Append($"{ofp.Product.Code}{(ofp.Product.HasOptions ? ofp.FoodOption : null)}. x {ofp.Quantity}");
+                }
+                else
+                {
+                    using (Graphics g = Graphics.FromImage(productXquantity))
+                    {
+                        g.Clear(System.Drawing.Color.White);
+                        g.DrawString($"{SauceOptionExtensions.GetSauceAbbreviation((orderProduct as OrderSauceProduct).SauceOption)} x {orderProduct.Quantity}", fontProductXquantity, brush, 0, 0);
+                    }
+
+                    printer.Image(productXquantity);
+                    //printer.Append($"{(orderProduct as OrderSauceProduct).SauceOption}. x {orderProduct.Quantity}");
+                }
+            }
+
+            printer.NewLines(3);
+            printer.FullPaperCut();
+            printer.PrintDocument();
+        }
+
         /*
          * Uses PrintDocument to print
          * Advantages:
