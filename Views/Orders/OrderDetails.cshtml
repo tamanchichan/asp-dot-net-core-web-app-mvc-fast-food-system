@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Orders Page";
+}
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+
+@model Order
+
+<div class="container order-details-page">
+    <div class="flex">
+        <h2>
+            Order nº: @Model.Number
+            @if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
+            {
+                <span>(@Model.CustomerPhoneNumber)</span>
+            }
+        </h2>
+        <h2>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h2>
+    </div>
+    <div class="order-products">
+        <div class="order-product-template">
+            <span class="product-code">Code</span>
+            <span class="product-name">Product</span>
+            <span class="product-quantity">Quantity</span>
+            <span class="product-price">Price</span>
+            <span class="product-total-price">Total Price</span>
+        </div>
+        @foreach (OrderProduct orderProduct in Model.OrderProducts)
+        {
+            <div class="order-product">
+                <span class="product-code">@orderProduct.Product.Code</span>
+                <span class="product-name">@orderProduct.Product.Name</span>
+                <span class="product-quantity">@orderProduct.Quantity</span>
+                <span class="product-price">@orderProduct.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                <span class="product-total-price">@orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+            </div>
+        }
+    </div>
+    <div class="flex order-summary">
+        <h3>Total Items: @Model.Quantity</h3>
+        <h3 class="order-total-price">Total Price: @Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("en-CA"))</h3>
+    </div>
+</div>

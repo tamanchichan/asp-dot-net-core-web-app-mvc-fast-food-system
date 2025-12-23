@@ -23,25 +23,27 @@
         <div class="orders">
             @foreach (Order order in Model)
             {
-                <div class="order">
-                    <div class="flex">
-                        <h3>
-                            Order nº: @order.Number
-                            @if (!String.IsNullOrEmpty(order.CustomerPhoneNumber))
-                            {
-                                <span>(@order.CustomerPhoneNumber)</span>
-                            }
-                        </h3>
-                        <h3>Ready at: <span class="order-ready-time">@order.ReadyTime.ToString("t")</span></h3>
+                <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@order.Id">
+                    <div class="order">
+                        <div class="flex">
+                            <h3>
+                                Order nº: @order.Number
+                                @if (!String.IsNullOrEmpty(order.CustomerPhoneNumber))
+                                {
+                                    <span>(@order.CustomerPhoneNumber)</span>
+                                }
+                            </h3>
+                            <h3>Ready at: <span class="order-ready-time">@order.ReadyTime.ToString("t")</span></h3>
+                        </div>
+                        <div class="flex order-type">
+                            <h3>@Html.DisplayFor(m => @order.Type)</h3>
+                        </div>
+                        <div class="flex">
+                            <span>Nº of Items: @order.Quantity</span>
+                            <span class="order-total-price">Total Price: @order.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                        </div>
                     </div>
-                    <div class="flex order-type">
-                        <h3>@Html.DisplayFor(m => @order.Type)</h3>
-                    </div>
-                    <div class="flex">
-                        <span>Nº of Items: @order.Quantity</span>
-                        <span class="order-total-price">Total Price: @order.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
-                    </div>
-                </div>
+                </a>
             }
         </div>
     }

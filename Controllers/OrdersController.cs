@@ -45,5 +45,22 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return View(orders);
         }
+
+        public IActionResult OrderDetails(Guid id)
+        {
+            Order order =
+                _context.Orders
+                    .Include(o => o.OrderProducts)
+                    .ThenInclude(op => op.Product)
+                    .Include(o => o.User)
+                    .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
     }
 }
