@@ -75,7 +75,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 
         public static HashSet<BeverageProduct> DefaultProducts = new HashSet<BeverageProduct>()
         {
-            new BeverageProduct("Beverage", "Beverage", null, 2.25m, ProductCategory.Extras, null, true)
+            new BeverageProduct("BEVERAGE", "Beverage", null, 2.25m, ProductCategory.Extras, null, true)
         };
     }
 }
