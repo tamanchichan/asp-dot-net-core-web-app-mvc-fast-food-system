@@ -114,7 +114,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 if (product == null)
                 {
                     // if productCode not found, assume it is sauce product
-                    product = _context.Products.FirstOrDefault(p => p.Code == "Sauce");
+                    product = _context.Products.FirstOrDefault(p => p.Code == "SAUCE");
 
                     if (product == null)
                     {
