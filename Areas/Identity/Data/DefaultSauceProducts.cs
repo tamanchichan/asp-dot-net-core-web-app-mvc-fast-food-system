@@ -17,7 +17,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             {
                 await context.SauceProducts.AddRangeAsync
                 (
-                    new SauceProduct("Sauce", "Sauce", null, 1.75m, ProductCategory.Extras, null, true)
+                    new SauceProduct("SAUCE", "Sauce", null, 1.75m, ProductCategory.Extras, null, true)
                 );
 
                 await context.SaveChangesAsync();
