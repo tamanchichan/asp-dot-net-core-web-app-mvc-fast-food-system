@@ -1,4 +1,10 @@
-﻿.order-details-page .flex {
+﻿.edit-order {
+    display: flex;
+    justify-content: right;
+    padding-bottom: 15px;
+}
+
+.order-details-page .flex {
     justify-content: space-between;
 }
 
