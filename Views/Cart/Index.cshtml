@@ -141,7 +141,7 @@
                 </div>
                 <div class="flex additional-charge">
                     <label for="additionalCharge">Additional Charge:</label>
-                    <input type="number" min="0" name="additionalCharge" id="additionalCharge" />
+                    <input type="number" min="0" step="0.1" name="additionalCharge" id="additionalCharge" />
                 </div>
                 <div class="flex sub-total">
                     <span>
@@ -154,12 +154,12 @@
                 </div>
                 <div class="flex gst">
                     <span>
-                        GST: @Model.Gst.ToString("C", new CultureInfo("en-CA"))
+                        GST: <span id="gst">@Model.Gst.ToString("C", new CultureInfo("en-CA"))</span>
                     </span>
                 </div>
                 <div class="flex pst">
                     <span>
-                        PST: @Model.Pst.ToString("C", new CultureInfo("en-CA"))
+                        PST: <span id="pst">@Model.Pst.ToString("C", new CultureInfo("en-CA"))</span>
                     </span>
                 </div>
                 <div class="flex delivery-fee">
@@ -181,7 +181,7 @@
                 <div class="flex ready-time">
                     <label for="readyTime">Ready In:</label>
                     <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime"
-                           value=@(new DateTime(2025, 12, 24, 14, 0, 0).ToString("yyyy-MM-ddTHH:mm")) />
+                           value=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm") />
                 </div>
                 <div class="flex place-cart-order-button">
                     <button type="submit">Place Order</button>
@@ -191,77 +191,6 @@
     }
 </div>
 
-<script>
-    const customerNameInput = document.getElementById("customerName");
-    const customerPhoneNumberInput = document.getElementById("customerPhoneNumber");
-    const customerAddressInput = document.getElementById("customerAddress");
-
-    const customersPhoneNumberDiv = document.querySelector(".customers-phone-number");
-
-    const radioDelivery = document.getElementById("delivery");
-
-    customerPhoneNumberInput.addEventListener("input", async () => {
-
-        const value = customerPhoneNumberInput.value;
-
-        if (value.length < 3) {
-            customersPhoneNumberDiv.hidden = true;
-            customersPhoneNumberDiv.innerHTML = "";
-            return;
-        }
-
-        const response = await fetch(`Shared/SearchCustomers?phoneNumber=${value}`);
-        const customers = await response.json();
-
-        customersPhoneNumberDiv.innerHTML = "";
-        customersPhoneNumberDiv.hidden = customers.length === 0;
-
-        customers.forEach((customer) => {
-            const div = document.createElement("div");
-            div.style.border = "1px solid #000";
-            div.style.cursor = "pointer";
-            div.textContent = customer.phoneNumber;
-
-            div.addEventListener("click", () => {
-                customerNameInput.value = customer.name;
-                customerPhoneNumberInput.value = customer.phoneNumber;
-                customerAddressInput.value = customer.address;
-                customersPhoneNumberDiv.innerHTML = "";
-                customersPhoneNumberDiv.hidden = true;
-            });
-
-            customersPhoneNumberDiv.appendChild(div);
-        });
-    });
-
-    const subTotalPriceElement = document.getElementById("subTotalPrice");
-    const subTotalPrice = parseFloat(subTotalPriceElement.dataset.value) || 0;
-    const totalPriceElement = document.getElementById("totalPrice");
-    const additionalChargeInput = document.getElementById("additionalCharge");
-    const deliveryFeeInput = document.getElementById("deliveryFee");
-    const discountInput = document.getElementById("discount");
-
-    function updateTotalPrice() {
-        const additionalCharge = parseFloat(additionalChargeInput.value.replace(",", ".")) || 0;
-        const deliveryFee = parseFloat(deliveryFeeInput.value.replace(",", ".")) || 0;
-        const discount = parseFloat(discountInput.value.replace(",", ".")) || 0;
-        const gst = subTotalPrice * 0.05;
-        const pst = subTotalPrice * 0.07;
-        const subTotal = additionalCharge + subTotalPrice;
-        const total = ((subTotalPrice + gst + pst) + deliveryFee) - discount;
-
-        subTotalPriceElement.textContent = subTotal.toLocaleString("en-CA", {
-            style: "currency",
-            currency: "CAD"
-        });
-
-        totalPriceElement.textContent = total.toLocaleString("en-CA", {
-            style: "currency",
-            currency: "CAD"
-        });
-    }
-
-    additionalCharge.addEventListener("input", updateTotalPrice);
-    deliveryFeeInput.addEventListener("input", updateTotalPrice);
-    discountInput.addEventListener("input", updateTotalPrice);
-</script>
+@section Scripts {
+    <script src="~/js/cart/index.js"></script>
+}
