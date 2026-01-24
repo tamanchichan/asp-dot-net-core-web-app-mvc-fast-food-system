@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -239,7 +241,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, decimal? additionalCharge = 0, decimal? deliveryFee = 0, decimal? discount = 0)
+        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? additionalCharge, string? deliveryFee, string? discount)
         {
             Cart cart = _context.Carts
                 .Include(c => c.CartProducts)
@@ -258,9 +260,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 Type = orderType,
                 Observations = observations,
                 ReadyTime = readyTime,
-                AdditionalCharge = additionalCharge ?? 0m,
-                DeliveryFee = deliveryFee ?? 0m,
-                Discount = discount ?? 0m
+                AdditionalCharge = string.IsNullOrEmpty(additionalCharge) ? 0m: decimal.Parse(additionalCharge.Replace(",", "."), CultureInfo.InvariantCulture),
+
+                DeliveryFee = string.IsNullOrEmpty(deliveryFee) ? 0m : decimal.Parse(deliveryFee.Replace(",", "."), CultureInfo.InvariantCulture),
+
+                Discount = string.IsNullOrEmpty(discount) ? 0m : decimal.Parse(discount.Replace(",", "."), CultureInfo.InvariantCulture)
             };
 
             foreach (CartProduct cartProduct in cartProducts)
