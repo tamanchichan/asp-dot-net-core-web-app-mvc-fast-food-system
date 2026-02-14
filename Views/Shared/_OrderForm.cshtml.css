@@ -1,0 +1,56 @@
+﻿.order-form .flex {
+    align-items: center;
+    justify-content: right;
+    margin: 10px 0px;
+}
+
+input, textarea {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 7.5px 15px;
+    margin-left: 5px;
+    font-size: 15px;
+    width: 200px;
+}
+
+.order-type input {
+    appearance: radio;
+    margin-left: 5px;
+}
+
+.order-type div {
+    margin: 0px 10px;
+}
+
+.order-type div input {
+    width: fit-content;
+}
+
+.observations label {
+    align-self: self-start;
+}
+
+.observations textarea {
+    padding: 10px 15px;
+    resize: none;
+}
+
+.customer-phone-number {
+    position: relative;
+}
+
+.customers-phone-number {
+    background-color: #fff;
+    display: block;
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    text-align: center;
+    width: 200px;
+}
+
+#additionalCharge, #deliveryFee, #discount {
+    width: 75px;
+    border: 1px solid #000;
+    text-align: center;
+}

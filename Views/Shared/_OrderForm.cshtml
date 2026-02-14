@@ -1,0 +1,112 @@
+﻿@{
+    OrderType selectedOrderType = OrderType.TakeAway;
+    string observations = "";
+    string customerName = "";
+    string customerPhoneNumber = "";
+    string customerAddress = "";
+    string additionalCharge = "";
+    string deliveryFee = "";
+    string discount = "";
+
+    if (Model is Order order)
+    {
+        selectedOrderType = order.Type;
+        customerName = order.CustomerName ?? "";
+        customerPhoneNumber = order.CustomerPhoneNumber ?? "";
+        customerAddress = order.CustomerAddress ?? "";
+        additionalCharge = (order.AdditionalCharge.HasValue && order.AdditionalCharge != 0m) ? order.AdditionalCharge.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
+        deliveryFee = (order.DeliveryFee.HasValue && order.DeliveryFee != 0m) ? order.DeliveryFee.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
+        discount = (order.Discount.HasValue && order.Discount != 0m) ? order.Discount.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
+    }
+}
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+
+<div class="order-form">
+    <form asp-action=@ViewData["OrderFormAction"] asp-controller=@ViewData["OrderFormController"] method="post" autocomplete="off">
+        <div class="flex order-type">
+            <div>
+                <input type="radio" id="dineIn" name="orderType" value="DineIn"
+                       @(selectedOrderType == OrderType.DineIn ? "checked" : "") />
+                <label for="dineIn">Dine-In</label>
+            </div>
+            <div>
+                <input type="radio" id="takeAway" name="orderType" value="TakeAway"
+                       @(selectedOrderType == OrderType.TakeAway ? "checked" : "") />
+                <label for="takeAway">Take-Away</label>
+            </div>
+            <div>
+                <input type="radio" id="delivery" name="orderType" value="Delivery"
+                       @(selectedOrderType == OrderType.Delivery ? "checked" : "") />
+                <label for="delivery">Delivery</label>
+            </div>
+        </div>
+
+        <div class="flex observations">
+            <label for="observations">Observations:</label>
+            <textarea name="observations" id="observations" rows="3">@observations</textarea>
+        </div>
+        <div class="flex customer-name">
+            <label for="customerName">Customer:</label>
+            <input type="text" name="customerName" id="customerName" value="@customerName" />
+        </div>
+        <div class="flex customer-phone-number">
+            <label for="customerPhoneNumber">Phone Number:</label>
+            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="customerPhoneNumber" id="customerPhoneNumber" value="@customerPhoneNumber" />
+            <div class="customers-phone-number" hidden></div>
+        </div>
+        <div class="flex customer-address">
+            <label for="customerAddress">Address:</label>
+            <input type="text" name="customerAddress" id="customerAddress" value="@customerAddress" />
+        </div>
+        <div class="flex additional-charge">
+            <label for="additionalCharge">Additional Charge:</label>
+            <input type="number" min="0" step="0.1" name="additionalCharge" id="additionalCharge" value="@additionalCharge" />
+        </div>
+        <div class="flex sub-total">
+            <span>
+                SubTotal:
+                <span id="subTotalPrice"
+                      data-value="@Model.SubTotalPrice.ToString(System.Globalization.CultureInfo.InvariantCulture)">
+                    @Model.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))
+                </span>
+            </span>
+        </div>
+        <div class="flex gst">
+            <span>
+                GST: <span id="gst">@Model.Gst.ToString("C", new CultureInfo("en-CA"))</span>
+            </span>
+        </div>
+        <div class="flex pst">
+            <span>
+                PST: <span id="pst">@Model.Pst.ToString("C", new CultureInfo("en-CA"))</span>
+            </span>
+        </div>
+        <div class="flex delivery-fee">
+            <label for="deliveryFee">Delivery Fee:</label>
+            <input type="number" min="0" step="0.1" name="deliveryFee" id="deliveryFee" value="@deliveryFee" />
+        </div>
+        <div class="flex discount">
+            <label for="discount">Discount:</label>
+            <input type="number" min="0" step="0.01" name="discount" id="discount" value="@discount" />
+        </div>
+        <div class="flex total">
+            <span>
+                Total:
+                <span id="totalPrice">
+                    @Model.TotalPrice.ToString("C", new CultureInfo("en-CA"))
+                </span>
+            </span>
+        </div>
+        <div class="flex ready-time">
+            <label for="readyTime">Ready In:</label>
+            <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime"
+                   value=@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm") />
+        </div>
+        <div class="flex submit-order-button">
+            <button type="submit">@ViewData["OrderFormSubmitButtonTitle"]</button>
+        </div>
+    </form>
+</div>
