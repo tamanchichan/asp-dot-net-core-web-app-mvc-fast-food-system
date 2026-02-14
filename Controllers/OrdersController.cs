@@ -1,9 +1,12 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.POS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -95,6 +98,124 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             }
 
             return View(order);
+        }
+
+        public IActionResult EditOrder(Guid id)
+        {
+            Order order = _context.Orders
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .Include(o => o.User)
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
+        // Add orderProducts editing later
+        [HttpPost]
+        public IActionResult EditOrder(Guid id, Guid? customerId, Customer? customer, string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? additionalCharge, string? deliveryFee, string? discount)
+        {
+            Order order = _context.Orders
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .Include(o => o.User)
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null) NotFound();
+
+            if (customer == null && !(String.IsNullOrEmpty(customerPhoneNumber)))
+            {
+                customer = new Customer()
+                {
+                    Name = customerName,
+                    PhoneNumber = customerPhoneNumber,
+                    Address = customerAddress
+                };
+
+                customer.Orders.Add(order);
+                order.Customer = customer;
+            }
+
+            order.Type = orderType;
+            order.Observations = observations;
+            order.ReadyTime = readyTime;
+            order.AdditionalCharge = string.IsNullOrEmpty(additionalCharge) ? 0m : decimal.Parse(additionalCharge.Replace(",", "."), CultureInfo.InvariantCulture);
+            order.DeliveryFee = string.IsNullOrEmpty(deliveryFee) ? 0m : decimal.Parse(deliveryFee.Replace(",", "."), CultureInfo.InvariantCulture);
+            order.Discount = string.IsNullOrEmpty(discount) ? 0m : decimal.Parse(discount.Replace(",", "."), CultureInfo.InvariantCulture);
+
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+
+            return RedirectToAction("OrderDetails", new { id = order.Id });
+        }
+
+        public IActionResult IncrementProduct(Guid id, int quantity = 1)
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            OrderProduct orderProduct = _context.OrderProducts
+                .Include(op => op.Order)
+                .FirstOrDefault(op => op.Id == id);
+
+            if (orderProduct == null)
+            {
+                return NotFound();
+            }
+
+            if (quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than zero.");
+            }
+
+            orderProduct.Quantity += quantity;
+
+            //_context.OrderProducts.Update(orderProduct);
+            //_context.SaveChanges();
+
+            return Redirect(returnUrl);
+        }
+
+        // Handle if there is only 1 orderProduct left, make the whole order as cancelled (needs to create a new field for order status) instead (do not delete order)
+        // Perhaps not use "context.SaveChanges" and create a new action to save anything that was modified
+        public IActionResult DecrementProduct(Guid id, int quantity = 1)
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            OrderProduct orderProduct = _context.OrderProducts
+                .Include(op => op.Order)
+                .FirstOrDefault(op => op.Id == id);
+
+            Order order = orderProduct.Order;
+
+            if (orderProduct == null)
+            {
+                return NotFound();
+            }
+
+            if (quantity <= 0)
+            {
+                return BadRequest("Quantity must be greater than zero.");
+            }
+
+            if (orderProduct.Quantity == 1 || (orderProduct.Quantity - quantity) <= 0)
+            {
+                order.OrderProducts.Remove(orderProduct);
+                _context.OrderProducts.Remove(orderProduct);
+            }
+            else
+            {
+                orderProduct.Quantity -= quantity;
+                _context.OrderProducts.Update(orderProduct);
+            }
+
+            _context.SaveChanges();
+
+            return Redirect(returnUrl);
         }
     }
 }
