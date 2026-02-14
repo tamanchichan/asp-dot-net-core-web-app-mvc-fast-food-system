@@ -23,3 +23,19 @@
 .checkbox-input {
     appearance: checkbox;
 }
+
+.button {
+    display: block;
+}
+
+.product-increment {
+    background-color: #28a745;
+}
+
+.product-decrement {
+    background-color: #dc3545;
+}
+
+.product-increment:hover, .product-decrement:hover {
+        color: #fff;
+    }
