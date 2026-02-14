@@ -1,5 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Cart Page";
+    ViewData["OrderFormAction"] = "PlaceCartOrder";
+    ViewData["OrderFormController"] = "Cart";
+    ViewData["OrderFormSubmitButtonTitle"] = "Place Order";
 }
 
 @using System.Globalization
@@ -106,91 +109,10 @@
                 </div>
             }
         </div>
-        <div class="cart-form">
-            <form asp-action="PlaceCartOrder" asp-controller="Cart" method="post" autocomplete="off">
-                <div class="flex order-type">
-                    <div>
-                        <input type="radio" id="dineIn" name="orderType" value="DineIn" />
-                        <label for="dineIn">Dine-In</label>
-                    </div>
-                    <div>
-                        <input type="radio" checked="checked" id="takeAway" name="orderType" value="TakeAway" />
-                        <label for="takeAway">Take-Away</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="delivery" name="orderType" value="Delivery" />
-                        <label for="delivery">Delivery</label>
-                    </div>
-                </div>
-                <div class="flex observations">
-                    <label for="observations">Observations:</label>
-                    <textarea name="observations" id="observations" rows="3"></textarea>
-                </div>
-                <div class="flex customer-name">
-                    <label for="customerName">Customer:</label>
-                    <input type="text" name="customerName" id="customerName" />
-                </div>
-                <div class="flex customer-phone-number">
-                    <label for="customerPhoneNumber">Phone Number:</label>
-                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="customerPhoneNumber" id="customerPhoneNumber" />
-                    <div class="customers-phone-number" hidden></div>
-                </div>
-                <div class="flex customer-address">
-                    <label for="customerAddress">Address:</label>
-                    <input type="text" name="customerAddress" id="customerAddress" />
-                </div>
-                <div class="flex additional-charge">
-                    <label for="additionalCharge">Additional Charge:</label>
-                    <input type="number" min="0" step="0.1" name="additionalCharge" id="additionalCharge" />
-                </div>
-                <div class="flex sub-total">
-                    <span>
-                        SubTotal:
-                        <span id="subTotalPrice"
-                              data-value="@Model.SubTotalPrice.ToString(System.Globalization.CultureInfo.InvariantCulture)">
-                            @Model.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))
-                        </span>
-                    </span>
-                </div>
-                <div class="flex gst">
-                    <span>
-                        GST: <span id="gst">@Model.Gst.ToString("C", new CultureInfo("en-CA"))</span>
-                    </span>
-                </div>
-                <div class="flex pst">
-                    <span>
-                        PST: <span id="pst">@Model.Pst.ToString("C", new CultureInfo("en-CA"))</span>
-                    </span>
-                </div>
-                <div class="flex delivery-fee">
-                    <label for="deliveryFee">Delivery Fee:</label>
-                    <input type="number" min="0" step="0.1" name="deliveryFee" id="deliveryFee" />
-                </div>
-                <div class="flex discount">
-                    <label for="discount">Discount:</label>
-                    <input type="number" min="0" step="0.01" name="discount" id="discount" />
-                </div>
-                <div class="flex total">
-                    <span>
-                        Total: 
-                        <span id="totalPrice">
-                            @Model.TotalPrice.ToString("C", new CultureInfo("en-CA"))
-                        </span>
-                    </span>
-                </div>
-                <div class="flex ready-time">
-                    <label for="readyTime">Ready In:</label>
-                    <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime"
-                           value=@DateTime.Now.ToString("yyyy-MM-ddTHH:mm") />
-                </div>
-                <div class="flex place-cart-order-button">
-                    <button type="submit">Place Order</button>
-                </div>
-            </form>
-        </div>
+        <partial name="_OrderForm" />
     }
 </div>
 
 @section Scripts {
-    <script src="~/js/cart/index.js"></script>
+    <script src="~/js/Shared/order-form.js"></script>
 }

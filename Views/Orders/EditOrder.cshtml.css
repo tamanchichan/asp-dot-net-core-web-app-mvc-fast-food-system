@@ -1,30 +1,25 @@
-﻿.clear-cart {
-    font-size: 30px;
-    position: absolute;
-    top: 130px;
-    right: 90px;
+﻿.edit-order-page .flex {
+    justify-content: space-between;
 }
 
-.fa-trash {
-    display: flex;
-}
-
-.cart-products-template, .cart-product {
+.order-product-template, .order-product {
     display: grid;
-    align-items: center; /* center items vertically (y-position) */
+    align-items: center;
     gap: 10px;
-    grid-template-columns: repeat(6, 1fr) 50px 50px;
     padding: 10px 0px;
+    grid-template-columns: repeat(5, 1fr) 50px 50px;
     text-align: center;
+    width: 100%;
 }
-.cart-products-template {
+
+.order-product-template {
     font-size: 20px;
     font-weight: 400;
     letter-spacing: 1.5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-.cart-page input, .cart-page textarea {
+.edit-order-page input, .edit-order-page textarea {
     border: 1px solid #000;
     border-radius: 5px;
     padding: 7.5px 15px;
@@ -33,7 +28,7 @@
     width: 200px;
 }
 
-.cart-page .order-type input {
+.edit-order-page .order-type input {
     appearance: radio;
     margin-left: 5px;
 }
@@ -42,9 +37,9 @@
     margin: 0px 10px;
 }
 
-.order-type div input {
-    width: fit-content;
-}
+    .order-type div input {
+        width: fit-content;
+    }
 
 .observations label {
     align-self: self-start;
