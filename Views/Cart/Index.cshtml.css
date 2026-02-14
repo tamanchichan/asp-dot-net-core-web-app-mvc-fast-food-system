@@ -9,7 +9,7 @@
     display: flex;
 }
 
-.head, .cart-product {
+.cart-products-template, .cart-product {
     display: grid;
     align-items: center; /* center items vertically (y-position) */
     gap: 10px;
@@ -17,18 +17,18 @@
     padding: 10px 0px;
     text-align: center;
 }
-.head {
+.cart-products-template{
     font-size: 20px;
     font-weight: 400;
     letter-spacing: 1.5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-.button {
+/*.button {
     display: block;
-}
+}*/
 
-.cart-product-increment {
+/*.cart-product-increment {
     background-color: #28a745;
 }
 
@@ -38,7 +38,7 @@
 
 .cart-product-increment:hover, .cart-product-decrement:hover {
     color: #fff;
-}
+}*/
 
 .cart-page input, .cart-page textarea {
     border: 1px solid #000;
