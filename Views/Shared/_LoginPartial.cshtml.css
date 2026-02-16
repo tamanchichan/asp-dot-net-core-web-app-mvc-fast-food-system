@@ -1,4 +1,5 @@
 ﻿.logout-button {
+    display: inline-block;
     padding: 15px;
     letter-spacing: 1.5px;
 }
