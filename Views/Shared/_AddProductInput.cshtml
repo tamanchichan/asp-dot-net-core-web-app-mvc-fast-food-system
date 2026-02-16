@@ -1,0 +1,25 @@
+﻿@{
+    string aspAction = "";
+    Guid orderId = Guid.Empty;
+
+    if (Model is Cart cart)
+    {
+        aspAction = "AddProductToCart";
+    }
+
+    if (Model is Order order)
+    {
+        aspAction = "AddProductToOrder";
+        orderId = order.Id;
+    }
+}
+
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+
+<div class="container add-product-input">
+    <form asp-action="@aspAction" asp-controller="Shared" autocomplete="off" method="post">
+        <input type="hidden" name="orderId" value="@orderId"
+        <label for="addProductInput" hidden></label>
+        <input type="text" name="input" id="addProductToCartInput" placeholder="CODE x QUANTITY" autofocus />
+    </form>
+</div>
