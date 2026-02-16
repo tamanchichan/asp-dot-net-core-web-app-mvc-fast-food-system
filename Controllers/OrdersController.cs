@@ -141,6 +141,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 order.Customer = customer;
             }
 
+            order.CustomerName = customerName;
+            order.CustomerPhoneNumber = customerPhoneNumber;
+            order.CustomerAddress = customerAddress;
             order.Type = orderType;
             order.Observations = observations;
             order.ReadyTime = readyTime;
