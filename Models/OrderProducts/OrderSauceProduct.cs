@@ -8,7 +8,17 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
     {
         public SauceOption? _sauceOption;
 
-        public SauceOption? SauceOption { get => Product.HasOptions ? _sauceOption : null; set => _sauceOption = Product.HasOptions ? value : null; }
+        public SauceOption? SauceOption
+        {
+            get
+            {
+                return _sauceOption;
+            }
+            set
+            {
+                SauceOption = value;
+            }
+        }
 
         public OrderSauceProduct() { }
 
