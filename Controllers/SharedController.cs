@@ -2,6 +2,7 @@
 using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -194,6 +195,141 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 cartProduct.Quantity += (int)quantity;
 
                 _context.CartProducts.Update(cartProduct);
+            }
+
+            _context.SaveChangesAsync();
+
+            return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public IActionResult AddProductToOrder(Guid orderId, string input)
+        {
+            input = input.ToUpperInvariant();
+
+            string returnUrl = Request.Headers["Referer"].ToString();
+            string code;
+            int quantity;
+
+            if (input.Contains("*") || input.Contains("x"))
+            {
+                string[] parts = input.Split(new char[] { '*', 'x' });
+                code = parts[0];
+                quantity = int.Parse(parts[1]);
+            }
+            else
+            {
+                code = input;
+                quantity = 1;
+            }
+
+            int lastIndex = code.Length - 1;
+            string productCode = code;
+            char? productOption = null;
+
+            Order order = _context.Orders
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .FirstOrDefault(o => o.Id == orderId);
+
+            if (order == null)
+            {
+                ModelState.AddModelError(string.Empty, "No active order found for the user.");
+            }
+
+            Product product = _context.Products.FirstOrDefault(p => p.Code == productCode);
+
+            OrderProduct orderProduct = null;
+
+            if (product == null)
+            {
+                productCode = code.Substring(0, lastIndex);
+                productOption = code[lastIndex];
+
+                product = _context.Products.FirstOrDefault(p => p.Code == productCode);
+
+                if (product == null)
+                {
+                    // if productCode not found, assume it is sauce product
+                    product = _context.Products.FirstOrDefault(p => p.Code == "SAUCE");
+
+                    if (product == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid code. Please double-check the code entered");
+
+                        return Redirect(returnUrl);
+                    }
+                }
+            }
+
+            if (product is FoodProduct)
+            {
+                orderProduct = _context.OrderProducts
+                    .OfType<OrderFoodProduct>()
+                    .Where(op => op.OrderId == order.Id)
+                    .FirstOrDefault(op => op.ProductId == product.Id && op.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null));
+            }
+            else if (product is SauceProduct)
+            {
+                orderProduct = _context.OrderProducts
+                    .OfType<OrderSauceProduct>()
+                    .Where(op => op.OrderId == order.Id)
+                    .FirstOrDefault(op => op.ProductId == product.Id && op.SauceOption == GetSauceOption(input));
+            }
+
+            if (orderProduct == null)
+            {
+                if (product is BeverageProduct)
+                {
+                    orderProduct = new OrderBeverageProduct()
+                    {
+                        //BeverageOption = 
+                    };
+                }
+                else if (product is FoodProduct)
+                {
+                    if (product.Code == "25")
+                    {
+                        orderProduct = new OrderFoodProduct()
+                        {
+                            //FoodSize = 
+                        };
+                    }
+                    else
+                    {
+                        orderProduct = new OrderFoodProduct()
+                        {
+                            FoodOption = productOption.HasValue ? GetFoodOption((char)productOption) : null,
+                        };
+                    }
+                }
+                else if (product is SauceProduct)
+                {
+                    orderProduct = new OrderSauceProduct()
+                    {
+                        SauceOption = GetSauceOption(input),
+                    };
+                }
+
+                if (orderProduct == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Error creating a 'cartProduct'.");
+                    return Redirect(returnUrl);
+                }
+
+                orderProduct.OrderId = order.Id;
+                orderProduct.Order = order;
+                orderProduct.ProductId = product.Id;
+                orderProduct.Product = product;
+                orderProduct.Quantity = (int)quantity;
+
+                _context.OrderProducts.Add(orderProduct);
+            }
+            else
+            {
+                orderProduct.Quantity += (int)quantity;
+
+                _context.OrderProducts.Update(orderProduct);
             }
 
             _context.SaveChangesAsync();
