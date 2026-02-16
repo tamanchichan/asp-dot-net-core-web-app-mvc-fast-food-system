@@ -16,7 +16,7 @@ customerPhoneNumberInput.addEventListener("input", async () => {
         return;
     }
 
-    const response = await fetch(`Shared/SearchCustomers?phoneNumber=${value}`);
+    const response = await fetch(`/Shared/SearchCustomers?phoneNumber=${value}`);
     const customers = await response.json();
 
     customersPhoneNumberDiv.innerHTML = "";
