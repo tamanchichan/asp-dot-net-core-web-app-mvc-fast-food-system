@@ -49,13 +49,21 @@ const totalPriceElement = document.getElementById("totalPrice");
 const deliveryFeeInput = document.getElementById("deliveryFee");
 const discountInput = document.getElementById("discount");
 
-function updateTotalPrice() {
+async function getRoundedValue(num, decimals = 2) {
+    const response = await fetch(`/Shared/RoundNumber?value=${num}&decimals=${decimals}`)
+    const result = await response.json();
+
+    return result.rounded;
+}
+
+async function updateTotalPrice() {
     const additionalCharge = parseFloat(additionalChargeInput.value.replace(",", ".")) || 0;
     const deliveryFee = parseFloat(deliveryFeeInput.value.replace(",", ".")) || 0;
     const discount = parseFloat(discountInput.value.replace(",", ".")) || 0;
-    const subTotal = additionalCharge + subTotalPrice;
-    const gst = parseFloat((subTotal * 0.05).toFixed(2));
-    const pst = parseFloat((subTotal * 0.07).toFixed(2));
+    const baseSubTotal = parseFloat(subTotalPriceElement.dataset.base) || 0;
+    const subTotal = baseSubTotal + additionalCharge;
+    const gst = await getRoundedValue(subTotal * 0.05);
+    const pst = await getRoundedValue(subTotal * 0.07);
     const total = ((subTotal + gst + pst) + deliveryFee) - discount;
     console.log(`(${subTotal} + ${gst} + ${pst}) + ${deliveryFee} - ${discount} = ${total} `)
 
