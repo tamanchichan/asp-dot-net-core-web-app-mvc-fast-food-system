@@ -337,6 +337,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return Redirect(returnUrl);
         }
 
+        [HttpGet]
         public IActionResult SearchCustomers(string phoneNumber)
         {
             var customers = _context.Customers
@@ -349,6 +350,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 }).ToList();
 
             return Json(customers);
+        }
+
+        [HttpGet]
+        public IActionResult RoundNumber(double value, int decimals = 2)
+        {
+            double rounded = Math.Round(value, decimals);
+
+            return Json(new { original = value, rounded = rounded });
         }
     }
 }
