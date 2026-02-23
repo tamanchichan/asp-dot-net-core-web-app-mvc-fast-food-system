@@ -83,6 +83,7 @@
                             @cartProduct.Product.Code
                             @if (cartProduct is CartFoodProduct cfp)
                             {
+                                @cartProduct.Product.Code
                                 @(cfp.FoodOption.HasValue ? cfp.FoodOption.Value.ToString().Substring(0, 1) : null)
                             }
                         </span>
