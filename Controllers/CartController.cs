@@ -88,7 +88,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 return NotFound();
             }
 
-            CartProduct cartProduct = cart.CartProducts.FirstOrDefault(cp => cp.ProductId == product.Id);
+            CartProduct cartProduct = cart.CartProducts
+                .FirstOrDefault(cp => cp.ProductId == product.Id && cp.AdditionalPrice == additionalPrice);
 
             if (cartProduct == null)
             {
