@@ -80,7 +80,6 @@
                     else
                     {
                         <span class="product-code">
-                            @cartProduct.Product.Code
                             @if (cartProduct is CartFoodProduct cfp)
                             {
                                 @cartProduct.Product.Code
@@ -101,7 +100,23 @@
                             @Html.DisplayFor(model => cartSauceProduct.SauceOption)
                         }
                     </span>
-                    <span class="product-additional-price">@cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                    <span class="product-additional-price">
+                        @cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))
+                        <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
+
+                        <div class="modal additional-price-modal">
+                            <div class="modal-content">
+                                <span class="close-modal">&times;</span>
+                                <form asp-action="EditProductAdditionalPrice" asp-controller="Cart" asp-route-id="@cartProduct.Id" method="post">
+                                    <div class="flex additional-price">
+                                        <label for="additionalPrice">Additional Price:</label>
+                                        <input type="number" name="additionalPrice" id="additionalPrice" />
+                                    </div>
+                                    <button type="submit" class="button">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+                    </span>
                     <span class="product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
                     <span class="product-quantity">@cartProduct.Quantity</span>
                     <span class="product-total-price">@cartProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
@@ -116,4 +131,5 @@
 
 @section Scripts {
     <script src="~/js/Shared/order-form.js"></script>
+    <script src="~/js/additionalPriceModal.js"></script>
 }
