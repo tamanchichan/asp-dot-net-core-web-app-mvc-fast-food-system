@@ -184,10 +184,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     }
                     else
                     {
+                        if (product.HasOptions && productOption == null)
+                        {
+                            TempData["ErrorMessage"] = "Please select an option for this product.";
+                            return Redirect(returnUrl);
+                        }
+
                         cartProduct = new CartFoodProduct()
                         {
                             FoodOption = productOption.HasValue ? GetFoodOption((char)productOption) : null,
-                        };
+                        };                            
                     }
                 }
                 else if (product is SauceProduct)
@@ -320,6 +326,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     }
                     else
                     {
+                        if (product.HasOptions && productOption == null)
+                        {
+                            TempData["ErrorMessage"] = "Please select an option for this product.";
+                            return Redirect(returnUrl);
+                        }
+
                         orderProduct = new OrderFoodProduct()
                         {
                             FoodOption = productOption.HasValue ? GetFoodOption((char)productOption) : null,
@@ -337,7 +349,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 if (orderProduct == null)
                 {
                     ModelState.AddModelError(string.Empty, "Error creating a 'cartProduct'.");
-                    return Redirect(returnUrl);
+                    return Redirect(returnUrl); //ModelState doesn't work for Redirect, so update this and others later to TempData
                 }
 
                 orderProduct.OrderId = order.Id;

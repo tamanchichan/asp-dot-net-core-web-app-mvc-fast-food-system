@@ -16,10 +16,13 @@
 
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 
-<div class="container add-product-input">
-    <form asp-action="@aspAction" asp-controller="Shared" autocomplete="off" method="post">
-        <input type="hidden" name="orderId" value="@orderId"
-        <label for="addProductInput" hidden></label>
-        <input type="text" name="input" id="addProductToCartInput" placeholder="CODE x QUANTITY" autofocus />
-    </form>
+<div class="container">
+    <div class="add-product-input">
+        <form asp-action="@aspAction" asp-controller="Shared" autocomplete="off" method="post">
+            <input type="hidden" name="orderId" value="@orderId"
+            <label for="addProductInput" hidden></label>
+            <input type="text" name="input" id="addProductToCartInput" placeholder="CODE x QUANTITY" autofocus />
+        </form>
+    </div>
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 </div>

@@ -1,7 +1,6 @@
 ﻿.add-product-input {
     display: flex;
     justify-content: center;
-    padding-bottom: 15px;
 }
 
 input[type=text] {
@@ -9,5 +8,13 @@ input[type=text] {
     border-radius: 30px;
     font-size: 20px;
     padding: 10px 30px;
+    text-align: center;
+}
+
+.alert {
+    height: 20px;
+    line-height: 20px;
+    margin-top: 5px;
+/*    padding-bottom: 15px;*/
     text-align: center;
 }
