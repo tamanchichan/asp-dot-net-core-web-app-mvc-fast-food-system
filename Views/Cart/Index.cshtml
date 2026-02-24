@@ -93,7 +93,7 @@
                             @cartFoodProduct.Product.Name
                             @if (cartFoodProduct.Product.HasOptions)
                             {
-                                @($" {cartFoodProduct.FoodOption.Value.ToString()}")
+                                @(cartFoodProduct.FoodOption.HasValue ? cartFoodProduct.FoodOption.Value.ToString() : "")
                             }
                         }
                         else if (cartProduct is CartSauceProduct cartSauceProduct) {
