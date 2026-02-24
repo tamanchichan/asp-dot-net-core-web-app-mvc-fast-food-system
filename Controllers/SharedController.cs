@@ -74,6 +74,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             string returnUrl = Request.Headers["Referer"].ToString();
             string code;
             int quantity;
+            decimal additionalPrice = 0m;
 
             if (input.Contains("*") || input.Contains("x"))
             {
@@ -126,21 +127,42 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 }
             }
 
-            if (product is FoodProduct)
+            if (product is BeverageProduct)
+            {
+                cartProduct = _context.CartProducts
+                    .OfType<CartBeverageProduct>()
+                    .Where(cp => cp.CartId == cart.Id)
+                    .FirstOrDefault(
+                        cp =>
+                            cp.ProductId == product.Id &&
+                            //cp.BeverageOption == (productOption.HasValue ? GetBeverageOption(productOption.Value) : null) && // Create GetBeverageOption function (?)
+                            cp.AdditionalPrice == additionalPrice
+                    );
+            }
+            else if (product is FoodProduct)
             {
                 cartProduct = _context.CartProducts
                     .OfType<CartFoodProduct>()
                     .Where(cp => cp.CartId == cart.Id)
-                    .FirstOrDefault(cp => cp.ProductId == product.Id && cp.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null));
+                    .FirstOrDefault(
+                        cp =>
+                            cp.ProductId == product.Id &&
+                            cp.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null) &&
+                            cp.AdditionalPrice == additionalPrice
+                    );
             }
             else if (product is SauceProduct)
             {
                 cartProduct = _context.CartProducts
                     .OfType<CartSauceProduct>()
                     .Where(cp => cp.CartId == cart.Id)
-                    .FirstOrDefault(cp => cp.ProductId == product.Id && cp.SauceOption == GetSauceOption(input));
+                    .FirstOrDefault(
+                        cp =>
+                            cp.ProductId == product.Id &&
+                            cp.SauceOption == GetSauceOption(input) &&
+                            cp.AdditionalPrice == additionalPrice
+                    );
             }
-
 
             if (cartProduct == null)
             {
@@ -186,6 +208,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 cartProduct.Cart = cart;
                 cartProduct.ProductId = product.Id;
                 cartProduct.Product = product;
+                cartProduct.AdditionalPrice = 0m;
                 cartProduct.Quantity = (int)quantity;
 
                 _context.CartProducts.Add(cartProduct);
