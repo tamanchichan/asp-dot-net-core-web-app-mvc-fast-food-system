@@ -149,6 +149,26 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return Redirect(returnUrl);
         }
 
+        [HttpPost]
+        public IActionResult EditProductAdditionalPrice(Guid id, string additionalPrice)
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
+
+            if (cartProduct == null)
+            {
+                return NotFound();
+            }
+
+            cartProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
+
+            _context.CartProducts.Update(cartProduct);
+            _context.SaveChanges();
+
+            return Redirect(returnUrl);
+        }
+
         public IActionResult IncrementProduct(Guid id, int quantity = 1)
         {
             string returnUrl = Request.Headers["Referer"].ToString();
