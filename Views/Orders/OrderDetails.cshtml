@@ -74,6 +74,44 @@
     </div>
     <div class="flex order-summary">
         <h3>Total Items: @Model.Quantity</h3>
-        <h3 class="order-total-price">Total Price: @Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("en-CA"))</h3>
+        <div class="flex order-summary-price">
+            <div class="flex order-additional-charge-price">
+                @if (Model.AdditionalCharge != null && Model.AdditionalCharge != 0m)
+                {
+                    <h3 class="key">Additional Charge:</h3>
+                    <h3 class="value">@Model.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))</h3>
+                }
+            </div>
+            <div class="flex order-subtotal-price ">
+                <h3 class="key">SubTotal:</h3>
+                <h3 class="value">@Model.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))</h3>
+            </div>
+            <div class="flex order-gst-price">
+                <h3 class="key">GST:</h3>
+                <h3 class="value">@Model.Gst.ToString("C", new CultureInfo("en-CA"))</h3>
+            </div>
+            <div class="flex order-pst-price">
+                <h3 class="key">PST:</h3>
+                <h3 class="value">@Model.Pst.ToString("C", new CultureInfo("en-CA"))</h3>
+            </div>
+            <div class="flex order-delivery-price">
+                @if (Model.DeliveryFee != null && Model.DeliveryFee != 0m)
+                {
+                    <h3 class="key">Delivery Fee:</h3>
+                    <h3 class="value">@Model.DeliveryFee.Value.ToString("C", new CultureInfo("en-CA"))</h3>
+                }
+            </div>
+            <div class="flex order-discount-price">
+                @if (Model.Discount != null && Model.Discount != 0m)
+                {
+                    <h3 class="key">Discount:</h3>
+                    <h3 class="value">@Model.Discount.Value.ToString("C", new CultureInfo("en-CA"))</h3>
+                }
+            </div>
+            <div class="flex order-total-price">
+                <h3 class="key">Total:</h3>
+                <h3 class="value">@Model.TotalPrice.ToString("C", new CultureInfo("en-CA"))</h3>
+            </div>
+        </div>
     </div>
 </div>
