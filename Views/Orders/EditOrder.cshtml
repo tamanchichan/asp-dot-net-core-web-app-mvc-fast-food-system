@@ -13,6 +13,11 @@
 
 <partial name="_AddProductInput" />
 <div class="container edit-order-page">
+    <div>
+        <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@Model.Id">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    </div>
     <div class="flex">
         <h2>
             Order nº: @Model.Number

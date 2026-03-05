@@ -8,10 +8,17 @@
 @model Order
 
 <div class="container order-details-page">
-    <div class="edit-order">
-        <a asp-action="EditOrder" asp-controller="Orders" asp-route-id="@Model.Id" class="btn btn-primary">
-            <i class="fa fa-edit"></i> Edit Order
-        </a>
+    <div class="flex">
+        <div>
+            <a asp-action="Index" asp-controller="Orders">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="edit-order">
+            <a asp-action="EditOrder" asp-controller="Orders" asp-route-id="@Model.Id">
+                <i class="fa fa-edit"></i> Edit Order
+            </a>
+        </div>
     </div>
     <div class="flex">
         <h2>
