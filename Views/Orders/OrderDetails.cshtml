@@ -27,6 +27,7 @@
         <div class="order-product-template">
             <span class="product-code">Code</span>
             <span class="product-name">Product</span>
+            <span class="product-additional-price">Additional Price</span>
             <span class="product-quantity">Quantity</span>
             <span class="product-price">Price</span>
             <span class="product-total-price">Total Price</span>
@@ -64,8 +65,9 @@
             <div class="order-product">
                 <span class="product-code">@orderProduct.Product.Code</span>
                 <span class="product-name">@orderProduct.Product.Name</span>
+                <span class="product-additional-price">@orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))</span>
                 <span class="product-quantity">@orderProduct.Quantity</span>
-                <span class="product-price">@orderProduct.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                <span class="product-price">@orderProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
                 <span class="product-total-price">@orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
             </div>
         }
