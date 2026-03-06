@@ -7,7 +7,7 @@
     align-items: center;
     gap: 10px;
     padding: 10px 0px;
-    grid-template-columns: repeat(5, 1fr) 50px 50px;
+    grid-template-columns: repeat(6, 1fr) 50px 50px;
     text-align: center;
     width: 100%;
 }
@@ -17,6 +17,20 @@
     font-weight: 400;
     letter-spacing: 1.5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.product-additional-price {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.button-additional-price {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    display: inline;
+    font-size: 20px;
+    padding: 0px;
 }
 
 .edit-order-page input, .edit-order-page textarea {

@@ -32,8 +32,9 @@
         <div class="order-product-template">
             <span class="product-code">Code</span>
             <span class="product-name">Product</span>
-            <span class="product-quantity">Quantity</span>
             <span class="product-price">Price</span>
+            <span class="product-additional-price">Additional Price</span>
+            <span class="product-quantity">Quantity</span>
             <span class="product-total-price">Total Price</span>
             <span class="product-increment-button"></span>
             <span class="product-decrement-button"></span>
@@ -71,8 +72,13 @@
             <div class="order-product">
                 <span class="product-code">@orderProduct.Product.Code</span>
                 <span class="product-name">@orderProduct.Product.Name</span>
-                <span class="product-quantity">@orderProduct.Quantity</span>
                 <span class="product-price">@orderProduct.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                <span class="product-additional-price">
+                    @orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))
+                    <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <partial name="_ProductsAdditionalPriceAndInstructionsModal" model="@orderProduct" />
+                </span>
+                <span class="product-quantity">@orderProduct.Quantity</span>
                 <span class="product-total-price">@orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
                 <a asp-action="IncrementProduct" asp-controller="Orders" asp-route-id="@orderProduct.Id">
                     <span class="button product-increment">+</span>
@@ -88,4 +94,5 @@
 
 @section Scripts {
     <script src="~/js/Shared/order-form.js"></script>
+    <script src="~/js/additionalPriceModal.js"></script>
 }
