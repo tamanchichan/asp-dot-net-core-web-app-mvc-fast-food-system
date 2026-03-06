@@ -3,7 +3,7 @@
 openModalButtons.forEach(button => {
     const modal = button
         .closest(".product-additional-price")
-        .querySelector(".additional-price-modal");
+        .querySelector(".additional-price-and-instructions-modal");
 
     const closeButton = modal.querySelector(".close-modal");
 

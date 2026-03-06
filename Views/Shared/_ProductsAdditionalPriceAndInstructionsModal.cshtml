@@ -1,0 +1,40 @@
+﻿@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+@{
+    Guid productId = Guid.Empty;
+    string additionalPrice = "";
+    string instructions = "";
+
+    if (Model is CartProduct cartProduct)
+    {
+        productId = cartProduct.Id;
+        additionalPrice = (cartProduct.AdditionalPrice != 0m) ? cartProduct.AdditionalPrice.ToString("0.##", CultureInfo.InvariantCulture) : "";
+        instructions = cartProduct.Instructions ?? "";
+    }
+    else if (Model is OrderProduct orderProduct)
+    {
+        productId = orderProduct.Id;
+        additionalPrice = (orderProduct.AdditionalPrice != 0m) ? orderProduct.AdditionalPrice.ToString("0.##", CultureInfo.InvariantCulture) : "";
+        instructions = orderProduct.Instructions ?? "";
+    }
+}
+
+<div class="modal additional-price-and-instructions-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <form asp-action=@ViewData["ProductsAdditionalFormAction"]
+              asp-controller=@ViewData["ProductsAdditionalFormController"]
+              asp-route-id="@productId"
+              method="post">
+            <div class="flex additional-price">
+                <label for="additionalPrice">Additional Price:</label>
+                <input type="number" step="0.1" name="additionalPrice" id="additionalPrice" value="@additionalPrice" />
+            </div>
+            <div class="flex instructions">
+                <label for="instructions">Instructions:</label>
+                <textarea name="instructions" id="instructions" rows="3">@instructions</textarea>
+            </div>
+            <button type="submit" class="button">Confirm</button>
+        </form>
+    </div>
+</div>

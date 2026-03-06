@@ -1,0 +1,24 @@
+﻿input, textarea {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.additional-price input {
+    width: 75px;
+}
+
+.instructions {
+    margin-top: 10px;
+}
+
+.instructions textarea {
+    padding: 10px 15px;
+    resize: none;
+}
+
+.additional-price label, .instructions label {
+    width: 150px;
+    text-align: right;
+    margin-right: 5px;
+}
