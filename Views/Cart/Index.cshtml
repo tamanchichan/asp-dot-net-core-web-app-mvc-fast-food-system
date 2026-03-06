@@ -35,6 +35,7 @@
                 <span class="product-name">Name</span>
                 <span class="product-additional-price">Additional Price</span>
                 <span class="product-price">Price</span>
+                <span class="product-additional-price">Additional Price</span>
                 <span class="product-quantity">Quantity</span>
                 <span class="product-total-price">Total Price</span>
                 <span class="product-increment-button"></span>
@@ -100,6 +101,7 @@
                             @Html.DisplayFor(model => cartSauceProduct.SauceOption)
                         }
                     </span>
+                    <span class="product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
                     <span class="product-additional-price">
                         @cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))
                         <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
