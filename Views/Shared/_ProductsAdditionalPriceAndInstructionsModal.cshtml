@@ -22,8 +22,8 @@
 <div class="modal additional-price-and-instructions-modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <form asp-action=@ViewData["ProductsAdditionalFormAction"]
-              asp-controller=@ViewData["ProductsAdditionalFormController"]
+        <form asp-action="EditProductAdditionalPriceAndInstructions"
+              asp-controller="Shared"
               asp-route-id="@productId"
               method="post">
             <div class="flex additional-price">

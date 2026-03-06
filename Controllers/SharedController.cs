@@ -7,6 +7,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -393,6 +394,39 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             double rounded = Math.Round(value, decimals);
 
             return Json(new { original = value, rounded = rounded });
+        }
+
+        [HttpPost]
+        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string instructions)
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
+
+            if (cartProduct == null)
+            {
+                OrderProduct orderProduct = _context.OrderProducts.FirstOrDefault(op => op.Id == id);
+
+                if (orderProduct == null)
+                {
+                    return NotFound();
+                }
+
+                orderProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
+
+                _context.OrderProducts.Update(orderProduct);
+                _context.SaveChanges();
+            }
+            else
+            {
+                cartProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
+
+                _context.CartProducts.Update(cartProduct);
+                _context.SaveChanges();
+
+            }
+
+            return Redirect(returnUrl);
         }
     }
 }
