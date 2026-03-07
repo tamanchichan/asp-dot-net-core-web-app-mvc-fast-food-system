@@ -413,6 +413,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 }
 
                 orderProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
+                orderProduct.Instructions = instructions;
 
                 _context.OrderProducts.Update(orderProduct);
                 _context.SaveChanges();
@@ -420,6 +421,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             else
             {
                 cartProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
+                cartProduct.Instructions = instructions;
 
                 _context.CartProducts.Update(cartProduct);
                 _context.SaveChanges();
