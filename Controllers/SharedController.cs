@@ -292,7 +292,20 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 }
             }
 
-            if (product is FoodProduct)
+            if (product is BeverageProduct)
+            {
+                orderProduct = _context.OrderProducts
+                    .OfType<OrderBeverageProduct>()
+                    .Where(op => op.OrderId == order.Id)
+                    .FirstOrDefault(
+                        op =>
+                            op.ProductId == product.Id &&
+                            //op.BeverageOption == (productOption.HasValue ? GetBeverageOption(productOption.Value) : null) && // Create GetBeverageOption function (?)
+                            op.AdditionalPrice == additionalPrice &&
+                            op.Instructions == instructions
+                    );
+            }
+            else if (product is FoodProduct)
             {
                 orderProduct = _context.OrderProducts
                     .OfType<OrderFoodProduct>()
