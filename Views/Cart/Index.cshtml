@@ -74,43 +74,51 @@
             ))
             {
                 <div class="cart-product">
-                    @if (cartProduct.Product.Category == ProductCategory.Extras)
-                    {
-                        <span class="product-code"></span>
-                    }
-                    else
-                    {
-                        <span class="product-code">
-                            @if (cartProduct is CartFoodProduct cfp)
+                    <div class="product">
+                        @if (cartProduct.Product.Category == ProductCategory.Extras)
+                        {
+                            <span class="product-code"></span>
+                        }
+                        else
+                        {
+                            <span class="product-code">
+                                @if (cartProduct is CartFoodProduct cfp)
+                                {
+                                    @cartProduct.Product.Code
+                                    @(cfp.FoodOption.HasValue ? cfp.FoodOption.Value.ToString().Substring(0, 1) : null)
+                                }
+                            </span>
+                        }
+                        <span class="product-name">
+                            @if (cartProduct is CartFoodProduct cartFoodProduct)
                             {
-                                @cartProduct.Product.Code
-                                @(cfp.FoodOption.HasValue ? cfp.FoodOption.Value.ToString().Substring(0, 1) : null)
+                                @cartFoodProduct.Product.Name
+                                @if (cartFoodProduct.Product.HasOptions)
+                                {
+                                    @(cartFoodProduct.FoodOption.HasValue ? cartFoodProduct.FoodOption.Value.ToString() : "")
+                                }
+                            }
+                            else if (cartProduct is CartSauceProduct cartSauceProduct) {
+                                @Html.DisplayFor(model => cartSauceProduct.SauceOption)
                             }
                         </span>
-                    }
-                    <span class="product-name">
-                        @if (cartProduct is CartFoodProduct cartFoodProduct)
+                        <span class="product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                        <span class="product-additional-price">
+                            @cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))
+                            <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <partial name="_ProductsAdditionalPriceAndInstructionsModal" model="cartProduct" />
+                        </span>
+                        <span class="product-quantity">@cartProduct.Quantity</span>
+                        <span class="product-total-price">@cartProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                        <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@cartProduct.Id"><span class="button product-increment">+</span></a>
+                        <a asp-action="DecrementProduct" asp-controller="Cart" asp-route-id="@cartProduct.Id"><span class="button product-decrement">-</span></a>
+                    </div>
+                        @if (!string.IsNullOrEmpty(cartProduct.Instructions))
                         {
-                            @cartFoodProduct.Product.Name
-                            @if (cartFoodProduct.Product.HasOptions)
-                            {
-                                @(cartFoodProduct.FoodOption.HasValue ? cartFoodProduct.FoodOption.Value.ToString() : "")
-                            }
+                            <div class="product-instructions">
+                                @cartProduct.Instructions
+                            </div>
                         }
-                        else if (cartProduct is CartSauceProduct cartSauceProduct) {
-                            @Html.DisplayFor(model => cartSauceProduct.SauceOption)
-                        }
-                    </span>
-                    <span class="product-price">@cartProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
-                    <span class="product-additional-price">
-                        @cartProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))
-                        <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <partial name="_ProductsAdditionalPriceAndInstructionsModal" model="cartProduct" />
-                    </span>
-                    <span class="product-quantity">@cartProduct.Quantity</span>
-                    <span class="product-total-price">@cartProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
-                    <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@cartProduct.Id"><span class="button product-increment">+</span></a>
-                    <a asp-action="DecrementProduct" asp-controller="Cart" asp-route-id="@cartProduct.Id"><span class="button product-decrement">-</span></a>
                 </div>
             }
         </div>

@@ -76,6 +76,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             string code;
             int quantity;
             decimal additionalPrice = 0m;
+            string instructions = null;
 
             if (input.Contains("*") || input.Contains("x"))
             {
@@ -137,7 +138,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         cp =>
                             cp.ProductId == product.Id &&
                             //cp.BeverageOption == (productOption.HasValue ? GetBeverageOption(productOption.Value) : null) && // Create GetBeverageOption function (?)
-                            cp.AdditionalPrice == additionalPrice
+                            cp.AdditionalPrice == additionalPrice &&
+                            cp.Instructions == instructions
                     );
             }
             else if (product is FoodProduct)
@@ -149,7 +151,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         cp =>
                             cp.ProductId == product.Id &&
                             cp.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null) &&
-                            cp.AdditionalPrice == additionalPrice
+                            cp.AdditionalPrice == additionalPrice &&
+                            cp.Instructions == instructions
                     );
             }
             else if (product is SauceProduct)
@@ -161,7 +164,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         cp =>
                             cp.ProductId == product.Id &&
                             cp.SauceOption == GetSauceOption(input) &&
-                            cp.AdditionalPrice == additionalPrice
+                            cp.AdditionalPrice == additionalPrice &&
+                            cp.Instructions == instructions
                     );
             }
 
@@ -240,6 +244,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             string returnUrl = Request.Headers["Referer"].ToString();
             string code;
             int quantity;
+            decimal additionalPrice = 0m;
+            string instructions = null;
 
             if (input.Contains("*") || input.Contains("x"))
             {
@@ -310,14 +316,26 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 orderProduct = _context.OrderProducts
                     .OfType<OrderFoodProduct>()
                     .Where(op => op.OrderId == order.Id)
-                    .FirstOrDefault(op => op.ProductId == product.Id && op.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null));
+                    .FirstOrDefault(
+                        op =>
+                            op.ProductId == product.Id &&
+                            op.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null) &&
+                            op.AdditionalPrice == additionalPrice &&
+                            op.Instructions == instructions
+                    );
             }
             else if (product is SauceProduct)
             {
                 orderProduct = _context.OrderProducts
                     .OfType<OrderSauceProduct>()
                     .Where(op => op.OrderId == order.Id)
-                    .FirstOrDefault(op => op.ProductId == product.Id && op.SauceOption == GetSauceOption(input));
+                    .FirstOrDefault(
+                        op =>
+                            op.ProductId == product.Id &&
+                            op.SauceOption == GetSauceOption(input) &&
+                            op.AdditionalPrice == additionalPrice &&
+                            op.Instructions == instructions
+                    );
             }
 
             if (orderProduct == null)
