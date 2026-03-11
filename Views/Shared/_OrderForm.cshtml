@@ -11,6 +11,7 @@
     if (Model is Order order)
     {
         selectedOrderType = order.Type;
+        observations = order.Observations ?? "";
         customerName = order.CustomerName ?? "";
         customerPhoneNumber = order.CustomerPhoneNumber ?? "";
         customerAddress = order.CustomerAddress ?? "";

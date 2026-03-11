@@ -10,6 +10,26 @@
 
 .order-summary {
     margin-top: 45px;
+    position: relative;
+}
+
+.observations {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+    position: absolute;
+    width: 250px;
+}
+
+.observations h3 {
+    margin: 0px;
+    letter-spacing: 2.5px;
+}
+
+.observations p {
+    color: #ff1212;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
 .order-summary-price {
