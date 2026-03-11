@@ -1,11 +1,14 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 {
-    public class CartFoodProduct : CartProduct
+    public class CartFoodProduct : CartProduct, IProductItem
     {
+        public BeverageOption? BeverageOption => null; // Not applicable for food products
+
         private FoodOption? _foodOption;
         public FoodOption? FoodOption  // Beef, Chicken, Fish, Mushroom, etc.
         {
@@ -26,6 +29,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             get => _foodSize;
             set => _foodSize = value;
         }
+
+        public SauceOption? SauceOption => null; // Not applicable for food products
 
         public CartFoodProduct() { }
 

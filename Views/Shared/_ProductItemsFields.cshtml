@@ -1,0 +1,114 @@
+﻿@{
+    bool hideButton = ViewData["HideButton"] as bool? ?? false;
+}
+
+@model IEnumerable<IProductItem>
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
+
+<div class="product-items">
+    <div class="product-items-template" style="@(hideButton ?"grid-template-columns: repeat(6, 1fr);" : "")">
+        <span class="product-code">Code</span>
+        <span class="product-name">Name</span>
+        <span class="product-price">Price</span>
+        <span class="product-additional-price">Additional Price</span>
+        <span class="product-quantity">Quantity</span>
+        <span class="product-total-price">Total Price</span>
+        @if (hideButton != true)
+        {
+            <span class="product-increment-button"></span>
+            <span class="product-decrement-button"></span>
+        }
+    </div>
+
+    @foreach (var productItem in Model.OrderBy
+    (
+        item => // order item by product's code
+        {
+            string code = item.Product.Code;
+            int i = 0;
+
+            while (i < code.Length && char.IsDigit(code[i]))
+            {
+                i++;
+            }
+
+            if (i > 0)
+            {
+                int number = int.Parse(code.Substring(0, i));
+                string letter = code.Substring(i);
+
+                return (0, number, letter); // tuple (group, number, text)
+                // 0: "code starts with a digit"
+                // number: the numeric part found
+                // letter: the remaining text
+            }
+            else
+            {
+                return (1, 0, code);
+                // 1: "code starts with a letter"
+                // 0: no number
+                // code: entire string
+            }
+        }
+    ))
+    {
+        <div class="product-item">
+            <div class="item" style="@(hideButton ? "grid-template-columns: repeat(6, 1fr);" : "")">
+                @if (productItem.Product.Category == ProductCategory.Extras)
+                {
+                    <span class="product-code"></span>
+                }
+                else
+                {
+                    <span class="product-code">
+                            @productItem.Product.Code
+                            @(productItem.FoodOption.HasValue ? productItem.FoodOption.Value.ToString().Substring(0, 1) : null)
+                    </span>
+                }
+                <span class="product-name">
+                    @productItem.Product.Name
+                    @if (productItem.Product.HasOptions)
+                    {
+                        @(productItem.FoodOption.HasValue? productItem.FoodOption.Value.ToString() : "")
+                    }
+                    @if (!string.IsNullOrEmpty(productItem.SauceOption.ToString()))
+                    {
+                        @Html.DisplayFor(model => productItem.SauceOption)
+                    }
+                </span>
+                <span class="product-price">@productItem.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                <span class="product-additional-price">
+                    @productItem.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))
+                    @if (hideButton != true)
+                    {
+                        <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <partial name="_ProductsAdditionalPriceAndInstructionsModal" model="productItem" />
+                    }
+                </span>
+                <span class="product-quantity">@productItem.Quantity</span>
+                <span class="product-total-price">@productItem.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
+                @if (hideButton != true)
+                {
+                    <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")">
+                        <span class="button product-increment">+</span>
+                    </a>
+                    <a asp-action="DecrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")">
+                        <span class="button product-decrement">-</span>
+                    </a>                    
+                }
+            </div>
+            @if (!string.IsNullOrEmpty(productItem.Instructions))
+            {
+                <div class="product-instructions">
+                    @productItem.Instructions
+                </div>
+            }
+        </div>
+    }
+</div>

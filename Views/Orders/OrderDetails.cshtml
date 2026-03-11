@@ -1,9 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Order Details";
+    ViewData["HideButton"] = true;
 }
 
 @using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
 @model Order
 
@@ -30,55 +32,7 @@
         </h2>
         <h2>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h2>
     </div>
-    <div class="order-products">
-        <div class="order-product-template">
-            <span class="product-code">Code</span>
-            <span class="product-name">Product</span>
-            <span class="product-price">Price</span>
-            <span class="product-additional-price">Additional Price</span>
-            <span class="product-quantity">Quantity</span>
-            <span class="product-total-price">Total Price</span>
-        </div>
-        @foreach (OrderProduct orderProduct in Model.OrderProducts.OrderBy(
-            op => // order by product's code
-            {
-                string code = op.Product.Code;
-                int i = 0;
-
-                while (i < code.Length && char.IsDigit(code[i]))
-                {
-                    i++;
-                }
-
-                if (i > 0)
-                {
-                    int number = int.Parse(code.Substring(0, i));
-                    string letter = code.Substring(i);
-
-                    return (0, number, letter); // tuple (group, number, text)
-                    // 0: "code starts with a digit"
-                    // number: the numeric part found
-                    // letter: the remaining text
-                }
-                else
-                {
-                    return (1, 0, code);
-                    // 1: "code starts with a letter"
-                    // 0: no number
-                    // code: entire string
-            }
-        }))
-        {
-            <div class="order-product">
-                <span class="product-code">@orderProduct.Product.Code</span>
-                <span class="product-name">@orderProduct.Product.Name</span>
-                <span class="product-price">@orderProduct.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
-                <span class="product-additional-price">@orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))</span>
-                <span class="product-quantity">@orderProduct.Quantity</span>
-                <span class="product-total-price">@orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
-            </div>
-        }
-    </div>
+    <partial name="_ProductItemsFields" model="Model.OrderProducts.OfType<IProductItem>()" />
     <div class="flex order-summary">
         <h3>Total Items: @Model.Quantity</h3>
         <div class="flex order-summary-price">

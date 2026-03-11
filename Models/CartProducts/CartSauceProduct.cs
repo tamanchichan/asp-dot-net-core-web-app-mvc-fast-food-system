@@ -1,11 +1,19 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
 {
-    public class CartSauceProduct : CartProduct
+    public class CartSauceProduct : CartProduct, IProductItem
     {
+        public BeverageOption? BeverageOption => null; // Not applicable for sauce products
+
+        public FoodOption? FoodOption => null; // Not applicable for sauce products
+
+        public FoodSize? FoodSize => null; // Not applicable for sauce products
+
+
         public SauceOption? _sauceOption;
 
         public SauceOption? SauceOption

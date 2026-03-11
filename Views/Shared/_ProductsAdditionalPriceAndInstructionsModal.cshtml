@@ -5,11 +5,11 @@
     string additionalPrice = "";
     string instructions = "";
 
-    if (Model is CartProduct cartProduct)
+    if (Model is CartProduct product)
     {
-        productId = cartProduct.Id;
-        additionalPrice = (cartProduct.AdditionalPrice != 0m) ? cartProduct.AdditionalPrice.ToString("0.##", CultureInfo.InvariantCulture) : "";
-        instructions = cartProduct.Instructions ?? "";
+        productId = product.Id;
+        additionalPrice = (product.AdditionalPrice != 0m) ? product.AdditionalPrice.ToString("0.##", CultureInfo.InvariantCulture) : "";
+        instructions = product.Instructions ?? "";
     }
     else if (Model is OrderProduct orderProduct)
     {
