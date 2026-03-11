@@ -66,6 +66,10 @@ using (IServiceScope scope = app.Services.CreateScope())
 
     try
     {
+        // Apply migrations and create the database if it doesn't exist
+        FastFoodSystemDbContext context = services.GetRequiredService<FastFoodSystemDbContext>();
+        await context.Database.MigrateAsync();
+
         await DefaultUsers.Initialize(services);
         await DefaultFoodProducts.Initialize(services);
         await DefaultBeverageProducts.Initialize(services);
