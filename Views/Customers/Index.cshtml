@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Customers Page";
+}
+
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+
+@model HashSet<Customer>
+
+<div class="container customers-page">
+    <h1>Customers</h1>
+    <div class="customers-list-template">
+        <div class="customer-name">Name</div>
+        <div class="customer-phone-number">Phone Number</div>
+        <div class="customer-address">Address</div>
+    </div>
+    <div class="customers-list">
+        @foreach (Customer customer in Model)
+        {
+            <div class="customer-name">@(customer.Name ?? "NULL")</div>
+            <div class="customer-phone-number">@(customer.PhoneNumber ?? "NULL")</div>
+            <div class="customer-address">@(customer.Address ?? "NULL")</div>
+        }
+    </div>
+</div>

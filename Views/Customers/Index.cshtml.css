@@ -1,0 +1,18 @@
+﻿.customers-list-template, .customers-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    text-align: center;
+}
+
+.customers-list-template {
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.customers-list {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+    padding: 15px 0px;
+}
