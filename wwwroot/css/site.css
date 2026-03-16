@@ -24,18 +24,6 @@
     appearance: checkbox;
 }
 
-.product-increment {
-    background-color: #28a745;
-}
-
-.product-decrement {
-    background-color: #dc3545;
-}
-
-.product-increment:hover, .product-decrement:hover {
-        color: #fff;
-}
-
 .modal {
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
