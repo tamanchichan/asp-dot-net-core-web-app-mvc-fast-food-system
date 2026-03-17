@@ -1,0 +1,29 @@
+﻿<div class="container create-customer-page">
+    <div class="create-customer-form">
+        <form asp-action="CreateCustomer" method="post" autocomplete="off">
+            <div class="customer-name">
+                <label for="customerName">Name:</label>
+                <input type="text" id="customerName" name="customerName" value="@TempData["CustomerName"]"/>
+            </div>
+            <div class="customer-phone-number">
+                <label for="customerPhoneNumber">Phone Number:</label>
+                <input 
+                    type="tel"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    title="Phone number must be in the format 123-456-7890"
+                    id="customerPhoneNumber" 
+                    name="customerPhoneNumber"
+                    value="@TempData["ErrorMessage"]"
+                />
+            </div>
+            <div class="customer-address">
+                <label for="customerAddress">Address:</label>
+                <input type="text" id="customerAddress" name="customerAddress" value="@TempData["CustomerAddress"]" />
+            </div>
+            <div class="form-actions">
+                <a asp-action="Index" class="button cancel-button">Cancel</a>
+                <button type="submit" class="button confirm-button">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

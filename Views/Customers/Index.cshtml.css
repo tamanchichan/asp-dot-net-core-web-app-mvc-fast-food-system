@@ -1,4 +1,13 @@
-﻿.customers-list-template, .customers-list {
+﻿.page-header {
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
+.page-header h2 {
+    margin-bottom: 0px;
+}
+
+.customers-list-template, .customer-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
@@ -12,7 +21,7 @@
     text-transform: uppercase;
 }
 
-.customers-list {
+.customer-list {
     border-bottom: 1px solid rgba(128, 128, 128, 0.25);
     padding: 15px 0px;
 }

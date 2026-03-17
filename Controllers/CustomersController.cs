@@ -28,5 +28,49 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return View(customers);
         }
+
+        [HttpGet]
+        public IActionResult CreateCustomer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCustomer(string? customerName, string customerPhoneNumber, string? customerAddress)
+        {
+            if (string.IsNullOrEmpty(customerPhoneNumber))
+            {
+                TempData["CustomerName"] = customerName;
+                TempData["ErrorMessage"] = "Phone number cannot be null/empty";
+                TempData["CustomerAddress"] = customerAddress;
+
+                return View();
+            }
+
+            Customer customer = _context.Customers.FirstOrDefault(c => c.PhoneNumber == customerPhoneNumber);
+
+            if (customer == null)
+            {
+                customer = new Customer()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = customerName,
+                    PhoneNumber = customerPhoneNumber,
+                    Address = customerAddress
+                };
+
+                _context.Customers.Add(customer);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+
+            }
+
+            TempData["CustomerName"] = customerName;
+            TempData["ErrorMessage"] = "Phone number already exist";
+            TempData["CustomerAddress"] = customerAddress;
+
+            return View();
+        }
     }
 }

@@ -1,0 +1,37 @@
+﻿label {
+    display: inline-block;
+    min-width: 150px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+input {
+    border: 1px solid #000;
+    border-radius: 2.5px;
+    padding: 10px 15px;
+}
+
+.create-customer-form {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 50px 25px 25px 25px;
+    width: fit-content;
+}
+
+.create-customer-form div + div {
+    margin-top: 15px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px !important;
+}
+
+::deep .form-actions a:hover {
+    color: #000;
+}

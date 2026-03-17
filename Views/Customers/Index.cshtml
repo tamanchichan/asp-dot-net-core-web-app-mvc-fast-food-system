@@ -7,18 +7,23 @@
 @model HashSet<Customer>
 
 <div class="container customers-page">
-    <h1>Customers</h1>
-    <div class="customers-list-template">
-        <div class="customer-name">Name</div>
-        <div class="customer-phone-number">Phone Number</div>
-        <div class="customer-address">Address</div>
+    <div class="flex page-header">
+        <h2>Customers List</h2>
+        <a asp-action="CreateCustomer" class="button create-button">Create New Customer</a>
     </div>
     <div class="customers-list">
+        <div class="customers-list-template">
+            <div class="customer-name">Name</div>
+            <div class="customer-phone-number">Phone Number</div>
+            <div class="customer-address">Address</div>
+        </div>
         @foreach (Customer customer in Model)
         {
-            <div class="customer-name">@(customer.Name ?? "NULL")</div>
-            <div class="customer-phone-number">@(customer.PhoneNumber ?? "NULL")</div>
-            <div class="customer-address">@(customer.Address ?? "NULL")</div>
+            <div class="customer-list">
+                <div class="customer-name">@(customer.Name ?? "NULL")</div>
+                <div class="customer-phone-number">@(customer.PhoneNumber ?? "NULL")</div>
+                <div class="customer-address">@(customer.Address ?? "NULL")</div>
+            </div>
         }
     </div>
 </div>
