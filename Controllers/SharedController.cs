@@ -80,7 +80,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             input = input.ToUpperInvariant();
 
-            string returnUrl = Request.Headers["Referer"].ToString();
             string code;
             int quantity;
             decimal additionalPrice = 0m;
