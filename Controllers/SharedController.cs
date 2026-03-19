@@ -70,6 +70,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         [HttpPost]
         public IActionResult AddProductToCart(string input)
         {
+            string returnUrl = Request.Headers["Referer"].ToString();
+            
+            // If input is NULL or EMPTY, do nothing, return to "previous" page
+            if (string.IsNullOrEmpty(input))
+            {
+                return Redirect(returnUrl);
+            }
+
             input = input.ToUpperInvariant();
 
             string returnUrl = Request.Headers["Referer"].ToString();
