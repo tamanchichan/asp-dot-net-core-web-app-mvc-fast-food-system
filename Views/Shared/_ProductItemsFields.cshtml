@@ -58,7 +58,7 @@
         }
     ))
     {
-        <div class="product-item">
+        <div class="product-item" data-id="@productItem.Id">
             <div class="item" style="@(hideButton ? "grid-template-columns: repeat(6, 1fr);" : "")">
                 @if (productItem.Product.Category == ProductCategory.Extras)
                 {
@@ -95,12 +95,14 @@
                 <span class="product-total-price">@productItem.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
                 @if (hideButton != true)
                 {
-                    <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")" class="button product-increment">
+                    @* <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")" class="button product-increment">
                         +
                     </a>
                     <a asp-action="DecrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")" class="button product-decrement">
                         -
-                    </a>
+                    </a> *@
+                    <button class="button product-increment" style="@(hideButton ? "display: none;" : "null")" onclick="incrementProductQuantity('@productItem.Id')" type="button">+</button>
+                    <button class="button product-decrement" style="@(hideButton ? "display: none;" : "null")" onclick="decrementProductQuantity('@productItem.Id')" type="button">-</button>
                 }
             </div>
             @if (!string.IsNullOrEmpty(productItem.Instructions))
