@@ -21,9 +21,3 @@ export function decrementProductQuantity(productId) {
             element.querySelector(".product-quantity").textContent = data.quantity;
         })
 };
-
-export function test() {
-    console.log("hello, world");
-}
-
-console.log('hello');
