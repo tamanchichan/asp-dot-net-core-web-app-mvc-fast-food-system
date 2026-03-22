@@ -154,6 +154,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return Redirect(returnUrl);
         }
 
+        [HttpPost]
         public IActionResult IncrementProduct(Guid id, int quantity = 1)
         {
             string returnUrl = Request.Headers["Referer"].ToString();
@@ -175,9 +176,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _context.CartProducts.Update(cartProduct);
             _context.SaveChanges();
 
-            return Redirect(returnUrl);
+            return Json(new
+            {
+                quantity = cartProduct.Quantity,
+            });
         }
 
+        [HttpPost]
         public IActionResult DecrementProduct(Guid id, int quantity = 1)
         {
             string returnUrl = Request.Headers["Referer"].ToString();
@@ -214,7 +219,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             _context.SaveChanges();
 
-            return Redirect(returnUrl);
+            return Json(new
+            {
+                quantity = cartProduct.Quantity
+            });
         }
 
         public IActionResult ClearCartProducts()
