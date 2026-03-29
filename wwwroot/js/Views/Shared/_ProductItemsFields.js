@@ -35,7 +35,10 @@ export function decrementProductQuantity(productId) {
         .then(data => {
             const product = document.querySelector(`.product-item[data-id="${productId}"]`);
 
-            if (data.removed) {
+            if (data.empty) {
+                window.location.href = "/Cart/Index";
+            }
+            else if (data.removed) {
                 product.remove();
             }
             else {

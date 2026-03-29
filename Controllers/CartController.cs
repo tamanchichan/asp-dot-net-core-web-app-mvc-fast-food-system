@@ -224,6 +224,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 _context.SaveChanges();
 
+                if (cart.CartProducts.Count == 0)
+                {
+                    return Json(new
+                    {
+                        empty = true
+                    });
+                }
+
                 return Json(new
                 {
                     removed = true,
