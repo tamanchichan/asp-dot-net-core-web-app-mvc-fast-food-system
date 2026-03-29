@@ -1,12 +1,29 @@
-﻿export function incrementProductQuantity(productId) {
+﻿const subTotal = document.getElementById("subTotalPrice");
+const totalPrice = document.getElementById("totalPrice");
+
+export function incrementProductQuantity(productId) {
     fetch(`/Cart/IncrementProduct?id=${productId}`, {
         method: "POST"
     })
         .then(response => response.json())
         .then(data => {
-            const row = document.querySelector(`.product-item[data-id="${productId}"]`);
+            const product= document.querySelector(`.product-item[data-id="${productId}"]`);
 
-            row.querySelector(".product-quantity").textContent = data.quantity;
+            product.querySelector(".product-quantity").textContent = data.quantity;
+            product.querySelector(".product-total-price").textContent = data.productTotalPrice.toLocaleString("en-CA", {
+                style: "currency",
+                currency: "CAD"
+            });
+
+            subTotal.textContent = data.subTotalPrice.toLocaleString("en-CA", {
+                style: "currency",
+                currency: "CAD"
+            });
+
+            totalPrice.textContent = data.totalPrice.toLocaleString("en-CA", {
+                style: "currency",
+                currency: "CAD"
+            });
         })
 };
 
@@ -16,8 +33,29 @@ export function decrementProductQuantity(productId) {
     })
         .then(response => response.json())
         .then(data => {
-            const element = document.querySelector(`.product-item[data-id="${productId}"]`);
+            const product = document.querySelector(`.product-item[data-id="${productId}"]`);
 
-            element.querySelector(".product-quantity").textContent = data.quantity;
+            if (data.removed) {
+                product.remove();
+            }
+            else {
+                product.querySelector(".product-quantity").textContent = data.quantity;
+
+                product.querySelector(".product-total-price").textContent = data.productTotalPrice.toLocaleString("en-CA", {
+                    style: "currency",
+                    currency: "CAD"
+                });
+
+            }
+
+            subTotal.textContent = data.subTotalPrice.toLocaleString("en-CA", {
+                style: "currency",
+                currency: "CAD"
+            });
+
+            totalPrice.textContent = data.totalPrice.toLocaleString("en-CA", {
+                style: "currency",
+                currency: "CAD"
+            });
         })
 };

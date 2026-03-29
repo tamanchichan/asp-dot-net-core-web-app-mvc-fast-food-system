@@ -89,6 +89,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             {
                 string[] parts = input.Split(new char[] { '*', 'x' });
                 code = parts[0];
+
+                if (string.IsNullOrEmpty(parts[1]))
+                {
+                    TempData["ErrorMessage"] = "Quantity must be entered";
+
+                    return Redirect(returnUrl);
+                }
+
                 quantity = int.Parse(parts[1]);
             }
             else

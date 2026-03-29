@@ -159,7 +159,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         {
             string returnUrl = Request.Headers["Referer"].ToString();
 
-            CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
+            CartProduct cartProduct = _context.CartProducts
+                .Include(cp => cp.Cart)
+                    .ThenInclude(c => c.CartProducts)
+                        .ThenInclude(cp => cp.Product)
+                .FirstOrDefault(cp => cp.Id == id);
 
             if (cartProduct == null)
             {
@@ -179,6 +183,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return Json(new
             {
                 quantity = cartProduct.Quantity,
+                productTotalPrice = cartProduct.TotalPrice,
+                subTotalPrice = cartProduct.Cart.SubTotalPrice,
+                totalPrice = cartProduct.Cart.TotalPrice
             });
         }
 
@@ -194,7 +201,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 return NotFound(cart);
             }
 
-            CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
+            CartProduct cartProduct = _context.CartProducts
+                .Include(cp => cp.Cart)
+                    .ThenInclude(c => c.CartProducts)
+                        .ThenInclude(cp => cp.Product)
+                .FirstOrDefault(cp => cp.Id == id);
 
             if (cartProduct == null)
             {
@@ -210,19 +221,30 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             {
                 cart.CartProducts.Remove(cartProduct);
                 _context.CartProducts.Remove(cartProduct);
+
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    removed = true,
+                    subTotalPrice = cart.SubTotalPrice,
+                    totalPrice = cart.TotalPrice
+                });
             }
             else
             {
                 cartProduct.Quantity -= quantity;
                 _context.CartProducts.Update(cartProduct);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    quantity = cartProduct.Quantity,
+                    productTotalPrice = cartProduct.TotalPrice,
+                    subTotalPrice = cart.SubTotalPrice,
+                    totalPrice = cart.TotalPrice
+                });
             }
-
-            _context.SaveChanges();
-
-            return Json(new
-            {
-                quantity = cartProduct.Quantity
-            });
         }
 
         public IActionResult ClearCartProducts()
