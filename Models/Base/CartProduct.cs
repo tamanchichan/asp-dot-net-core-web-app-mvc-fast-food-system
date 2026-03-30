@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 {
-    public abstract class CartProduct
+    public abstract class CartProduct : IProductItem
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 

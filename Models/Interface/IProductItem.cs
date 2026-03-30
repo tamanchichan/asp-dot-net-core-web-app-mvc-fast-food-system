@@ -20,13 +20,5 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
         decimal Price { get; }
 
         decimal TotalPrice { get; }
-
-        BeverageOption? BeverageOption { get; }
-
-        FoodOption? FoodOption { get; }
-
-        FoodSize? FoodSize { get; }
-
-        SauceOption? SauceOption { get; }
     }
 }
