@@ -2,6 +2,7 @@
 using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
 using Microsoft.AspNetCore.Identity;
@@ -246,7 +247,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 _context.CartProducts.Update(cartProduct);
             }
 
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return Redirect(returnUrl);
         }
@@ -417,6 +418,120 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _context.SaveChangesAsync();
 
             return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public IActionResult IncrementProduct(Guid id, int quantity = 1)
+        {
+            Cart cart = _context.Carts?.FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
+
+            CartProduct cartProduct = _context.CartProducts
+                .Include(cp => cp.Cart)
+                    .ThenInclude(c => c.CartProducts)
+                        .ThenInclude(cp => cp.Product)
+                .FirstOrDefault(cp => cp.Id == id);
+
+            if (cartProduct == null)
+            {
+                OrderProduct orderProduct = _context.OrderProducts
+                    .Include(op => op.Order)
+                        .ThenInclude(o => o.OrderProducts)
+                            .ThenInclude(op => op.Product)
+                    .FirstOrDefault(op => op.Id == id);
+
+                if (orderProduct == null)
+                {
+                    return NotFound();
+                }
+
+                orderProduct.Quantity += quantity;
+
+                _context.OrderProducts.Update(orderProduct);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    quantity = orderProduct.Quantity,
+                    productTotalPrice = orderProduct.TotalPrice,
+                    subTotalPrice = orderProduct.Order.SubTotalPrice,
+                    totalPrice = orderProduct.Order.TotalPrice
+                });
+            }
+            else
+            {
+                cartProduct.Quantity += quantity;
+                _context.CartProducts.Update(cartProduct);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    quantity = cartProduct.Quantity,
+                    productTotalPrice = cartProduct.TotalPrice,
+                    subTotalPrice = cart.SubTotalPrice,
+                    totalPrice = cart.TotalPrice
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DecrementProduct(Guid id, int quantity = 1)
+        {
+            Cart cart = _context.Carts?.FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
+
+            IProductItem product = _context.CartProducts
+                .Include(cp => cp.Cart)
+                    .ThenInclude(c => c.CartProducts)
+                        .ThenInclude(cp => cp.Product)
+                .FirstOrDefault(cp => cp.Id == id) ;
+
+            if (product == null)
+            {
+                product = _context.OrderProducts
+                    .Include(op => op.Order)
+                        .ThenInclude(o => o.OrderProducts)
+                            .ThenInclude(op => op.Product)
+                    .FirstOrDefault(op => op.Id == id);
+            }
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            product.Quantity -= quantity;
+
+            if (product.Quantity == 0)
+            {
+                if (product is CartProduct cartProduct)
+                {
+                    _context.CartProducts.Remove(cartProduct);
+                }
+                else if (product is OrderProduct orderProduct)
+                {
+                    _context.OrderProducts.Remove(orderProduct);
+                }
+
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    empty = true,
+                    quantity = product.Quantity,
+                    productTotalPrice = product.TotalPrice,
+                    subTotalPrice = cart != null ? cart.SubTotalPrice : ((OrderProduct)product).Order.SubTotalPrice,
+                    totalPrice = cart != null ? cart.TotalPrice : ((OrderProduct)product).Order.TotalPrice
+                });
+            }
+
+            _context.SaveChanges();
+
+            return Json(new
+            {
+                quantity = product.Quantity,
+                productTotalPrice = product.TotalPrice,
+                subTotalPrice = cart != null ? cart.SubTotalPrice : ((OrderProduct)product).Order.SubTotalPrice,
+                totalPrice = cart != null ? cart.TotalPrice : ((OrderProduct)product).Order.TotalPrice
+            });
         }
 
         [HttpGet]

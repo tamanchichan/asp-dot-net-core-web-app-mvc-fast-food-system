@@ -2,7 +2,7 @@
 const totalPrice = document.getElementById("totalPrice");
 
 export function incrementProductQuantity(productId) {
-    fetch(`/Cart/IncrementProduct?id=${productId}`, {
+    fetch(`/Shared/IncrementProduct?id=${productId}`, {
         method: "POST"
     })
         .then(response => response.json())
@@ -28,7 +28,7 @@ export function incrementProductQuantity(productId) {
 };
 
 export function decrementProductQuantity(productId) {
-    fetch(`/Cart/DecrementProduct?id=${productId}`, {
+    fetch(`/Shared/DecrementProduct?id=${productId}`, {
         method: "POST"
     })
         .then(response => response.json())

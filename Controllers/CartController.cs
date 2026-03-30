@@ -186,7 +186,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 productTotalPrice = cartProduct.TotalPrice,
                 subTotalPrice = cartProduct.Cart.SubTotalPrice,
                 totalPrice = cartProduct.Cart.TotalPrice
-            });
+            }); 
         }
 
         [HttpPost]

@@ -11,7 +11,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
         Product Product { get; set; }
 
-        int Quantity { get; }
+        int Quantity { get; set; }
 
         string Instructions { get; }
 
