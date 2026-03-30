@@ -29,11 +29,17 @@
         </h2>
         <h2>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h2>
     </div>
-    <partial name="_ProductItemsFields" model="Model.OrderProducts.OfType<IProductItem>()" />
+    <partial name="_ProductItemsFields" model="Model.OrderProducts" />
     <partial name="_OrderForm" />
 </div>
 
 @section Scripts {
     <script src="~/js/Shared/order-form.js"></script>
     <script src="~/js/additionalPriceModal.js"></script>
+    <script type="module">
+        import { incrementProductQuantity, decrementProductQuantity } from "/js/Views/Shared/_ProductItemsFields.js";
+
+        window.incrementProductQuantity = incrementProductQuantity;
+        window.decrementProductQuantity = decrementProductQuantity;
+    </script>
 }
