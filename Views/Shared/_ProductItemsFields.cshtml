@@ -66,20 +66,46 @@
                 }
                 else
                 {
+                    string optionCode = "";
+
+                    if (productItem is CartFoodProduct cartFood && cartFood.FoodOption.HasValue)
+                    {
+                        optionCode = cartFood.FoodOption.Value.ToString().Substring(0, 1);
+                    }
+                    else if (productItem is OrderFoodProduct orderFood && orderFood.FoodOption.HasValue)
+                    {
+                        optionCode = orderFood.FoodOption.Value.ToString().Substring(0, 1);
+                    }
                     <span class="product-code">
-                            @productItem.Product.Code
-                            @(productItem.FoodOption.HasValue ? productItem.FoodOption.Value.ToString().Substring(0, 1) : null)
+                        @($"{productItem.Product.Code}{optionCode}")
                     </span>
                 }
                 <span class="product-name">
                     @productItem.Product.Name
                     @if (productItem.Product.HasOptions)
                     {
-                        @(productItem.FoodOption.HasValue? productItem.FoodOption.Value.ToString() : "")
+                        @if (productItem is CartFoodProduct cartFood)
+                        {
+                            @(cartFood.FoodOption.HasValue? cartFood.FoodOption.Value.ToString() : "")
+                        }
+                        else if (productItem is OrderFoodProduct orderFood)
+                        {
+                            @(orderFood.FoodOption.HasValue? orderFood.FoodOption.Value.ToString() : "")
+                        }
                     }
-                    @if (!string.IsNullOrEmpty(productItem.SauceOption.ToString()))
+                    @if (productItem is CartSauceProduct cartSauce)
                     {
-                        @Html.DisplayFor(model => productItem.SauceOption)
+                        @if (!string.IsNullOrEmpty(cartSauce.SauceOption.ToString()))
+                        {
+                            @Html.DisplayFor(model => cartSauce.SauceOption)
+                        }
+                    }
+                    else if (productItem is OrderSauceProduct orderSauce)
+                    {
+                        @if (!string.IsNullOrEmpty(orderSauce.SauceOption.ToString()))
+                        {
+                            @Html.DisplayFor(model => orderSauce.SauceOption)
+                        }
                     }
                 </span>
                 <span class="product-price">@productItem.Product.Price.ToString("C", new CultureInfo("en-CA"))</span>
