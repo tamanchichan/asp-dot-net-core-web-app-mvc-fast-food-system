@@ -2,6 +2,11 @@
     justify-content: space-between;
 }
 
+.customer-orders {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+}
+
 .customer-order {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }

@@ -25,6 +25,7 @@
         <p>Phone Number: @Model.PhoneNumber</p>
         <p>Address: @Model.Address</p>
         <div class="customer-orders">
+            <h3>Customer's Orders:</h3>
             @foreach (Order order in Model.Orders.OrderByDescending(o => o.ReadyTime))
             {
                 <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@order.Id">
