@@ -19,11 +19,13 @@
         </div>
         @foreach (Customer customer in Model)
         {
-            <div class="customer-list">
-                <div class="customer-name">@(customer.Name ?? "NULL")</div>
-                <div class="customer-phone-number">@(customer.PhoneNumber ?? "NULL")</div>
-                <div class="customer-address">@(customer.Address ?? "NULL")</div>
-            </div>
+            <a asp-action="CustomerDetails" asp-route-id="@customer.Id">
+                <div class="customer-list">
+                    <div class="customer-name">@(customer.Name ?? "NULL")</div>
+                    <div class="customer-phone-number">@(customer.PhoneNumber ?? "NULL")</div>
+                    <div class="customer-address">@(customer.Address ?? "NULL")</div>
+                </div>
+            </a>
         }
     </div>
 </div>

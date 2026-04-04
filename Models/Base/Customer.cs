@@ -23,14 +23,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         (
             string? name,
             string phoneNumber,
-            string? Address,
+            string? address,
             List<CustomerRemarks> remarks,
             HashSet<Order>? orders
         )
         {
             Name = name;
             PhoneNumber = phoneNumber;
-            Address = Address;
+            Address = address;
             Remarks = remarks;
             Orders = orders;
         }

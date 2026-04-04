@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Customer Details";
+}
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+
+@model Customer
+
+<div class="container customer-details-page">
+    <div class="page-header">
+        <div class="flex">
+            <a asp-action="Index">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <a asp-action="EditCustomer" asp-route-id="@Model.Id" class="button">
+                Edit Customer
+            </a>
+        </div>
+        <h2>Customer's Details</h2>
+    </div>
+    <div class="customer-details">
+        <p>Total spent: @Model.Orders.Sum(o => o.TotalPrice).ToString("C", new CultureInfo("en-CA"))</p>
+        <p>Name: @Model.Name</p>
+        <p>Phone Number: @Model.PhoneNumber</p>
+        <p>Address: @Model.Address</p>
+        <div class="customer-orders">
+            @foreach (Order order in Model.Orders.OrderByDescending(o => o.ReadyTime))
+            {
+                <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@order.Id">
+                    <div class="customer-order">
+                        <div class="flex">
+                            <p>Order nº: @order.Number</p>
+                            <p>Order Date: @order.ReadyTime.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="flex">
+                            <p>Total Items: @order.OrderProducts.Count()</p>
+                            <p>Total Price: @order.TotalPrice.ToString("C", new CultureInfo("en-CA"))</p>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>

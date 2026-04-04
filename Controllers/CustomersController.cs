@@ -3,6 +3,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -71,6 +72,32 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             TempData["CustomerAddress"] = customerAddress;
 
             return View();
+        }
+
+        public IActionResult CustomerDetails(Guid id)
+        {
+            HashSet<Order> orders = _context.Orders
+                .Where(o => o.CustomerId == id)
+                .OrderByDescending(o => o.ReadyTime)
+                .Include(o => o.OrderProducts)
+                    .ThenInclude(op => op.Product)
+                .Take(5)
+                .ToHashSet();
+
+            Customer customer = _context.Customers
+                .Where(c => c.Id == id)
+                .Select(c => new Customer
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    PhoneNumber = c.PhoneNumber,
+                    Address = c.Address,
+                    Remarks = c.Remarks,
+                    Orders = orders
+                })
+                .FirstOrDefault();
+
+            return View(customer);
         }
     }
 }
