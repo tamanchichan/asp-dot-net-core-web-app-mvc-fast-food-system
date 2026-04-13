@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Edit Customer Page";
+}
+
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+
+@model Customer
+
+<div class="container edit-customer-page">
+    <div class="page-header">
+        <a asp-action="CustomerDetails" asp-route-id="@Model.Id">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h2>Edit Customer</h2>
+    </div>
+    <div class="edit-customer">
+        <form asp-action="EditCustomer" method="post" class="edit-customer-form">
+            <h3>Customer's Details:</h3>
+            <div class="customer-name">
+                <label for="customerName">Name:</label>
+                <input type="text" name="customerName" value="@(Model.Name ?? "")" />
+            </div>
+            <div class="customer-phone-number">
+                <label for="customerPhoneNumber">Phone Number:</label>
+                <input type="text" name="customerPhoneNumber" value="@(Model.PhoneNumber ?? "")" />
+            </div>
+            <div class="customer-address">
+                <label for="customerAddress">Address:</label>
+                <input type="text" name="customerAddress" value="@(Model.Address ?? "")" />
+            </div>
+            <div class="flex form-buttons">
+                <a asp-action="CustomerDetails" asp-route-id="@Model.Id" class="button">
+                    Cancel
+                </a>
+                <button type="submit" class="button">Update</button>
+            </div>
+            </form>
+    </div>
+</div>

@@ -99,5 +99,45 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return View(customer);
         }
+
+        [HttpGet]
+        public IActionResult EditCustomer(Guid id)
+        {
+            Customer customer = _context.Customers.FirstOrDefault(c => c.Id == id);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        public IActionResult EditCustomer(Guid id, string? customerName, string customerPhoneNumber, string? customerAddress)
+        {
+            if (string.IsNullOrEmpty(customerPhoneNumber))
+            {
+                TempData["CustomerName"] = customerName;
+                TempData["ErrorMessage"] = "Phone number cannot be null/empty";
+                TempData["CustomerAddress"] = customerAddress;
+                return View();
+            }
+
+            Customer customer = _context.Customers
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.OrderProducts)
+                        .ThenInclude(op => op.Product)
+                .FirstOrDefault(c => c.Id == id);
+            
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            customer.Name = customerName;
+            customer.PhoneNumber = customerPhoneNumber;
+            customer.Address = customerAddress;
+            
+            _context.Customers.Update(customer);
+            _context.SaveChanges();
+            
+            return RedirectToAction("CustomerDetails", new { id = customer.Id });
+        }
     }
 }
