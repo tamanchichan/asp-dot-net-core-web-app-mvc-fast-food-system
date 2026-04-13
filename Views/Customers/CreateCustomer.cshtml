@@ -1,6 +1,17 @@
-﻿<div class="container create-customer-page">
+﻿@{
+    ViewData["Title"] = "Create Customer Page";
+}
+
+<div class="container create-customer-page">
+    <div class="page-header">
+        <a asp-action="Index">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h2>Create Customer</h2>
+    </div>
     <div class="create-customer-form">
         <form asp-action="CreateCustomer" method="post" autocomplete="off">
+            <h3>Customer's Details:</h3>
             <div class="customer-name">
                 <label for="customerName">Name:</label>
                 <input type="text" id="customerName" name="customerName" value="@TempData["CustomerName"]"/>
