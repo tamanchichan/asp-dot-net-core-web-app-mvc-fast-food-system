@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 
@@ -10,9 +11,11 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 {
     [DbContext(typeof(FastFoodSystemDbContext))]
-    partial class FastFoodSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260414164606_AddIsFreeItemProperty")]
+    partial class AddIsFreeItemProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -240,7 +243,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CartProduct", b =>
@@ -275,7 +278,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartProducts", (string)null);
+                    b.ToTable("CartProducts");
 
                     b.HasDiscriminator().HasValue("CartProduct");
 
@@ -300,7 +303,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.CustomerRemarks", b =>
@@ -330,7 +333,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerRemarks", (string)null);
+                    b.ToTable("CustomerRemarks");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.Order", b =>
@@ -388,7 +391,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base.OrderProduct", b =>
@@ -426,7 +429,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts", (string)null);
+                    b.ToTable("OrderProducts");
 
                     b.HasDiscriminator().HasValue("OrderProduct");
 
@@ -467,7 +470,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasDiscriminator().HasValue("Product");
 

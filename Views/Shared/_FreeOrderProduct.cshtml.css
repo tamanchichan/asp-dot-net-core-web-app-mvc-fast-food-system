@@ -1,0 +1,27 @@
+﻿input {
+    appearance: auto;
+}
+
+.free-order-product {
+    background-color: #f2f2f2;
+    border-radius: 2.5px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 25px 30px;
+    width: 400px;
+    height: 210px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -105px; /* Negative half of height. */
+    margin-left: -200px; /* Negative half of width. */
+    z-index: 1;
+}
+
+.free-order-product div {
+    height: 30px
+}
+
+.free-order-product button {
+    margin: 0 auto;
+    margin-top: 15px;
+}

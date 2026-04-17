@@ -3,6 +3,11 @@
 
     ViewData["OrderFormAction"] = "PlaceCartOrder";
     ViewData["OrderFormController"] = "Cart";
+    ViewData["OrderFormId"] = "orderFormCart";
+
+    ViewData["OrderFormButtonOnClick"] = "handlePlaceOrder()";
+    ViewData["OrderFormButtonType"] = "button";
+
     ViewData["OrderFormSubmitButtonTitle"] = "Place Order";
 }
 
@@ -31,6 +36,7 @@
                 <i class="fa-solid fa-trash"></i>
             </a>
         </div>
+        @* <partial name="_FreeOrderProduct" /> *@
         <partial name="_ProductItemsFields" model="Model.CartProducts" />
         <partial name="_OrderForm" />
     }
@@ -45,5 +51,10 @@
 
         window.incrementProductQuantity = incrementProductQuantity;
         window.decrementProductQuantity = decrementProductQuantity;
+    </script>
+    <script type="module">
+        import { handlePlaceOrder } from "/js/Views/Shared/_FreeOrderProduct.js";
+
+        window.handlePlaceOrder = handlePlaceOrder;
     </script>
 }

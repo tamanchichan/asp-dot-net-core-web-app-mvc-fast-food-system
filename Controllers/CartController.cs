@@ -284,7 +284,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? additionalCharge, string? deliveryFee, string? discount)
+        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? additionalCharge, string? deliveryFee, string? discount, string? freeOrderProductCode)
         {
             Cart cart = _context.Carts
                 .Include(c => c.CartProducts)
@@ -369,6 +369,30 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 //_context.Carts.Update(cart);
             }
 
+            if (!String.IsNullOrEmpty(freeOrderProductCode))
+            {
+                Product product = _context.Products.FirstOrDefault(p => p.Code == freeOrderProductCode);
+
+                OrderFoodProduct freeOrderProduct = new OrderFoodProduct()
+                {
+                    OrderId = order.Id,
+                    Order = order,
+                    Product = product,
+                    ProductId = product.Id,
+                    Quantity = 1,
+                    Instructions = "Free",
+                    IsFreeItem = true
+                };
+
+                if (freeOrderProductCode == "23")
+                {
+                    freeOrderProduct.FoodOption = FoodOption.Chicken;
+                }
+
+                order.OrderProducts.Add(freeOrderProduct);
+                _context.OrderFoodProducts.Add(freeOrderProduct);
+            }
+
             if (!String.IsNullOrEmpty(customerPhoneNumber))
             {
                 customerPhoneNumber = customerPhoneNumber.Trim();
@@ -406,7 +430,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             _printer.PrintReceiptUSB(order);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("OrderDetails", "Orders", new { id = order.Id });
         }
     }
 }
