@@ -9,6 +9,8 @@ using ESCPOS_NET.Utilities;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
+using Color = System.Drawing.Color;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 {
@@ -39,17 +41,26 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             Printer printer = new Printer("POS-80");
 
             #region Header
-            Bitmap bmp = new Bitmap(300, 100); // width = paper width in pixels
-
+            // Order Type
+            Bitmap bmp = new Bitmap(300, 100); // width = paper width in pixel
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.Clear(System.Drawing.Color.White);
                 g.DrawString(order.Type.ToString(), new Font("Arial", 24, FontStyle.Bold), Brushes.Black, 0, 0);
             }
 
-            printer.AlignCenter();
+            printer.AlignRight();
             printer.Image(bmp); // Weird padding at the left side, does not align properly with other text
-            printer.Append($"Order - {order.Number}");
+
+            // Order Number
+            Bitmap orderNumber = new Bitmap(300, 30);
+            using (Graphics g = Graphics.FromImage(orderNumber))
+            {
+                g.Clear(System.Drawing.Color.White);
+                g.DrawString($"Order - {order.Number}", new Font("Arial", 24, FontStyle.Regular), Brushes.Black, 0, 0);
+            }
+            printer.Image(orderNumber);
+                //printer.Append($"Order - {order.Number}");
             #endregion
 
             #region Items
@@ -63,14 +74,17 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             }
             #endregion
 
+            printer.AlignCenter();
+            
+
             #region Total Price
-            printer.AlignRight();
+            printer.AlignCenter();
             printer.SetLineHeight(25);
             printer.Append($"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}");
             #endregion
 
             // Feed and cut
-            printer.NewLines(3);
+            printer.NewLines(5);
             printer.FullPaperCut();
 
             // Send to printer
@@ -218,27 +232,166 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             printDocument.Print();
         }
 
+        private float DrawTextBlock
+        (
+            Graphics g,
+            string text,
+            Font font,
+            Brush brush,
+            float x,
+            float y,
+            float width,
+            StringFormat format
+        )
+        {
+            RectangleF rect = new RectangleF(x, y, width, 1000);
+
+            SizeF size = g.MeasureString(text, font, (int)width);
+
+            g.DrawString(text, font, brush, rect, format);
+
+            return size.Height;
+        }
+
         private void PrintReceiptPage(Graphics graphics, Order order)
         {
             float yPos = 0;
-            int padding = 5;
-            Font orderFont = new Font("Arial", 35, FontStyle.Bold);
-            Font font = new Font("Arial", 20, FontStyle.Regular);
-            Font totalPriceFont = new Font("Arial", 30, FontStyle.Bold);
+            float xPos = 0;
+            float maxWidth = 200f;
+            float width = maxWidth - 10;
 
-            graphics.DrawString($"{order.Type.ToString()}", font, Brushes.Black, 0, yPos);
-            yPos += font.GetHeight();
-
-            graphics.DrawString($"Order: {order.Number.ToString()}", orderFont, Brushes.Black, 0, yPos);
-            yPos += orderFont.GetHeight();
-
-            foreach (OrderProduct orderProduct in order.OrderProducts)
+            StringFormat format = new StringFormat
             {
-                graphics.DrawString($"{orderProduct.Product.Code} x {orderProduct.Quantity} - {orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", font, Brushes.Black, 0, yPos);
-                yPos += font.GetHeight();
+                Trimming = StringTrimming.Word,
+                FormatFlags = StringFormatFlags.LineLimit
+            };
+
+            // Fonts
+            Font orderTypeFont = new Font("Arial", 20, FontStyle.Bold);
+            Font orderCustomerAddressFont = new Font("Arial", 16, FontStyle.Regular);
+            Font orderReadyTimeDateFont = new Font("Arial", 20, FontStyle.Regular);
+            Font orderReadyTimeFont = new Font("Arial", 22, FontStyle.Bold);
+            Font orderNumberFont = new Font("Arial", 18, FontStyle.Regular);
+            Font orderCustomerPhoneNumberFont = new Font("Arial", 18, FontStyle.Regular);
+            Font orderItemFont = new Font("Arial", 22, FontStyle.Regular);
+            Font orderItemInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
+            Font orderPriceFont = new Font("Arial", 18, FontStyle.Bold);
+
+            // Header
+            // Order Type: Dine-In | Take-Out | Delivery
+            yPos += DrawTextBlock(graphics, OrderTypeExtensions.GetName(order.Type), orderTypeFont, Brushes.Black, xPos, yPos, width, format);
+            
+            // (Customer Address)
+            if (order.Type == Enums.OrderType.Delivery)
+            {
+                if (!string.IsNullOrEmpty(order.CustomerAddress))
+                {
+                    yPos += DrawTextBlock(graphics, $"({order.CustomerAddress})", orderCustomerAddressFont, Brushes.Black, xPos, yPos, width, format);
+                }
             }
 
-            graphics.DrawString($"Total Price: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", font, Brushes.Black, 0, yPos);
+            yPos += 15;
+
+            // Order nº: 1001
+            yPos += DrawTextBlock(graphics, $"Order: {order.Number}", orderNumberFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Customer's phone number
+            if (!string.IsNullOrEmpty(order.CustomerPhoneNumber))
+            {
+                yPos += DrawTextBlock(graphics, $"({order.CustomerPhoneNumber})", orderCustomerPhoneNumberFont, Brushes.Black, xPos, yPos, width, format);
+            }
+
+            // Order Ready Date: yyyy-MM-dd
+            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("yyyy-MM-dd"), orderReadyTimeDateFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Order Ready Time: hh-mm
+            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("t"), orderReadyTimeFont, Brushes.Black, xPos, yPos, width, format);
+
+            yPos += 15;
+            graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + width, yPos);
+            yPos += 15;
+
+            // Items
+            // Code x Quantity - Price
+            foreach (OrderProduct orderProduct in order.OrderProducts.OrderBy(item =>
+            {
+                string code = item.Product.Code;
+                int i = 0;
+
+                while (i < code.Length && char.IsDigit(code[i])) i++;
+
+                if (i > 0)
+                {
+                    int number = int.Parse(code.Substring(0, i));
+                    string letter = code.Substring(i);
+                    return (0, number, letter);
+                }
+
+                return (1, 0, code);
+            }))
+            {
+                string itemText =
+                    $"{orderProduct.Product.Code}. x {orderProduct.Quantity} - {orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+
+                yPos += DrawTextBlock(graphics, itemText, orderItemFont, Brushes.Black, xPos, yPos, width, format);
+
+                // Instructions
+                if (!string.IsNullOrEmpty(orderProduct.Instructions))
+                {
+                    yPos += DrawTextBlock(
+                        graphics,
+                        $"({orderProduct.Instructions.ToUpper()})",
+                        orderItemInstructionsFont,
+                        Brushes.Black,
+                        xPos,
+                        yPos,
+                        width,
+                        format
+                    );
+                }
+                
+                // Separator
+                using (Pen pen = new Pen(Color.Black, 1))
+                {
+                    yPos += 15;
+                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    yPos += 15;
+                }
+            }
+
+            // Summary
+            if (order.AdditionalCharge != null && order.AdditionalCharge != 0m)
+            {
+                // Food: $0.00
+                yPos += DrawTextBlock(graphics, $"Food: {order.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+
+                // Additional Charge: $0.00
+                yPos += DrawTextBlock(graphics, $"Additional Charge: {order.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                using (Pen pen = new Pen(Color.Black, 1))
+                {
+                    yPos += 5;
+                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    yPos += 5;
+                }
+            }
+
+            // Subtotal:  $0.00
+            yPos += DrawTextBlock(graphics, $"Subtotal: {order.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Gst: $0.00
+            yPos += DrawTextBlock(graphics, $"GST: {order.Gst.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Pst: $0.00
+            yPos += DrawTextBlock(graphics, $"PST: {order.Pst.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Delivery: $0.00
+            if (order.Type == Enums.OrderType.Delivery)
+            {
+                yPos += DrawTextBlock(graphics, $"Delivery: {order.DeliveryFee.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+            }
+
+            // Total: $0.00
+            yPos += DrawTextBlock(graphics, $"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
         }
     }
 }
