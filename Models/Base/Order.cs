@@ -44,10 +44,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         public DateTime ReadyTime { get; set; }
 
         public decimal? AdditionalCharge { get; set; } = 0m;
+
+        public decimal FoodTotalPrice
         {
             get
             {
-                return OrderProducts?.Sum(op => op.Price * op.Quantity) ?? 0;
+                return OrderProducts?.Sum(op => op.TotalPrice) ?? 0;
             }
         }
 
