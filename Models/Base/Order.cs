@@ -61,7 +61,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             {
                 return
                     (AdditionalCharge ?? 0) +
-                    (OrderProducts?.Sum(op => op.Price * op.Quantity) ?? 0);
+                    FoodTotalPrice;
             }
         }
 
