@@ -428,7 +428,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             // Save changes to the database
             _context.SaveChanges();
 
-            _printer.PrintReceiptUSB(order);
+            _printer.PrintReceiptUSBAlt(order);
 
             return RedirectToAction("OrderDetails", "Orders", new { id = order.Id });
         }
