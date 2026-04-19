@@ -45,13 +45,22 @@
             }
         </div>
         <div class="flex order-summary-price">
-            <div class="flex order-additional-charge-price">
-                @if (Model.AdditionalCharge != null && Model.AdditionalCharge != 0m)
-                {
-                    <h3 class="key">Additional Charge:</h3>
-                    <h3 class="value">@Model.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))</h3>
-                }
-            </div>
+            @if (Model.AdditionalCharge != null && Model.AdditionalCharge != 0m)
+            {
+                <div class="food-total">
+                    <div class="flex order-food-total-price">
+                        <h3 class="key">Food Total:</h3>
+                        <h3 class="value">@Model.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))</h3>
+                    </div>
+                    <div class="flex order-additional-charge-price">
+                        @if (Model.AdditionalCharge != null && Model.AdditionalCharge != 0m)
+                        {
+                            <h3 class="key">Additional Charge:</h3>
+                            <h3 class="value">@Model.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))</h3>
+                        }
+                    </div>
+                </div>                
+            }
             <div class="flex order-subtotal-price ">
                 <h3 class="key">SubTotal:</h3>
                 <h3 class="value">@Model.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))</h3>
@@ -83,5 +92,10 @@
                 <h3 class="value">@Model.TotalPrice.ToString("C", new CultureInfo("en-CA"))</h3>
             </div>
         </div>
+    </div>
+    <div class="print-receipt">
+        <a asp-action="PrintOrder" asp-controller="ThermalPrinter" asp-route-id="@Model.Id" class="print-receipt-button">
+            <i class="fa-solid fa-print"></i>
+        </a>
     </div>
 </div>

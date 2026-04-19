@@ -48,6 +48,10 @@
     margin: 0px;
 }
 
+.food-total {
+    border-bottom: 1px solid #000;
+}
+
 .value {
     font-weight: 300;
     margin-left: 5px !important;
@@ -57,4 +61,13 @@
 
 .order-total-price .value {
     font-weight: 400;
+}
+
+.print-receipt {
+    display: flex;
+    justify-content: right;
+}
+
+::deep .print-receipt-button {
+    font-size: 30px;
 }
