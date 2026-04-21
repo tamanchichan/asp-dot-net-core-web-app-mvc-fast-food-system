@@ -4,6 +4,7 @@
 }
 
 @using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
@@ -31,6 +32,15 @@
             }
         </h2>
         <h2>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h2>
+    </div>
+    <div class="flex order-type">
+        <h3>@Html.DisplayFor(m => @Model.Type)</h3>
+        @if (Model.Type == OrderType.Delivery)
+        {
+            <div class="order-customer-address">
+                <h4>@($"({Model.CustomerAddress})" ?? "")</h4>
+            </div>
+        }
     </div>
     <partial name="_ProductItemsFields" model="Model.OrderProducts.OfType<IProductItem>()" />
     <div class="flex order-summary">
