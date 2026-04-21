@@ -20,11 +20,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             }
         }
 
-        public decimal ProductsTotalPrice
+        public decimal FoodTotalPrice
         {
             get
             {
-                return CartProducts?.Sum(cp => cp.Price * cp.Quantity) ?? 0;
+                return CartProducts?.Sum(cp => cp.TotalPrice) ?? 0;
             }
         }
 
