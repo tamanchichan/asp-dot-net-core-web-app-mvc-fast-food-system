@@ -8,6 +8,8 @@
     string deliveryFee = "";
     string discount = "";
 
+    string readyTime = "";
+
     if (Model is Order order)
     {
         selectedOrderType = order.Type;
@@ -18,6 +20,7 @@
         additionalCharge = (order.AdditionalCharge.HasValue && order.AdditionalCharge != 0m) ? order.AdditionalCharge.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
         deliveryFee = (order.DeliveryFee.HasValue && order.DeliveryFee != 0m) ? order.DeliveryFee.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
         discount = (order.Discount.HasValue && order.Discount != 0m) ? order.Discount.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
+        readyTime = order.ReadyTime.ToString("HH:mm");
     }
 }
 
@@ -71,7 +74,7 @@
             <span>
                 SubTotal:
                 <span id="subTotalPrice"
-                      data-base="@Model.ProductsTotalPrice.ToString(CultureInfo.InvariantCulture)">
+                      data-base="@Model.FoodTotalPrice.ToString(CultureInfo.InvariantCulture)">
                     @Model.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))
                 </span>
             </span>
@@ -102,10 +105,13 @@
                 </span>
             </span>
         </div>
-        <div class="flex ready-time">
+        <div class="flex ready-date-time-only">
+            <label for="readyDateTime">Date:</label>
+            <input type="date" id="readyDateOnly" min="@DateTime.Today.ToString("yyyy-MM-dd")" name="readyDateOnly" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="flex ready-time-only">
             <label for="readyTime">Ready In:</label>
-            <input type="datetime-local" id="readyTime" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" name="readyTime"
-                   value=@DateTime.Now.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm") />
+            <input type="time" id="readyTimeOnly" name="readyTimeOnly" value="@ViewData["ReadyTimeOnly"]" />
         </div>
         <div class="flex submit-order-button">
             <button onclick="@ViewData["OrderFormButtonOnClick"]" type="@ViewData["OrderFormButtonType"]" class="button">@ViewData["OrderFormSubmitButtonTitle"]</button>

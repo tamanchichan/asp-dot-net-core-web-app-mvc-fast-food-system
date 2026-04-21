@@ -8,6 +8,8 @@
     ViewData["OrderFormButtonOnClick"] = "handlePlaceOrder()";
     ViewData["OrderFormButtonType"] = "button";
 
+    ViewData["ReadyTimeOnly"] = DateTime.Now.AddMinutes(15).ToString("HH:mm");
+
     ViewData["OrderFormSubmitButtonTitle"] = "Place Order";
 }
 

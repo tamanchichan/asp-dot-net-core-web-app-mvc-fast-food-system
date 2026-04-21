@@ -284,7 +284,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? additionalCharge, string? deliveryFee, string? discount, string? freeOrderProductCode)
+        public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateOnly readyDateOnly, TimeOnly readyTimeOnly, string? additionalCharge, string? deliveryFee, string? discount, string? freeOrderProductCode)
         {
             Cart cart = _context.Carts
                 .Include(c => c.CartProducts)
@@ -302,7 +302,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 CustomerAddress = customerAddress,
                 Type = orderType,
                 Observations = observations,
-                ReadyTime = readyTime,
+                ReadyTime = readyDateOnly.ToDateTime(readyTimeOnly),
                 AdditionalCharge = string.IsNullOrEmpty(additionalCharge) ? 0m: decimal.Parse(additionalCharge.Replace(",", "."), CultureInfo.InvariantCulture),
 
                 DeliveryFee = string.IsNullOrEmpty(deliveryFee) ? 0m : decimal.Parse(deliveryFee.Replace(",", "."), CultureInfo.InvariantCulture),
@@ -429,6 +429,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _context.SaveChanges();
 
             _printer.PrintReceiptUSBAlt(order);
+            _printer.PrintReceiptKitchenUSB(order);
 
             return RedirectToAction("OrderDetails", "Orders", new { id = order.Id });
         }

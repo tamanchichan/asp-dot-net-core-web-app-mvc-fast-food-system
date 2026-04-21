@@ -118,7 +118,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
         // Add orderProducts editing later
         [HttpPost]
-        public IActionResult EditOrder(Guid id, Guid? customerId, Customer? customer, string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateTime readyTime, string? additionalCharge, string? deliveryFee, string? discount)
+        public IActionResult EditOrder(Guid id, Guid? customerId, Customer? customer, string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateOnly readyDateOnly, TimeOnly readyTimeOnly, string? additionalCharge, string? deliveryFee, string? discount)
         {
             Order order = _context.Orders
                 .Include(o => o.OrderProducts)
@@ -146,7 +146,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             order.CustomerAddress = customerAddress;
             order.Type = orderType;
             order.Observations = observations;
-            order.ReadyTime = readyTime;
+            order.ReadyTime = readyDateOnly.ToDateTime(readyTimeOnly);
             order.AdditionalCharge = string.IsNullOrEmpty(additionalCharge) ? 0m : decimal.Parse(additionalCharge.Replace(",", "."), CultureInfo.InvariantCulture);
             order.DeliveryFee = string.IsNullOrEmpty(deliveryFee) ? 0m : decimal.Parse(deliveryFee.Replace(",", "."), CultureInfo.InvariantCulture);
             order.Discount = string.IsNullOrEmpty(discount) ? 0m : decimal.Parse(discount.Replace(",", "."), CultureInfo.InvariantCulture);
