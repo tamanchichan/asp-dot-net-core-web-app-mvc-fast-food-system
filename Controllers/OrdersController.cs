@@ -43,6 +43,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 .ThenInclude(op => op.Product)
                 .Include(o => o.User)
                 .Where(o => o.ReadyTime.Date >= startDate && o.ReadyTime < endDate)
+                .Where(o => (bool)!o.IsCanceled)
                 .OrderByDescending(o => o.ReadyTime)
                 .ThenByDescending(o => o.Number)
                 .ToHashSet();
@@ -219,6 +220,21 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _context.SaveChanges();
 
             return Redirect(returnUrl);
+        }
+
+        public IActionResult CancelOrder(Guid id)
+        {
+            Order order = _context.Orders
+                .Include(o => o.OrderProducts)
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null) NotFound();
+
+            order.IsCanceled = true;
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

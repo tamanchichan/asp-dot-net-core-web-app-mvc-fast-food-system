@@ -20,9 +20,12 @@
 
 <partial name="_AddProductInput" />
 <div class="container edit-order-page">
-    <div>
+    <div class="header flex">
         <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@Model.Id">
             <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <a asp-action="CancelOrder" asp-controller="Orders" asp-route-id="@Model.Id">
+            <i class="fa-solid fa-ban"></i>
         </a>
     </div>
     <div class="flex">

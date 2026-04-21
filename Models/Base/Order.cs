@@ -93,6 +93,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         //public OrderStatus? Status { get; set; }
 
+        public bool? IsCanceled { get; set; } = false;
+
         public Order() { }
 
         public Order
