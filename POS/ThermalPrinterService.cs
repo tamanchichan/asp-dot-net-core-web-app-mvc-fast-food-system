@@ -232,6 +232,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             printDocument.Print();
         }
 
+        public void PrintReceiptKitchenUSB(Order order)
+        {
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrinterSettings.PrinterName = _printername;
+            printDocument.PrintPage += (sender, e) => PrintReceiptPageKitchen(e.Graphics, order);
+            printDocument.Print();
+        }
+
         private float DrawTextBlock
         (
             Graphics g,
@@ -276,6 +284,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             Font orderItemFont = new Font("Arial", 22, FontStyle.Regular);
             Font orderItemInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
             Font orderPriceFont = new Font("Arial", 18, FontStyle.Bold);
+            Font orderObservationsFont = new Font("Arial", 18, FontStyle.Bold);
 
             // Header
             // Order Type: Dine-In | Take-Out | Delivery
@@ -289,8 +298,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                     yPos += DrawTextBlock(graphics, $"({order.CustomerAddress})", orderCustomerAddressFont, Brushes.Black, xPos, yPos, width, format);
                 }
             }
+            yPos += 5;
 
-            yPos += 15;
+            // Order Ready Date: yyyy-MM-dd
+            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("yyyy-MM-dd"), orderReadyTimeDateFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Order Ready Time: hh-mm
+            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("t"), orderReadyTimeFont, Brushes.Black, xPos, yPos, width, format);
+            yPos += 5;
 
             // Order nº: 1001
             yPos += DrawTextBlock(graphics, $"Order: {order.Number}", orderNumberFont, Brushes.Black, xPos, yPos, width, format);
@@ -301,15 +316,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 yPos += DrawTextBlock(graphics, $"({order.CustomerPhoneNumber})", orderCustomerPhoneNumberFont, Brushes.Black, xPos, yPos, width, format);
             }
 
-            // Order Ready Date: yyyy-MM-dd
-            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("yyyy-MM-dd"), orderReadyTimeDateFont, Brushes.Black, xPos, yPos, width, format);
-
-            // Order Ready Time: hh-mm
-            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("t"), orderReadyTimeFont, Brushes.Black, xPos, yPos, width, format);
-
             yPos += 15;
             graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + width, yPos);
-            yPos += 15;
+            yPos += 5;
 
             // Items
             // Code x Quantity - Price
@@ -330,8 +339,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 return (1, 0, code);
             }))
             {
+                string optionCode = "";
+
+                if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
+                {
+                    optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                }
+
                 string itemText =
-                    $"{orderProduct.Product.Code}. x {orderProduct.Quantity} - {orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+                    $"{orderProduct.Product.Code}{optionCode}. x {orderProduct.Quantity} - {orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))}";
 
                 yPos += DrawTextBlock(graphics, itemText, orderItemFont, Brushes.Black, xPos, yPos, width, format);
 
@@ -353,9 +369,21 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 // Separator
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
-                    yPos += 15;
+                    yPos += 5;
                     graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
-                    yPos += 15;
+                    yPos += 5;
+                }
+            }
+
+            // Observations:
+            if (!string.IsNullOrEmpty(order.Observations))
+            {
+                yPos += DrawTextBlock(graphics, $"*{order.Observations.ToUpper()}*", orderObservationsFont, Brushes.Black, xPos, yPos, width, format);
+                using (Pen pen = new Pen(Color.Black, 1))
+                {
+                    yPos += 5;
+                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    yPos += 5;
                 }
             }
 
@@ -375,6 +403,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 }
             }
 
+            // Items
+            yPos += DrawTextBlock(graphics, $"{order.Quantity}", orderItemFont, Brushes.Black, xPos, yPos, width, format);
+
             // Subtotal:  $0.00
             yPos += DrawTextBlock(graphics, $"Subtotal: {order.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
 
@@ -389,6 +420,135 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             {
                 yPos += DrawTextBlock(graphics, $"Delivery: {order.DeliveryFee.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
             }
+
+            // Total: $0.00
+            yPos += DrawTextBlock(graphics, $"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+        }
+
+        private void PrintReceiptPageKitchen(Graphics graphics, Order order)
+        {
+            float yPos = 0;
+            float xPos = 0;
+            float maxWidth = 200f;
+            float width = maxWidth - 10;
+
+            StringFormat format = new StringFormat
+            {
+                Trimming = StringTrimming.Word,
+                FormatFlags = StringFormatFlags.LineLimit
+            };
+
+            // Fonts
+            Font orderTypeFont = new Font("Arial", 20, FontStyle.Bold);
+            Font orderNumberFont = new Font("Arial", 18, FontStyle.Regular);
+            Font orderReadyTimeDateFont = new Font("Arial", 20, FontStyle.Regular);
+            Font orderReadyTimeFont = new Font("Arial", 22, FontStyle.Bold);
+            Font orderCustomerPhoneNumberFont = new Font("Arial", 18, FontStyle.Regular);
+            Font orderItemFont = new Font("Arial", 22, FontStyle.Regular);
+            Font orderItemInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
+            Font orderPriceFont = new Font("Arial", 18, FontStyle.Bold);
+            Font orderObservationsFont = new Font("Arial", 18, FontStyle.Bold);
+
+            yPos += 100;
+
+            // Header
+            // Order nº: 1001
+            yPos += DrawTextBlock(graphics, $"Order: {order.Number}", orderNumberFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Order Ready Date: yyyy-MM-dd
+            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("yyyy-MM-dd"), orderReadyTimeDateFont, Brushes.Black, xPos, yPos, width, format);
+
+            yPos += 15;
+            graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + width, yPos);
+            yPos += 5;
+
+            // Items
+            // Code x Quantity - Price
+            foreach (OrderProduct orderProduct in order.OrderProducts.OrderBy(item =>
+            {
+                string code = item.Product.Code;
+                int i = 0;
+
+                while (i < code.Length && char.IsDigit(code[i])) i++;
+
+                if (i > 0)
+                {
+                    int number = int.Parse(code.Substring(0, i));
+                    string letter = code.Substring(i);
+                    return (0, number, letter);
+                }
+
+                return (1, 0, code);
+            }))
+            {
+                string optionCode = "";
+
+                if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
+                {
+                    optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                }
+
+                // Code. x Quantity
+                yPos += DrawTextBlock(graphics, $"{orderProduct.Product.Code}{optionCode}. x {orderProduct.Quantity}", orderItemFont, Brushes.Black, xPos, yPos, width, format);
+
+                // Additional Price
+                if (orderProduct.AdditionalPrice != null && orderProduct.AdditionalPrice != 0m)
+                {
+                    yPos += DrawTextBlock(graphics, $"{orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))}", orderItemFont, Brushes.Black, xPos, yPos, width, format);
+                }
+
+                // Instructions
+                if (!string.IsNullOrEmpty(orderProduct.Instructions))
+                {
+                    yPos += DrawTextBlock(
+                        graphics,
+                        $"({orderProduct.Instructions.ToUpper()})",
+                        orderItemInstructionsFont,
+                        Brushes.Black,
+                        xPos,
+                        yPos,
+                        width,
+                        format
+                    );
+                }
+
+                // Separator
+                using (Pen pen = new Pen(Color.Black, 1))
+                {
+                    yPos += 5;
+                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    yPos += 5;
+                }
+            }
+
+            // Summary
+            if (order.AdditionalCharge != null && order.AdditionalCharge != 0m)
+            {
+                // Food: $0.00
+                yPos += DrawTextBlock(graphics, $"Food: {order.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+
+                // Additional Charge: $0.00
+                yPos += DrawTextBlock(graphics, $"Additional Charge: {order.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                using (Pen pen = new Pen(Color.Black, 1))
+                {
+                    yPos += 5;
+                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    yPos += 5;
+                }
+            }
+
+            // Observations:
+            if (!string.IsNullOrEmpty(order.Observations))
+            {
+                yPos += DrawTextBlock(graphics, $"*{order.Observations.ToUpper()}*", orderObservationsFont, Brushes.Black, xPos, yPos, width, format);
+            }
+
+            // Order Type: Dine-In | Take-Out | Delivery
+            yPos += DrawTextBlock(graphics, OrderTypeExtensions.GetName(order.Type), orderTypeFont, Brushes.Black, xPos, yPos, width, format);
+
+            // Order Ready Time: hh-mm
+            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("t"), orderReadyTimeFont, Brushes.Black, xPos, yPos, width, format);
+            yPos += 15;
 
             // Total: $0.00
             yPos += DrawTextBlock(graphics, $"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
