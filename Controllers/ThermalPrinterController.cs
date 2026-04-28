@@ -25,8 +25,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     .ThenInclude(op => op.Product)
                 .FirstOrDefault(o => o.Id == id);
 
-            _printer.PrintReceiptUSBAlt(order);
-            Thread.Sleep(300);
+            _printer.PrintReceiptUSB(order);
+            
+            Thread.Sleep(1000);
+
             _printer.PrintReceiptKitchenUSB(order);
 
             return Results.NoContent();
