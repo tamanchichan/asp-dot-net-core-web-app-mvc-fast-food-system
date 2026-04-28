@@ -360,7 +360,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("A", "Combo A", 15.95m),
             new FoodProduct("B", "Combo B", 14.95m),
             new FoodProduct("C", "Combo C", 14.95m),
-            new FoodProduct("D", "Combo D", 15.95m),
+            new FoodProduct("D", "Combo D", 14.95m),
             new FoodProduct("E", "Combo E", 14.95m),
             new FoodProduct("F", "Combo F", 15.95m)
         };
