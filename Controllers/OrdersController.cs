@@ -236,5 +236,27 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return RedirectToAction("Index");
         }
+        
+        public IActionResult SearchOrder(int orderNumber)
+        {
+            if (string.IsNullOrEmpty(orderNumber.ToString()))
+            {
+                TempData["ErrorMessage"] = "Order number cannot be null/empty.";
+                return RedirectToAction("Index");
+            }
+
+            Order order = _context.Orders
+                .Include(o => o.OrderProducts)
+                    .ThenInclude(op => op.Product)
+                .FirstOrDefault(o => o.Number == orderNumber);
+
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = "Order number not found.";
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("OrderDetails", new { id = order.Id });
+        }
     }
 }
