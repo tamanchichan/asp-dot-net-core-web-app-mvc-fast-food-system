@@ -29,6 +29,7 @@ modal.addEventListener("click", function(event) {
 
 export function handlePlaceOrder() {
     const orderFormCart = document.getElementById("orderFormCart");
+    const inputDineIn = document.getElementById("dineIn");
 
     const subTotal = document.getElementById("subTotalPrice").textContent.trim().replace("$", "");
 
@@ -37,19 +38,30 @@ export function handlePlaceOrder() {
     const pepperChicken = document.getElementById("pepperChicken");
 
 
-
-    if (subTotal >= 65) {
-        openFreeOrderProductModal();
-    }
-    else if (subTotal >= 55 && subTotal < 65) {
-        openFreeOrderProductModal();
-
-        friedRice.checked = true;
+    if (inputDineIn.checked) {
+        friedRice.checked = false;
+        chickenBalls.checked = false;
+        pepperChicken.checked = false;
+        friedRice.disabled = true;
         chickenBalls.disabled = true;
         pepperChicken.disabled = true;
 
+        orderFormCart.submit();
     }
     else {
-        orderFormCart.submit();
+        if (subTotal >= 65) {
+            openFreeOrderProductModal();
+        }
+        else if (subTotal >= 55 && subTotal < 65) {
+            openFreeOrderProductModal();
+
+            friedRice.checked = true;
+            chickenBalls.disabled = true;
+            pepperChicken.disabled = true;
+
+        }
+        else {
+            orderFormCart.submit();
+        }
     }
 }
