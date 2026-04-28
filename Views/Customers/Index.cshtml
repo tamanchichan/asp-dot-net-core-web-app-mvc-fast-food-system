@@ -1,5 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Customers Page";
+
+    ViewData["SearchForm"] = "SearchCustomer";
+    ViewData["SearchId"] = "phoneNumber";
+    ViewData["SearchName"] = "phoneNumber";
+    ViewData["SearchPlaceHolder"] = "123-456-7890";
+    ViewData["SearchController"] = "Customers";
 }
 
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
@@ -7,6 +13,7 @@
 @model HashSet<Customer>
 
 <div class="container customers-page">
+    <partial name="_SearchBar" />
     <div class="flex page-header">
         <h2>Customers List</h2>
         <a asp-action="CreateCustomer" class="button create-button">Create New Customer</a>

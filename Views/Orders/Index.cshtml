@@ -1,5 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Orders Page";
+
+    ViewData["SearchForm"] = "SearchOrder";
+    ViewData["SearchId"] = "orderNumber";
+    ViewData["SearchName"] = "orderNumber";
+    ViewData["SearchPlaceHolder"] = "Order nº";
+    ViewData["SearchController"] = "Orders";
 }
 
 @using System.Globalization
@@ -14,6 +20,7 @@
     }
     else
     {
+        <partial name="_SearchBar" />
         <form asp-action="Index" method="get" class="orders-filter-form">
             <div class="orders-filter-date">
                 <label for="date">Orders for:</label>

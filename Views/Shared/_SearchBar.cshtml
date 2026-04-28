@@ -1,0 +1,8 @@
+﻿<div class="search-customer">
+    <form asp-action="@ViewData["SearchForm"]" asp-controller="@ViewData["SearchController"]" method="post">
+        <div class="flex">
+            <input type="text" id="@ViewData["SearchId"]" name="@ViewData["SearchName"]" placeholder="@ViewData["SearchPlaceholder"]" value="@(TempData["ErrorMessage"] ?? "")" />
+            <button type="submit" class="button">Search</button>
+        </div>
+    </form>
+</div>

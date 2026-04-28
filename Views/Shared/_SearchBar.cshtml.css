@@ -1,0 +1,16 @@
+﻿.search-customer {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 25px;
+}
+
+input {
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-align: center;
+    margin-right: 30px;
+}
+
+.button {
+    display: inline-block;
+}
