@@ -1,22 +1,19 @@
-﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
-using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
+﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
-using ESC_POS_USB_NET.EpsonCommands;
 using ESC_POS_USB_NET.Printer;
 using ESCPOS_NET;
 using ESCPOS_NET.Emitters;
-using ESCPOS_NET.Utilities;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
-using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
 using Color = System.Drawing.Color;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 {
     public class ThermalPrinterService
     {
-        private readonly string _printername = "POS-80";
+        private readonly string _printername = "POS-80C";
 
         // Needs to configure virtual COM port for USB printer first
         public void PrintReceiptSerial(Order order)
@@ -36,7 +33,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
         }
 
         // https://github.com/mtmsuhail/ESC-POS-USB-NET
-        public void PrintReceiptUSB(Order order)
+        public void PrintReceiptUSBAlt(Order order)
         {
             Printer printer = new Printer("POS-80");
 
@@ -215,6 +212,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             printer.PrintDocument();
         }
 
+
         /*
          * Uses PrintDocument to print
          * Advantages:
@@ -224,40 +222,35 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
          *  - Too much blank space at the bottom after printed content
          *  - Needs to control 'x' and 'y' position where content will be printed
         */
-        public void PrintReceiptUSBAlt(Order order)
+        public void PrintReceiptUSB(Order order)
         {
             PrintDocument printDocument = new PrintDocument();
             printDocument.PrinterSettings.PrinterName = _printername;
+            printDocument.DefaultPageSettings.PaperSize = printDocument.PrinterSettings.DefaultPageSettings.PaperSize;
+            printDocument.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0); // Adjust margins as needed
             printDocument.PrintPage += (sender, e) => PrintReceiptPage(e.Graphics, order);
             printDocument.Print();
         }
 
         public void PrintReceiptKitchenUSB(Order order)
         {
+
             PrintDocument printDocument = new PrintDocument();
             printDocument.PrinterSettings.PrinterName = _printername;
+            printDocument.DefaultPageSettings.PaperSize = printDocument.PrinterSettings.DefaultPageSettings.PaperSize;
+            printDocument.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0); // Adjust margins as needed
             printDocument.PrintPage += (sender, e) => PrintReceiptPageKitchen(e.Graphics, order);
             printDocument.Print();
         }
 
-        private float DrawTextBlock
-        (
-            Graphics g,
-            string text,
-            Font font,
-            Brush brush,
-            float x,
-            float y,
-            float width,
-            StringFormat format
-        )
+        private float DrawTextBlock(Graphics graphics, string text, Font font, float x, float y, float width, StringFormat format)
         {
+            Brush brush = Brushes.Black;
+            SizeF size = graphics.MeasureString(text, font, (int)width);
             RectangleF rect = new RectangleF(x, y, width, 1000);
-
-            SizeF size = g.MeasureString(text, font, (int)width);
-
-            g.DrawString(text, font, brush, rect, format);
-
+            
+            graphics.DrawString(text, font, brush, rect, format);
+            
             return size.Height;
         }
 
@@ -265,8 +258,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
         {
             float yPos = 0;
             float xPos = 0;
-            float maxWidth = 200f;
-            float width = maxWidth - 10;
+            float widthPos = graphics.VisibleClipBounds.Width - 5;
+            float halfWidthPos = widthPos / 2;
 
             StringFormat format = new StringFormat
             {
@@ -274,54 +267,96 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 FormatFlags = StringFormatFlags.LineLimit
             };
 
-            // Fonts
-            Font orderTypeFont = new Font("Arial", 20, FontStyle.Bold);
-            Font orderCustomerAddressFont = new Font("Arial", 16, FontStyle.Regular);
-            Font orderReadyTimeDateFont = new Font("Arial", 20, FontStyle.Regular);
-            Font orderReadyTimeFont = new Font("Arial", 22, FontStyle.Bold);
-            Font orderNumberFont = new Font("Arial", 18, FontStyle.Regular);
-            Font orderCustomerPhoneNumberFont = new Font("Arial", 18, FontStyle.Regular);
-            Font orderItemFont = new Font("Arial", 22, FontStyle.Regular);
-            Font orderItemInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
-            Font orderPriceFont = new Font("Arial", 18, FontStyle.Bold);
-            Font orderObservationsFont = new Font("Arial", 18, FontStyle.Bold);
+            StringFormat rightAlign = new StringFormat
+            {
+                Alignment = StringAlignment.Far
+            };
 
-            // Header
-            // Order Type: Dine-In | Take-Out | Delivery
-            yPos += DrawTextBlock(graphics, OrderTypeExtensions.GetName(order.Type), orderTypeFont, Brushes.Black, xPos, yPos, width, format);
-            
+            #region Fonts
+            // Fonts
+            // Dine-In | Take-Out | Delivery
+            Font orderTypeFont = new Font("Arial", 16, FontStyle.Bold);
+
             // (Customer Address)
+            Font orderCustomerAddressFont = new Font("Arial", 16, FontStyle.Regular);
+
+            // yyyy-MM-dd
+            Font orderReadyTimeDateFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // hh-mm
+            Font orderReadyTimeFont = new Font("Arial", 16, FontStyle.Bold);
+
+            // Order nº: 1001
+            Font orderNumberFont = new Font("Arial", 16, FontStyle.Regular);
+
+            // (123-456-7890)
+            Font orderCustomerPhoneNumberFont = new Font("Arial", 16, FontStyle.Regular);
+
+            // Code. x Quantity - Product
+            Font orderProductFont = new Font("Arial", 16, FontStyle.Regular);
+
+            // $0.00
+            Font orderProductTotalPriceFont = new Font("Arial", 16, FontStyle.Bold);
+
+            // (INSTRUCTIONS)
+            Font orderProductInstructionsFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // *OBSERVATIONS*
+            Font orderObservationsFont = new Font("Arial", 16, FontStyle.Bold);
+            
+            // $0.00
+            Font orderPriceFont = new Font("Arial", 16, FontStyle.Bold);
+            #endregion
+
+            #region POS Header
+            // Order Type: Dine-In | Take-Out | Delivery
+            string orderTypeText = OrderTypeExtensions.GetName(order.Type);
+            yPos += DrawTextBlock(graphics, orderTypeText, orderTypeFont, xPos, yPos, widthPos, format);
+            
+            // Customer's Address: (123 Main St)
             if (order.Type == Enums.OrderType.Delivery)
             {
                 if (!string.IsNullOrEmpty(order.CustomerAddress))
                 {
-                    yPos += DrawTextBlock(graphics, $"({order.CustomerAddress})", orderCustomerAddressFont, Brushes.Black, xPos, yPos, width, format);
+                    string customerAddressText = $"({order.CustomerAddress})";
+                    yPos += DrawTextBlock(graphics, customerAddressText, orderCustomerAddressFont, xPos, yPos, widthPos, format);
                 }
             }
+            
             yPos += 5;
 
-            // Order Ready Date: yyyy-MM-dd
-            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("yyyy-MM-dd"), orderReadyTimeDateFont, Brushes.Black, xPos, yPos, width, format);
+            #region Space-Between: (Date and Time)
+            // Date: (yyyy-MM-dd)
+            string dateText = order.ReadyTime.ToString("yyyy-MM-dd");
+            DrawTextBlock(graphics, dateText, orderReadyTimeDateFont, xPos, yPos, halfWidthPos, format);
 
-            // Order Ready Time: hh-mm
-            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("t"), orderReadyTimeFont, Brushes.Black, xPos, yPos, width, format);
-            yPos += 5;
+            // Time: (hh-mm) // right-aligned
+            string timeText = order.ReadyTime.ToString("t");
+            DrawTextBlock(graphics, timeText, orderReadyTimeFont, xPos, yPos, widthPos, rightAlign);
+
+            // Move down based on taller text (date or time)
+            yPos += Math.Max(orderReadyTimeDateFont.GetHeight(graphics), orderReadyTimeFont.GetHeight(graphics)) + 5;
+            #endregion
 
             // Order nº: 1001
-            yPos += DrawTextBlock(graphics, $"Order: {order.Number}", orderNumberFont, Brushes.Black, xPos, yPos, width, format);
+            string orderNumberText = $"Order nº: {order.Number}";
+            yPos += DrawTextBlock(graphics, orderNumberText, orderNumberFont, xPos, yPos, widthPos, format);
 
-            // Customer's phone number
+            // Customer's phone number: (123-456-7890)
             if (!string.IsNullOrEmpty(order.CustomerPhoneNumber))
             {
-                yPos += DrawTextBlock(graphics, $"({order.CustomerPhoneNumber})", orderCustomerPhoneNumberFont, Brushes.Black, xPos, yPos, width, format);
+                string customerPhoneNumberText = $"({order.CustomerPhoneNumber})";
+                yPos += DrawTextBlock(graphics, customerPhoneNumberText, orderCustomerPhoneNumberFont, xPos, yPos, widthPos, format);
             }
+            #endregion
 
+            // Separator
             yPos += 15;
-            graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + width, yPos);
+            graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + widthPos, yPos);
             yPos += 5;
 
-            // Items
-            // Code x Quantity - Price
+            #region Items
+            // Code. x Quantity - Product - Price
             foreach (OrderProduct orderProduct in order.OrderProducts.OrderBy(item =>
             {
                 string code = item.Product.Code;
@@ -339,98 +374,141 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 return (1, 0, code);
             }))
             {
+                string productCode = "";
                 string optionCode = "";
+                string foodOption = "";
+                string productNameText = orderProduct.Product.Name;
+                string productQuantity = orderProduct.Quantity.ToString();
 
-                if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
+                if (orderProduct is OrderFoodProduct ofp)
                 {
-                    optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                    productCode = ofp.Product.Code;
+                    if (ofp.FoodOption.HasValue)
+                    {
+                        optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                        productCode += $"{optionCode}";
+
+                        foodOption = ofp.FoodOption.Value.ToString();
+                        productNameText = $"{productNameText} {foodOption}";
+                    }
                 }
 
-                string itemText =
-                    $"{orderProduct.Product.Code}{optionCode}. x {orderProduct.Quantity} - {orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+                //yPos += DrawTextBlock(graphics, itemText, orderItemFont, Brushes.Black, xPos, yPos, width, format);
 
-                yPos += DrawTextBlock(graphics, itemText, orderItemFont, Brushes.Black, xPos, yPos, width, format);
+                float codeWidth = 100;                 // left column
+                float nameWidth = widthPos - codeWidth;  // remaining space
 
+                #region Space-Between: Code and Product Name
+                // Code x Quantity
+                string codeAndQuantityText = $"{productCode}{optionCode}. x {productQuantity}";
+                DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, codeWidth, format);
+
+                // Product name
+                float productNameHeight = DrawTextBlock(graphics, productNameText, orderProductFont, xPos + codeWidth, yPos, nameWidth, format);
+
+                // Move down based on taller text (productNameHeight or orderItemFont)
+                yPos += Math.Max(productNameHeight, orderProductFont.GetHeight(graphics));
+                #endregion
+
+                #region Space-Between: Instructions and Price
                 // Instructions
+                string orderProductInstructionsText = "";
+                //float orderProductInstructionsWidth = 150;
+
                 if (!string.IsNullOrEmpty(orderProduct.Instructions))
                 {
-                    yPos += DrawTextBlock(
-                        graphics,
-                        $"({orderProduct.Instructions.ToUpper()})",
-                        orderItemInstructionsFont,
-                        Brushes.Black,
-                        xPos,
-                        yPos,
-                        width,
-                        format
-                    );
+                    orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
+                    DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, halfWidthPos, format);
                 }
-                
+
+                //float orderProductTotalPriceWidth = widthPos - orderProductInstructionsWidth;
+
+                // Product's total price: $0.00 (right-aligned)
+                string orderItemTotalPrice = orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"));
+                DrawTextBlock(graphics, orderItemTotalPrice, orderProductTotalPriceFont, xPos, yPos, widthPos, rightAlign);
+
+                // Move down based on taller text (instructions or price)
+                yPos += Math.Max(orderProductInstructionsFont.GetHeight(graphics), orderProductTotalPriceFont.GetHeight(graphics));
+                #endregion
+
                 // Separator
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
                     yPos += 5;
-                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
                     yPos += 5;
                 }
             }
+            #endregion
 
+            #region Order Summary
             // Observations:
             if (!string.IsNullOrEmpty(order.Observations))
             {
-                yPos += DrawTextBlock(graphics, $"*{order.Observations.ToUpper()}*", orderObservationsFont, Brushes.Black, xPos, yPos, width, format);
+                string orderObservationsText = $"*{order.Observations.ToUpper()}*";
+                yPos += DrawTextBlock(graphics, orderObservationsText, orderObservationsFont, xPos, yPos, widthPos, format);
+
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
                     yPos += 5;
-                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
                     yPos += 5;
                 }
             }
 
-            // Summary
             if (order.AdditionalCharge != null && order.AdditionalCharge != 0m)
             {
                 // Food: $0.00
-                yPos += DrawTextBlock(graphics, $"Food: {order.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                string orderFoodTotalPriceText = $"Food: {order.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+                yPos += DrawTextBlock(graphics, orderFoodTotalPriceText, orderPriceFont, xPos, yPos, widthPos, format);
 
                 // Additional Charge: $0.00
-                yPos += DrawTextBlock(graphics, $"Additional Charge: {order.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                string orderAdditionalChargeText = $"Additional Charge: {order.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))}";
+                yPos += DrawTextBlock(graphics, orderAdditionalChargeText, orderPriceFont, xPos, yPos, widthPos, format);
+
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
                     yPos += 5;
-                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
                     yPos += 5;
                 }
             }
 
-            // Items
-            yPos += DrawTextBlock(graphics, $"{order.Quantity}", orderItemFont, Brushes.Black, xPos, yPos, width, format);
+            // Items: x
+            string orderItemsText = $"Items: {order.Quantity}";
+            yPos += DrawTextBlock(graphics, orderItemsText, orderProductFont, xPos, yPos, widthPos, format);
 
-            // Subtotal:  $0.00
-            yPos += DrawTextBlock(graphics, $"Subtotal: {order.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+            // Subtotal: $0.00
+            string orderSubtotalText = $"Subtotal: {order.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+            yPos += DrawTextBlock(graphics, orderSubtotalText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
 
             // Gst: $0.00
-            yPos += DrawTextBlock(graphics, $"GST: {order.Gst.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+            string orderGstText = $"GST: {order.Gst.ToString("C", new CultureInfo("en-CA"))}";
+            yPos += DrawTextBlock(graphics, orderGstText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
 
             // Pst: $0.00
-            yPos += DrawTextBlock(graphics, $"PST: {order.Pst.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+            string orderPstText = $"PST: {order.Pst.ToString("C", new CultureInfo("en-CA"))}";
+            yPos += DrawTextBlock(graphics, orderPstText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
 
             // Delivery: $0.00
             if (order.Type == Enums.OrderType.Delivery)
             {
-                yPos += DrawTextBlock(graphics, $"Delivery: {order.DeliveryFee.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                string orderDeliveryText = $"Delivery: {order.DeliveryFee.Value.ToString("C", new CultureInfo("en-CA"))}";
+                yPos += DrawTextBlock(graphics, orderDeliveryText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
             }
 
             // Total: $0.00
-            yPos += DrawTextBlock(graphics, $"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+            string orderTotalText = $"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+            yPos += DrawTextBlock(graphics, orderTotalText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
+            #endregion
         }
 
         private void PrintReceiptPageKitchen(Graphics graphics, Order order)
         {
-            float yPos = 0;
             float xPos = 0;
-            float maxWidth = 200f;
-            float width = maxWidth - 10;
+            float yPos = 0;
+            float widthPos = graphics.VisibleClipBounds.Width - 5;
+            float halfWidthPos = widthPos / 2;
 
             StringFormat format = new StringFormat
             {
@@ -438,32 +516,62 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 FormatFlags = StringFormatFlags.LineLimit
             };
 
-            // Fonts
-            Font orderTypeFont = new Font("Arial", 20, FontStyle.Bold);
-            Font orderNumberFont = new Font("Arial", 18, FontStyle.Regular);
-            Font orderReadyTimeDateFont = new Font("Arial", 20, FontStyle.Regular);
-            Font orderReadyTimeFont = new Font("Arial", 22, FontStyle.Bold);
-            Font orderCustomerPhoneNumberFont = new Font("Arial", 18, FontStyle.Regular);
-            Font orderItemFont = new Font("Arial", 22, FontStyle.Regular);
-            Font orderItemInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
-            Font orderPriceFont = new Font("Arial", 18, FontStyle.Bold);
+            StringFormat rightAlign = new StringFormat
+            {
+                Alignment = StringAlignment.Far
+            };
+
+            #region Fonts
+            // Dine-In | Take-Out | Delivery
+            Font orderTypeFont = new Font("Arial", 18, FontStyle.Bold);
+
+            // Order nº: 1001
+            Font orderNumberFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // yyyy-MM-dd
+            Font orderReadyTimeDateFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // hh-mm
+            Font orderReadyTimeFont = new Font("Arial", 20, FontStyle.Bold);
+
+            // Code. x Quantity
+            Font orderProductFont = new Font("Arial", 24, FontStyle.Regular);
+
+            // $0.00
+            Font orderProductAdditionalPriceFont = new Font("Arial", 16, FontStyle.Bold);
+
+            // (INSTRUCTIONS)
+            Font orderProductInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
+
+            // *OBSERVATIONS*
             Font orderObservationsFont = new Font("Arial", 18, FontStyle.Bold);
 
+            // $0.00
+            Font orderPriceFont = new Font("Arial", 18, FontStyle.Bold);
+            #endregion
+
+            #region POS Header
             yPos += 100;
 
-            // Header
             // Order nº: 1001
-            yPos += DrawTextBlock(graphics, $"Order: {order.Number}", orderNumberFont, Brushes.Black, xPos, yPos, width, format);
+            string orderNumberText = $"Order nº: {order.Number}";
+            DrawTextBlock(graphics, orderNumberText, orderNumberFont, xPos, yPos, halfWidthPos, format);
 
-            // Order Ready Date: yyyy-MM-dd
-            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("yyyy-MM-dd"), orderReadyTimeDateFont, Brushes.Black, xPos, yPos, width, format);
+            // yyyy-MM-dd
+            string orderReadyTimeDateText = order.ReadyTime.ToString("yyyy-MM-dd");
+            DrawTextBlock(graphics, orderReadyTimeDateText, orderReadyTimeDateFont, xPos, yPos, widthPos, rightAlign);
 
-            yPos += 15;
-            graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + width, yPos);
+            // Move down once (based on tallest text)
+            yPos += Math.Max(orderNumberFont.GetHeight(graphics), orderReadyTimeDateFont.GetHeight(graphics));
+            #endregion
+
+            // Separator
+            yPos += 5;
+            graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + widthPos, yPos);
             yPos += 5;
 
-            // Items
-            // Code x Quantity - Price
+            #region Items
+            // Code. x Quantity
             foreach (OrderProduct orderProduct in order.OrderProducts.OrderBy(item =>
             {
                 string code = item.Product.Code;
@@ -481,33 +589,51 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 return (1, 0, code);
             }))
             {
+                string productCode = "";
                 string optionCode = "";
+                string foodOption = "";
+                string productNameText = orderProduct.Product.Name;
+                string productQuantity = orderProduct.Quantity.ToString();
 
                 if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
                 {
+                    productCode = ofp.Product.Code;
                     optionCode = ofp.FoodOption.ToString().Substring(0, 1);
                 }
 
-                // Code. x Quantity
-                yPos += DrawTextBlock(graphics, $"{orderProduct.Product.Code}{optionCode}. x {orderProduct.Quantity}", orderItemFont, Brushes.Black, xPos, yPos, width, format);
+                string codeAndQuantityText =
+                    $"{orderProduct.Product.Code}{optionCode}.";
 
-                // Additional Price
+                if (orderProduct.Quantity > 1)
+                {
+                    codeAndQuantityText = $"{orderProduct.Product.Code}{optionCode}. x {orderProduct.Quantity}";
+                }
+
+                #region Space-Between: Code and Additional Price
+                // Code. x Quantity
+                float codeAndQuantityHeight = DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, halfWidthPos, format);
+
+                // Additional Price: $0.00
                 if (orderProduct.AdditionalPrice != null && orderProduct.AdditionalPrice != 0m)
                 {
-                    yPos += DrawTextBlock(graphics, $"{orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))}", orderItemFont, Brushes.Black, xPos, yPos, width, format);
+                    string additionalPriceText = orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"));
+                    DrawTextBlock(graphics, additionalPriceText, orderProductAdditionalPriceFont, xPos, yPos, widthPos, rightAlign);
                 }
+
+                yPos += Math.Max(codeAndQuantityHeight, orderProductAdditionalPriceFont.GetHeight(graphics));
+                #endregion
 
                 // Instructions
                 if (!string.IsNullOrEmpty(orderProduct.Instructions))
                 {
+                    string orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
                     yPos += DrawTextBlock(
                         graphics,
-                        $"({orderProduct.Instructions.ToUpper()})",
-                        orderItemInstructionsFont,
-                        Brushes.Black,
+                        orderProductInstructionsText,
+                        orderProductInstructionsFont,
                         xPos,
                         yPos,
-                        width,
+                        widthPos,
                         format
                     );
                 }
@@ -516,23 +642,27 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
                     yPos += 5;
-                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
                     yPos += 5;
                 }
             }
+            #endregion
 
-            // Summary
+            #region Order Summary
             if (order.AdditionalCharge != null && order.AdditionalCharge != 0m)
             {
                 // Food: $0.00
-                yPos += DrawTextBlock(graphics, $"Food: {order.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                string orderFoodTotalPriceText = $"Food: {order.FoodTotalPrice.ToString("C", new CultureInfo("en-CA"))}";
+                yPos += DrawTextBlock(graphics, orderFoodTotalPriceText, orderPriceFont, xPos, yPos, widthPos, format);
 
                 // Additional Charge: $0.00
-                yPos += DrawTextBlock(graphics, $"Additional Charge: {order.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+                string orderAdditionalChargeText = $"Additional Charge: {order.AdditionalCharge.Value.ToString("C", new CultureInfo("en-CA"))}";
+                yPos += DrawTextBlock(graphics, orderAdditionalChargeText, orderPriceFont, xPos, yPos, widthPos, format);
+
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
                     yPos += 5;
-                    graphics.DrawLine(pen, xPos, yPos, xPos + width, yPos);
+                    graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
                     yPos += 5;
                 }
             }
@@ -540,18 +670,23 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             // Observations:
             if (!string.IsNullOrEmpty(order.Observations))
             {
-                yPos += DrawTextBlock(graphics, $"*{order.Observations.ToUpper()}*", orderObservationsFont, Brushes.Black, xPos, yPos, width, format);
+                string orderObservationsText = $"*{order.Observations.ToUpper()}*";
+                yPos += DrawTextBlock(graphics, orderObservationsText, orderObservationsFont, xPos, yPos, widthPos, format);
             }
 
             // Order Type: Dine-In | Take-Out | Delivery
-            yPos += DrawTextBlock(graphics, OrderTypeExtensions.GetName(order.Type), orderTypeFont, Brushes.Black, xPos, yPos, width, format);
+            string orderTypeText = $"{OrderTypeExtensions.GetName(order.Type)} ({OrderTypeExtensions.GetChineseName(order.Type)})";
+            yPos += DrawTextBlock(graphics, orderTypeText, orderTypeFont, xPos, yPos, widthPos, rightAlign);
 
             // Order Ready Time: hh-mm
-            yPos += DrawTextBlock(graphics, order.ReadyTime.ToString("t"), orderReadyTimeFont, Brushes.Black, xPos, yPos, width, format);
-            yPos += 15;
+            string orderReadyTimeText = order.ReadyTime.ToString("t");
+            yPos += DrawTextBlock(graphics, orderReadyTimeText, orderReadyTimeFont, xPos, yPos, widthPos, rightAlign);
 
             // Total: $0.00
-            yPos += DrawTextBlock(graphics, $"Total: {order.TotalPrice.ToString("C", new CultureInfo("en-CA"))}", orderPriceFont, Brushes.Black, xPos, yPos, width, format);
+            string orderTotalPriceText = order.TotalPrice.ToString("C", new CultureInfo("en-CA"));
+            yPos += DrawTextBlock(graphics, orderTotalPriceText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
+            graphics.Dispose();
+            #endregion
         }
     }
 }
