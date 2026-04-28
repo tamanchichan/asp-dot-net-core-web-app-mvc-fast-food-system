@@ -23,5 +23,25 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Helpers
 
             }
         }
+
+        public static string GetChineseName(OrderType? orderType)
+        {
+            if (orderType == null)
+            {
+                return "取出";
+            }
+            switch (orderType)
+            {
+                case OrderType.Delivery:
+                    return "送货";
+                case OrderType.DineIn:
+                    return "堂食";
+                case OrderType.TakeAway:
+                    return "取出";
+                default:
+                    return "取出";
+
+            }
+        }
     }
 }
