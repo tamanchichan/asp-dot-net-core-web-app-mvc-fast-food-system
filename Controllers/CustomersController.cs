@@ -139,5 +139,27 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             
             return RedirectToAction("CustomerDetails", new { id = customer.Id });
         }
+
+        public IActionResult SearchCustomer(string phoneNumber)
+        {
+            if (string.IsNullOrEmpty(phoneNumber))
+            {
+                TempData["ErrorMessage"] = "Phone number cannot be null/empty";
+                return RedirectToAction("Index");
+            }
+
+            Customer customer = _context.Customers
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.OrderProducts)
+                        .ThenInclude(op => op.Product)
+                .FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+            if (customer == null)
+            {
+                TempData["ErrorMessage"] = "Customer with this phone number does not exist";
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("CustomerDetails", new { id = customer.Id });
+        }
     }
 }
