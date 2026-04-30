@@ -400,7 +400,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 #region Space-Between: Code and Product Name
                 // Code x Quantity
-                string codeAndQuantityText = $"{productCode}{optionCode}. x {productQuantity}";
+                string codeAndQuantityText = $"{productCode}. x {productQuantity}";
                 DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, codeWidth, format);
 
                 // Product name
