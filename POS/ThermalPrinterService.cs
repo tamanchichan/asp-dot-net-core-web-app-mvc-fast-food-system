@@ -613,7 +613,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 #region Space-Between: Code and Additional Price
                 // Code. x Quantity
-                float codeAndQuantityHeight = DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, halfWidthPos, format);
+                float codeAndQuantityHeight = DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, halfWidthPos + 50, format);
 
                 // Additional Price: $0.00
                 if (orderProduct.AdditionalPrice != null && orderProduct.AdditionalPrice != 0m)
