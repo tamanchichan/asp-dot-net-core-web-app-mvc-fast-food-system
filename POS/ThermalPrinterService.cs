@@ -415,10 +415,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 string orderProductInstructionsText = "";
                 //float orderProductInstructionsWidth = 150;
 
+                float orderProductInstructionsHeight = 0;
+
                 if (!string.IsNullOrEmpty(orderProduct.Instructions))
                 {
                     orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
-                    DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, halfWidthPos, format);
+                    orderProductInstructionsHeight = DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, halfWidthPos, format);
                 }
 
                 //float orderProductTotalPriceWidth = widthPos - orderProductInstructionsWidth;
@@ -428,7 +430,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 DrawTextBlock(graphics, orderItemTotalPrice, orderProductTotalPriceFont, xPos, yPos, widthPos, rightAlign);
 
                 // Move down based on taller text (instructions or price)
-                yPos += Math.Max(orderProductInstructionsFont.GetHeight(graphics), orderProductTotalPriceFont.GetHeight(graphics));
+                yPos += Math.Max(orderProductInstructionsHeight, orderProductTotalPriceFont.GetHeight(graphics));
                 #endregion
 
                 // Separator
