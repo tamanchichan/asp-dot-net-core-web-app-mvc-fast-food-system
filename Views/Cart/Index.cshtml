@@ -21,39 +21,33 @@
 
 @model Cart
 
+@* <link rel="stylesheet" href="~/css/Views/Shared/_ProductItemsFields.css" /> *@
+
 <partial name="_AddProductInput" />
 <div class="container cart-page">
-    @if (Model == null)
-    {
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-    }
-    else if (Model.CartProducts == null || Model.CartProducts.Count == 0)
-    {
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-    }
-    else
-    {
-        <div class="clear-cart">
-            <a asp-action="ClearCartProducts" asp-controller="Cart">
-                <i class="fa-solid fa-trash"></i>
-            </a>
-        </div>
-        @* <partial name="_FreeOrderProduct" /> *@
-        <partial name="_ProductItemsFields" model="Model.CartProducts" />
-        <partial name="_OrderForm" />
-    }
+    <div class="clear-cart">
+        <a asp-action="ClearCartProducts" asp-controller="Cart">
+            <i class="fa-solid fa-trash"></i>
+        </a>
+    </div>
+    <partial name="_ProductItemsFields" model="Model.CartProducts" />
+    <partial name="_OrderForm" />
 </div>
 
 @section Scripts {
-    <script src="~/js/Shared/order-form.js"></script>
+    <script src="~/js/Views/Shared/_OrderForm.js"></script>
     <script src="~/js/additionalPriceModal.js"></script>
-    @* <script src="~/js/Views/Shared/_ProductItemsFields.js"></script> *@
     <script type="module">
         import { incrementProductQuantity, decrementProductQuantity } from "/js/Views/Shared/_ProductItemsFields.js";
 
         window.incrementProductQuantity = incrementProductQuantity;
         window.decrementProductQuantity = decrementProductQuantity;
     </script>
+    @* <script type="module">
+        import { addProductInput } from "/js/Views/Shared/_AddProductInput.js";
+
+        window.addProductInput = addProductInput;
+    </script> *@
     <script type="module">
         import { handlePlaceOrder } from "/js/Views/Shared/_FreeOrderProduct.js";
 
