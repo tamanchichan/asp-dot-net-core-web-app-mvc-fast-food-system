@@ -10,6 +10,8 @@
 
     string readyTime = "";
 
+    int quantity = 0;
+
     if (Model is Order order)
     {
         selectedOrderType = order.Type;
@@ -21,6 +23,12 @@
         deliveryFee = (order.DeliveryFee.HasValue && order.DeliveryFee != 0m) ? order.DeliveryFee.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
         discount = (order.Discount.HasValue && order.Discount != 0m) ? order.Discount.Value.ToString("0.##", CultureInfo.InvariantCulture) : "";
         readyTime = order.ReadyTime.ToString("HH:mm");
+        quantity = order.Quantity;
+    }
+
+    if (Model is Cart cart)
+    {
+        quantity = cart.CartProducts.Sum(cp => cp.Quantity);
     }
 }
 
@@ -114,7 +122,7 @@
             <input type="time" id="readyTimeOnly" name="readyTimeOnly" value="@ViewData["ReadyTimeOnly"]" />
         </div>
         <div class="flex submit-order-button">
-            <button onclick="@ViewData["OrderFormButtonOnClick"]" type="@ViewData["OrderFormButtonType"]" class="button">@ViewData["OrderFormSubmitButtonTitle"]</button>
+            <button onclick="@ViewData["OrderFormButtonOnClick"]" type="@ViewData["OrderFormButtonType"]" class="button" disabled="@(quantity == 0)">@ViewData["OrderFormSubmitButtonTitle"]</button>
         </div>
     </form>
 </div>
