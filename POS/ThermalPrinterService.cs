@@ -537,7 +537,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             Font orderReadyTimeFont = new Font("Arial", 20, FontStyle.Bold);
 
             // Code. x Quantity
-            Font orderProductFont = new Font("Arial", 24, FontStyle.Regular);
+            Font orderProductFont = new Font("Arial", 22, FontStyle.Regular);
 
             // $0.00
             Font orderProductAdditionalPriceFont = new Font("Arial", 16, FontStyle.Bold);
