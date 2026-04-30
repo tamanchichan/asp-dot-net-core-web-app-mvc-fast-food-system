@@ -57,6 +57,6 @@
     font-size: 20px;
 }
 
-::deep .product-increment:hover, .product-decrement:hover {
+::deep .product-increment:hover, ::deep .product-decrement:hover {
     color: #fff;
 }
