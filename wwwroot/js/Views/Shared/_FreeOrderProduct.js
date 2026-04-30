@@ -1,4 +1,6 @@
 ﻿const modal = document.getElementById("freeOrderProductModal");
+const orderFormCart = document.getElementById("orderFormCart");
+
 function openFreeOrderProductModal() {
 
     if (!modal) {
@@ -28,7 +30,6 @@ modal.addEventListener("click", function(event) {
 })
 
 export function handlePlaceOrder() {
-    const orderFormCart = document.getElementById("orderFormCart");
     const inputDineIn = document.getElementById("dineIn");
 
     const subTotal = document.getElementById("subTotalPrice").textContent.trim().replace("$", "");
@@ -42,11 +43,12 @@ export function handlePlaceOrder() {
         friedRice.checked = false;
         chickenBalls.checked = false;
         pepperChicken.checked = false;
+
         friedRice.disabled = true;
         chickenBalls.disabled = true;
         pepperChicken.disabled = true;
 
-        orderFormCart.submit();
+        orderFormCart.requestSubmit();
     }
     else {
         if (subTotal >= 65) {
@@ -61,7 +63,8 @@ export function handlePlaceOrder() {
 
         }
         else {
-            orderFormCart.submit();
+            orderFormCart.requestSubmit();
+
         }
     }
 }
