@@ -604,11 +604,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 }
 
                 string codeAndQuantityText =
-                    $"{orderProduct.Product.Code}{optionCode}.";
+                    $"{productCode}{optionCode}.";
 
                 if (orderProduct.Quantity > 1)
                 {
-                    codeAndQuantityText = $"{orderProduct.Product.Code}{optionCode}. x {orderProduct.Quantity}";
+                    codeAndQuantityText = $"{productCode}{optionCode}. x {orderProduct.Quantity}";
                 }
 
                 #region Space-Between: Code and Additional Price
