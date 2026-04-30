@@ -629,15 +629,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 if (!string.IsNullOrEmpty(orderProduct.Instructions))
                 {
                     string orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
-                    yPos += DrawTextBlock(
-                        graphics,
-                        orderProductInstructionsText,
-                        orderProductInstructionsFont,
-                        xPos,
-                        yPos,
-                        widthPos,
-                        format
-                    );
+                    yPos += DrawTextBlock(graphics,orderProductInstructionsText,orderProductInstructionsFont,xPos,yPos,widthPos,format);
                 }
 
                 // Separator
