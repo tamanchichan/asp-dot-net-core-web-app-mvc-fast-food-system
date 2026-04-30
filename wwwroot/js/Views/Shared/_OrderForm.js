@@ -1,14 +1,30 @@
-﻿const customerNameInput = document.getElementById("customerName");
+﻿const observationsInput = document.getElementById("observations");
+observationsInput.addEventListener("input", () => {
+    localStorage.setItem("observations", observationsInput.value);
+});
+observationsInput.value = localStorage.getItem("observations");
+
+const customerNameInput = document.getElementById("customerName");
+customerNameInput.addEventListener("input", () => {
+    localStorage.setItem("customerName", customerNameInput.value);
+});
+customerNameInput.value = localStorage.getItem("customerName");
+
 const customerPhoneNumberInput = document.getElementById("customerPhoneNumber");
+
 const customerAddressInput = document.getElementById("customerAddress");
+customerAddressInput.addEventListener("input", () => {
+    localStorage.setItem("customerAddress", customerAddressInput.value)
+});
+customerAddressInput.value = localStorage.getItem("customerAddress");
 
 const customersPhoneNumberDiv = document.querySelector(".customers-phone-number");
 
 const radioDelivery = document.getElementById("delivery");
 
 customerPhoneNumberInput.addEventListener("input", async () => {
-
     const value = customerPhoneNumberInput.value;
+    localStorage.setItem("customerPhoneNumber", value);
 
     if (value.length < 3) {
         customersPhoneNumberDiv.hidden = true;
@@ -39,6 +55,8 @@ customerPhoneNumberInput.addEventListener("input", async () => {
         customersPhoneNumberDiv.appendChild(div);
     });
 });
+
+customerPhoneNumberInput.value = localStorage.getItem("customerPhoneNumber");
 
 const additionalChargeInput = document.getElementById("additionalCharge");
 const gstElement = document.getElementById("gst");
@@ -91,3 +109,12 @@ async function updateTotalPrice() {
 additionalChargeInput.addEventListener("input", updateTotalPrice);
 deliveryFeeInput.addEventListener("input", updateTotalPrice);
 discountInput.addEventListener("input", updateTotalPrice);
+
+const orderFormCart = document.getElementById("orderFormCart");
+
+orderFormCart.addEventListener("submit", () => {
+    localStorage.removeItem("observations");
+    localStorage.removeItem("customerName");
+    localStorage.removeItem("customerPhoneNumber");
+    localStorage.removeItem("customerAddress");
+})
