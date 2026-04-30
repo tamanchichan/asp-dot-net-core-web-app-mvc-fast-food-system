@@ -293,6 +293,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             HashSet<CartProduct> cartProducts = cart.CartProducts;
 
+            if (cartProducts.Count == 0)
+            {
+                TempData["ErrorMessage"] = "Cannot process an order without products.";
+
+                return RedirectToAction("Index");
+            }
+
             Order order = new Order()
             {
                 UserId = _userManager.GetUserId(User),
