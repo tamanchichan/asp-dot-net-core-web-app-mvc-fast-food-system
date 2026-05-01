@@ -57,7 +57,7 @@
         </div>
         <div class="product-option">
             <label for="option">Product Option: </label>
-            <input type="checkbox" name="option" @(Model.HasOptions ? "checked" : "") />
+            <input type="checkbox" name="option" value="true" @(Model.HasOptions ? "checked" : "") />
         </div>
         <div class="form-buttons">
             <button type="submit" class="button submit-button">Save Changes</button>

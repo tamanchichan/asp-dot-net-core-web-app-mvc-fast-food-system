@@ -61,7 +61,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(ProductCategory category, string? code, string? name, string? price, bool option)
+        public IActionResult CreateProduct(ProductCategory category, string? code, string? name, string? price, bool? option)
         {
             ViewBag.Categories = Enum.GetValues(typeof(ProductCategory));
 
@@ -109,7 +109,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     Code = code,
                     Name = name,
                     Price = string.IsNullOrEmpty(price) ? 0m : decimal.Parse(price.Replace(",", "."), CultureInfo.InvariantCulture),
-                    HasOptions = option
+                    HasOptions = option ?? false
                 };
             }
             else if (category == ProductCategory.Extras)
@@ -120,7 +120,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     Code = code,
                     Name = name,
                     Price = string.IsNullOrEmpty(price) ? 0m : decimal.Parse(price.Replace(",", "."), CultureInfo.InvariantCulture),
-                    HasOptions = option
+                    HasOptions = option ?? false
                 };
             }
             else if (category == ProductCategory.Sauces)
@@ -131,7 +131,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     Code = code,
                     Name = name,
                     Price = string.IsNullOrEmpty(price) ? 0m : decimal.Parse(price.Replace(",", "."), CultureInfo.InvariantCulture),
-                    HasOptions = option
+                    HasOptions = option ?? false
                 };
             }
             else
@@ -142,7 +142,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     Code = code,
                     Name = name,
                     Price = string.IsNullOrEmpty(price) ? 0m : decimal.Parse(price.Replace(",", "."), CultureInfo.InvariantCulture),
-                    HasOptions = option
+                    HasOptions = option ?? false
                 };
 
             }
@@ -180,7 +180,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProduct(Guid id, string? code,string? name, string? price, ProductCategory category, bool option)
+        public IActionResult EditProduct(Guid id, string? code,string? name, string? price, ProductCategory category, bool? option)
         {
             code = code.ToUpper();
 
@@ -227,7 +227,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             product.Name = name;
             product.Price = string.IsNullOrEmpty(price) ? 0m : decimal.Parse(price.Replace(",", "."), CultureInfo.InvariantCulture);
             product.Category = category;
-            product.HasOptions = option;
+            product.HasOptions = option ?? false;
             
             _context.Products.Update(product);
             _context.SaveChanges();
