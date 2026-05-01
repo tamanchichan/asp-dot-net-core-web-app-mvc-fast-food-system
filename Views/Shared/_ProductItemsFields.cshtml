@@ -60,7 +60,7 @@
     {
         <div class="product-item" data-id="@productItem.Id">
             <div class="item" style="@(hideButton ? "grid-template-columns: repeat(6, 1fr);" : "")">
-                @if (productItem.Product.Category == ProductCategory.Extras)
+                @if (
                 {
                     <span class="product-code"></span>
                 }
