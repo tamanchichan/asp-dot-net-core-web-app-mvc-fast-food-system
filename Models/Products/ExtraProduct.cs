@@ -3,13 +3,13 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products
 {
-    public class SauceProduct : Product
+    public class ExtraProduct : Product
     {
-        public SauceProduct() { }
+        public ExtraProduct() { }
 
-        public SauceProduct(string code, string name, decimal price, bool hasOptions = false) : base(code, name, price, hasOptions) { }
+        public ExtraProduct(string code, string name, decimal price, bool hasOptions = false) : base(code, name, price, hasOptions) { }
 
-        public SauceProduct
+        public ExtraProduct
         (
             string code,
             string name,
