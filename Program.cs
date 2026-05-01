@@ -74,6 +74,7 @@ using (IServiceScope scope = app.Services.CreateScope())
         await DefaultFoodProducts.Initialize(services);
         await DefaultBeverageProducts.Initialize(services);
         await DefaultSauceProducts.Initialize(services);
+        await DefaultExtraProducts.Initialize(services);
 
         // Initialize default food products by creating a JSON file
         //await DefaultFoodProducts.InitializeJson();
