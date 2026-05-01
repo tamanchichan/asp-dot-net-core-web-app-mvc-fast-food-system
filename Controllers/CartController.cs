@@ -327,12 +327,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Order = order,
                         Product = cartFoodProduct.Product,
                         ProductId = cartFoodProduct.ProductId,
+                        Code = cartFoodProduct.Product.Code,
+                        Name = cartFoodProduct.Product.Name,
                         FoodOption = cartFoodProduct.FoodOption,
                         FoodSize = cartFoodProduct.FoodSize,
                         Quantity = cartFoodProduct.Quantity,
                         Instructions = cartFoodProduct.Instructions,
                         AdditionalPrice = cartFoodProduct.AdditionalPrice,
-                        Price = cartProduct.Price
+                        Price = cartProduct.Price,
+                        Category = cartFoodProduct.Category,
+                        HasOptions = cartFoodProduct.HasOptions
                     };
 
                     order.OrderProducts.Add(orderFoodProduct);
@@ -346,11 +350,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Order = order,
                         Product = cartBeverageProduct.Product,
                         ProductId = cartBeverageProduct.ProductId,
+                        Code = cartBeverageProduct.Product.Code,
+                        Name = cartBeverageProduct.Product.Name,
                         BeverageOption = cartBeverageProduct.BeverageOption,
                         Quantity = cartBeverageProduct.Quantity,
                         Instructions = cartBeverageProduct.Instructions,
                         AdditionalPrice = cartBeverageProduct.AdditionalPrice,
-                        Price = cartProduct.Price
+                        Price = cartProduct.Price,
+                        Category = cartBeverageProduct.Category,
+                        HasOptions = cartBeverageProduct.HasOptions
                     };
 
                     order.OrderProducts.Add(orderBeverageProduct);
@@ -364,10 +372,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Order = order,
                         Product = cartExtraProduct.Product,
                         ProductId = cartExtraProduct.ProductId,
+                        Code = cartExtraProduct.Product.Code,
+                        Name = cartExtraProduct.Product.Name,
                         Quantity = cartExtraProduct.Quantity,
                         Instructions = cartExtraProduct.Instructions,
                         AdditionalPrice = cartExtraProduct.AdditionalPrice,
-                        Price = cartProduct.Price
+                        Price = cartProduct.Price,
+                        Category = cartExtraProduct.Category,
+                        HasOptions = cartExtraProduct.HasOptions
                     };
 
                     order.OrderProducts.Add(orderExtraProduct);
@@ -381,11 +393,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Order = order,
                         Product = cartSauceProduct.Product,
                         ProductId = cartSauceProduct.ProductId,
+                        Code = cartSauceProduct.Product.Code,
+                        Name = cartSauceProduct.Product.Name,
                         SauceOption = cartSauceProduct.SauceOption,
                         Quantity = cartSauceProduct.Quantity,
                         Instructions = cartSauceProduct.Instructions,
                         AdditionalPrice = cartSauceProduct.AdditionalPrice,
-                        Price = cartProduct.Price
+                        Price = cartProduct.Price,
+                        Category = cartSauceProduct.Category,
+                        HasOptions = cartSauceProduct.HasOptions
                     };
 
                     order.OrderProducts.Add(orderSauceProduct);
@@ -406,10 +422,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     Order = order,
                     Product = product,
                     ProductId = product.Id,
+                    Code = product.Code,
+                    Name = product.Name,
                     Quantity = 1,
                     Instructions = "Free",
                     Price = 0m,
-                    IsFreeItem = true
+                    IsFreeItem = true,
+                    Category = product.Category,
+                    HasOptions = product.HasOptions
                 };
 
                 if (freeOrderProductCode == "23")

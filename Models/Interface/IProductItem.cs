@@ -7,9 +7,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
     {
         Guid Id { get; }
 
-        Guid ProductId { get; }
+        Guid? ProductId { get; }
 
-        Product Product { get; set; }
+        Product? Product { get; set; }
+
+        public string Code { get; set; }
+
+        public string Name { get; set; }
 
         int Quantity { get; set; }
 
@@ -20,5 +24,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
         decimal Price { get; }
 
         decimal TotalPrice { get; }
+
+        ProductCategory? Category { get; set; }
+
+        bool? HasOptions { get; set; }
     }
 }

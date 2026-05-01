@@ -15,8 +15,13 @@ input[type=number] {
     width: 100px;
 }
 
-button {
-    margin-top: 10px;
+.page-header .flex {
+    justify-content: space-between;
+    align-items: center;
+}
+
+::deep .delete-button {
+    font-size: 30px;
 }
 
 ::deep .edit-product-form {

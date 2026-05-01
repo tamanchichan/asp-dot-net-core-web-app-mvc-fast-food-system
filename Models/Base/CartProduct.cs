@@ -12,9 +12,33 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public Cart Cart { get; set; } = null!;
 
-        public Guid ProductId { get; set; }
+        public Guid? ProductId { get; set; }
 
-        public Product Product { get; set; } = null!;
+        public Product? Product { get; set; }
+
+        public string Code
+        {
+            get
+            {
+                return Product?.Code ?? string.Empty;
+            }
+            set
+            {
+
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return Product?.Name ?? string.Empty;
+            }
+            set
+            {
+
+            }
+        }
 
         public int Quantity { get; set; } = 1;
 
@@ -36,6 +60,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             get
             {
                 return (AdditionalPrice + Price) * Quantity;
+            }
+        }
+
+        public ProductCategory? Category
+        {
+            get
+            {
+                return Product?.Category;
+            }
+            set
+            {
+            }
+        }
+
+        public bool? HasOptions
+        {
+            get
+            {
+                return Product?.HasOptions;
+            }
+            set
+            {
             }
         }
 

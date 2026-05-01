@@ -42,6 +42,12 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
         builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
         builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
         builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+
+        builder.Entity<OrderProduct>()
+            .HasOne(op => op.Product)
+            .WithMany()
+            .HasForeignKey(op => op.ProductId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 
     public DbSet<Cart> Carts { get; set; } = default!;

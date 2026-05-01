@@ -12,10 +12,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public Order Order { get; set; }
 
-        public Guid ProductId { get; set; }
+        public Guid? ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
+        public string Code { get; set; }
+
+        public string Name { get; set; }
 
         public int Quantity { get; set; } = 1;
 
@@ -35,6 +38,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
                 return (AdditionalPrice + Price) * Quantity;
             }
         }
+
+        public ProductCategory? Category { get; set; }
+
+        public bool? HasOptions { get; set; }
 
         public OrderProduct() { }
 

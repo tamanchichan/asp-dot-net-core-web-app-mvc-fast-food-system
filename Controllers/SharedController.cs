@@ -442,6 +442,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 orderProduct.Order = order;
                 orderProduct.ProductId = product.Id;
                 orderProduct.Product = product;
+                orderProduct.Code = product.Code;
+                orderProduct.Name = product.Name;
+                orderProduct.Category = product.Category;
+                orderProduct.HasOptions = product.HasOptions;
+                orderProduct.AdditionalPrice = 0m;
                 orderProduct.Quantity = (int)quantity;
 
                 _context.OrderProducts.Add(orderProduct);

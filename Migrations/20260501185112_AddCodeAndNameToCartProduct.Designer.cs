@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 
@@ -10,9 +11,11 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 {
     [DbContext(typeof(FastFoodSystemDbContext))]
-    partial class FastFoodSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260501185112_AddCodeAndNameToCartProduct")]
+    partial class AddCodeAndNameToCartProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -255,9 +258,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Property<Guid>("CartId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Category")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -266,9 +266,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                         .IsRequired()
                         .HasMaxLength(21)
                         .HasColumnType("TEXT");
-
-                    b.Property<bool?>("HasOptions")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Instructions")
                         .HasColumnType("TEXT");
@@ -417,9 +414,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                     b.Property<decimal>("AdditionalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("Category")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -428,9 +422,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                         .IsRequired()
                         .HasMaxLength(21)
                         .HasColumnType("TEXT");
-
-                    b.Property<bool?>("HasOptions")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Instructions")
                         .HasColumnType("TEXT");

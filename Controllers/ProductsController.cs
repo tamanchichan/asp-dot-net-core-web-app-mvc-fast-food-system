@@ -244,7 +244,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

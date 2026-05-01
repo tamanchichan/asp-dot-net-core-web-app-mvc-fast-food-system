@@ -17,6 +17,9 @@
             <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@Model.Id">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
+            <a asp-action="DeleteProduct" asp-controller="Products" asp-route-id="@Model.Id" class="delete-button">
+                <i class="fa-solid fa-trash-can"></i>
+            </a>
         </div>
         <h2>Edit Product: </h2>
     </div>
