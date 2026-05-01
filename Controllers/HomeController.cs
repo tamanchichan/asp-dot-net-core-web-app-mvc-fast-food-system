@@ -55,6 +55,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 ProductCategory.HotAndSpicy,
                 ProductCategory.ComboPlates,
                 ProductCategory.FamilyDinners,
+                ProductCategory.Beverages,
+                ProductCategory.Sauces,
                 ProductCategory.Extras
             };
 
