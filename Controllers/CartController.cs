@@ -332,6 +332,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartFoodProduct.Quantity,
                         Instructions = cartFoodProduct.Instructions,
                         AdditionalPrice = cartFoodProduct.AdditionalPrice,
+                        Price = cartProduct.Price
                     };
 
                     order.OrderProducts.Add(orderFoodProduct);
@@ -349,10 +350,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartBeverageProduct.Quantity,
                         Instructions = cartBeverageProduct.Instructions,
                         AdditionalPrice = cartBeverageProduct.AdditionalPrice,
+                        Price = cartProduct.Price
                     };
 
                     order.OrderProducts.Add(orderBeverageProduct);
                     _context.OrderProducts.Add(orderBeverageProduct);
+                }
+                else if (cartProduct is CartExtraProduct cartExtraProduct)
+                {
+                    OrderExtraProduct orderExtraProduct = new OrderExtraProduct()
+                    {
+                        OrderId = order.Id,
+                        Order = order,
+                        Product = cartExtraProduct.Product,
+                        ProductId = cartExtraProduct.ProductId,
+                        Quantity = cartExtraProduct.Quantity,
+                        Instructions = cartExtraProduct.Instructions,
+                        AdditionalPrice = cartExtraProduct.AdditionalPrice,
+                        Price = cartProduct.Price
+                    };
+
+                    order.OrderProducts.Add(orderExtraProduct);
+                    _context.OrderProducts.Add(orderExtraProduct);
                 }
                 else if (cartProduct is CartSauceProduct cartSauceProduct)
                 {
@@ -366,6 +385,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartSauceProduct.Quantity,
                         Instructions = cartSauceProduct.Instructions,
                         AdditionalPrice = cartSauceProduct.AdditionalPrice,
+                        Price = cartProduct.Price
                     };
 
                     order.OrderProducts.Add(orderSauceProduct);
@@ -388,6 +408,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     ProductId = product.Id,
                     Quantity = 1,
                     Instructions = "Free",
+                    Price = 0m,
                     IsFreeItem = true
                 };
 
