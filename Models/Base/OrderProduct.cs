@@ -16,6 +16,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public Product Product { get; set; }
 
+
         public int Quantity { get; set; } = 1;
 
         public string? Instructions { get; set; }
@@ -25,13 +26,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         [Column(TypeName = "decimal(18,2)")]
         public decimal AdditionalPrice { get; set; } = 0m;
 
-        public decimal Price
-        {
-            get
-            {
-                return IsFreeItem ? 0 : Product.Price;
-            }
-        }
+        public decimal Price { get; set; }
 
         public decimal TotalPrice
         {
