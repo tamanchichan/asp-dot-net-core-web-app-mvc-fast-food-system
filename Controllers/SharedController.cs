@@ -158,6 +158,18 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                             cp.Instructions == instructions
                     );
             }
+            else if (product is ExtraProduct)
+            {
+                cartProduct = _context.CartProducts
+                    .OfType<CartExtraProduct>()
+                    .Where(cp => cp.CartId == cart.Id)
+                    .FirstOrDefault(
+                        cp =>
+                            cp.ProductId == product.Id &&
+                            cp.AdditionalPrice == additionalPrice &&
+                            cp.Instructions == instructions
+                    );
+            }
             else if (product is FoodProduct)
             {
                 cartProduct = _context.CartProducts
@@ -192,6 +204,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     cartProduct = new CartBeverageProduct()
                     {
                         //BeverageOption = 
+                    };
+                }
+                else if (product is ExtraProduct)
+                {
+                    cartProduct = new CartExtraProduct()
+                    {
+                        //No options for extra products for now, but can add later if needed
                     };
                 }
                 else if (product is FoodProduct)
@@ -327,6 +346,18 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                             op.Instructions == instructions
                     );
             }
+            else if (product is ExtraProduct)
+            {
+                orderProduct = _context.OrderProducts
+                    .OfType<OrderExtraProduct>()
+                    .Where(op => op.OrderId == order.Id)
+                    .FirstOrDefault(
+                        op =>
+                            op.ProductId == product.Id &&
+                            op.AdditionalPrice == additionalPrice &&
+                            op.Instructions == instructions
+                    );
+            }
             else if (product is FoodProduct)
             {
                 orderProduct = _context.OrderProducts
@@ -361,6 +392,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     orderProduct = new OrderBeverageProduct()
                     {
                         //BeverageOption = 
+                    };
+                }
+                else if (product is ExtraProduct)
+                {
+                    orderProduct = new OrderExtraProduct()
+                    {
+                        //No options for extra products for now, but can add later if needed
                     };
                 }
                 else if (product is FoodProduct)
