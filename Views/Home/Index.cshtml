@@ -25,7 +25,11 @@
                 {
                     <a asp-action="AddProductToCart" asp-controller="Cart" asp-route-id="@productVM.Product.Id" class="save-scroll-position" title="@productVM.Product.Name">
                         <div class="product">
-                            @if (productVM.Product.Category == ProductCategory.Extras)
+                            @if (
+                                productVM.Product.Category == ProductCategory.Beverages ||
+                                productVM.Product.Category == ProductCategory.Extras ||
+                                productVM.Product.Category == ProductCategory.Sauces
+                            )
                             {
                                 <span class="product-code"></span>
                             }
