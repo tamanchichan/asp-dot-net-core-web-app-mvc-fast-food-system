@@ -1,0 +1,51 @@
+﻿input, select {
+    appearance: auto;
+    border: 1px solid #000;
+    border-radius: 2.5px;
+    padding: 10px 15px;
+    width: 200px;
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
+input[type=number] {
+    text-align: center;
+    width: 100px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+::deep .edit-product-form {
+    border: 1px solid #000;
+    border-radius: 5px;
+    display: grid;
+    place-content: center;
+    padding: 30px 15px;
+    padding-bottom: 45px;
+    position: relative;
+}
+
+::deep .edit-product-form div {
+    padding: 15px 0px;
+}
+
+::deep .edit-product-form label {
+    display: block;
+}
+
+.error-message {
+    display: block;
+    position: absolute;
+    color: #f00;
+    font-size: 15px;
+}
+
+.form-buttons {
+    position: absolute;
+    right: 15px;
+    bottom: 0px;
+}

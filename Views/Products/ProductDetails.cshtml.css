@@ -1,0 +1,29 @@
+﻿.page-header .flex {
+    justify-content: space-between;
+}
+
+.product-details {
+    display: grid;
+    justify-content: center;
+}
+
+.product-details div {
+    border-bottom: 1px solid #000;
+    padding: 15px 30px;
+}
+
+.product-details .flex {
+    justify-content:right;
+    align-items: baseline;
+}
+
+.key {
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-size: 22px;
+}
+
+.value {
+    font-size: 20px;
+    margin-left: 15px;
+}

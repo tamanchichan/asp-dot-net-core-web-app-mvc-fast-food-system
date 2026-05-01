@@ -54,6 +54,8 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
 
     public DbSet<CartBeverageProduct> CartBeverageProducts { get; set; } = default!;
 
+    public DbSet<CartExtraProduct> CartExtraProducts { get; set; } = default!;
+
     public DbSet<CartFoodProduct> CartFoodProducts { get; set; } = default!;
 
     public DbSet<CartSauceProduct> CartSauceProducts { get; set; } = default!;
@@ -62,6 +64,8 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
 
     public DbSet<OrderBeverageProduct> OrderBeverageProducts { get; set; } = default!;
 
+    public DbSet<OrderExtraProduct> OrderExtraProducts { get; set; } = default!;
+
     public DbSet<OrderFoodProduct> OrderFoodProducts { get; set; } = default!;
 
     public DbSet<OrderSauceProduct> OrderSauceProducts { get; set; } = default!;
@@ -69,6 +73,8 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
     public DbSet<Product> Products { get; set; } = default!;
 
     public DbSet<BeverageProduct> BeverageProducts { get; set; } = default!;
+
+    public DbSet<ExtraProduct> ExtraProducts { get; set; } = default!;
 
     public DbSet<FoodProduct> FoodProducts { get; set; } = default!;
 

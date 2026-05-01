@@ -374,11 +374,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
             new FoodProduct("F6", "For Six", 108.50m)
         };
 
-        public static readonly HashSet<FoodProduct> ExtrasProducts = new HashSet<FoodProduct>()
-        {
-            new FoodProduct("DN", "Dry Noodles", null, 1.00m, ProductCategory.Extras, null, false),
-        };
-
         public static readonly HashSet<FoodProduct> DefaultProducts = new HashSet<FoodProduct>
         (
             AppetizerFoodProducts
@@ -393,7 +388,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                 .Concat(HotAndSpicyProducts)
                 .Concat(ComboPlateProducts)
                 .Concat(FamilyDinnerProducts)
-                .Concat(ExtrasProducts)
         ) { };
     }
 }

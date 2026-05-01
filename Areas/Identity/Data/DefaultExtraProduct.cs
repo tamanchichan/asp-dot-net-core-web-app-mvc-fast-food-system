@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
-using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
 {
-    public static class DefaultSauceProducts
+    public static class DefaultExtraProducts
     {
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
@@ -13,11 +13,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data
                 serviceProvider.GetRequiredService<DbContextOptions<FastFoodSystemDbContext>>()
             );
 
-            if (!context.SauceProducts.Any())
+            if (!context.ExtraProducts.Any())
             {
-                await context.SauceProducts.AddRangeAsync
+                await context.ExtraProducts.AddRangeAsync
                 (
-                    new SauceProduct("SAUCE", "Sauce", null, 1.75m, ProductCategory.Sauces, null, true)
+                    new ExtraProduct("DN", "Dry Noodles", null, 1.00m, ProductCategory.Extras, null, false)
                 );
 
                 await context.SaveChangesAsync();

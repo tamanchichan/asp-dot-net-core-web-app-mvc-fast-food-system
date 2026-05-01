@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Product Details Page";
+}
+
+@using System.Globalization;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+
+@model Product
+
+<div class="container product-details-page">
+    <div class="page-header">
+        <div class="flex">
+            <a asp-action="Index" asp-controller="Products" asp-route-id="@Model.Id">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <a asp-action="EditProduct" asp-controller="Products" asp-route-id="@Model.Id" class="button">Edit</a>
+        </div>
+        <div>
+            <h2>Product's Details:</h2>
+        </div>
+    </div>
+    <div class="product-details">
+        <div class="flex">
+            <span class="key">Category: </span>
+            <span class="value">@Model.Category.ToString()</span>
+        </div>
+        <div class="flex">
+            <span class="key">Code: </span>
+            <span class="value">@Model.Code</span>
+        </div>
+        <div class="flex">
+            <span class="key">Name:</span>
+            <span class="value">@Model.Name</span>
+        </div>
+        <div class="flex">
+            <span class="key">Price:</span>
+            <span class="value">@Model.Price.ToString("C", new CultureInfo("en-CA"))</span>
+        </div>
+    </div>
+</div>

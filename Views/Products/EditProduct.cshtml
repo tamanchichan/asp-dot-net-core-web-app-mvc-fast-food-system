@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Edit Product";
+
+    string productCode = Model.Code;
+    string productName = Model.Name;
+    string productPrice = Model.Price.ToString(CultureInfo.InvariantCulture);
+}
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+
+@model Product
+
+<div class="container edit-product-page">
+    <div class="page-header">
+        <div class="flex">
+            <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@Model.Id">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <h2>Edit Product: </h2>
+    </div>
+    <form asp-action="EditProduct" asp-controller="Products" method="post" class="edit-product-form">
+        <div class="product-category">
+            <label for="category">Product Category: </label>
+            <select name="category">
+                @foreach (Enum category in ViewBag.Categories)
+                {
+                    @if (category.ToString() == Model.Category.ToString())
+                    {
+                        <option value="@category" selected>@category</option>
+                    }
+                    else
+                    {
+                        <option value="@category">@category</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="product-code">
+            <label for="code">Product Code: </label>
+            <input type="text" name="code" value="@productCode" />
+            <span class="error-message">@TempData["ProductCodeMessage"]</span>
+        </div>
+        <div class="product-name">
+            <label for="name">Product Name: </label>
+            <input type="text" name="name" value="@productName" />
+            <span class="error-message">@TempData["ProductNameMessage"]</span>
+        </div>
+        <div class="product-price">
+            <label for="price">Product Price: </label>
+            <input type="number" step="0.01" name="price" value="@productPrice" />
+            <span class="error-message">@TempData["ProductPriceMessage"]</span>
+        </div>
+        <div class="product-option">
+            <label for="option">Product Option: </label>
+            <input type="checkbox" name="option" @(Model.HasOptions ? "checked" : "") />
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="button submit-button">Save Changes</button>
+        </div>
+    </form>
+</div>

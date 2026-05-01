@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Products Page";
+}
+
+@using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
+
+@model Dictionary<ProductCategory, List<Product>>
+
+<div class="container products-page">
+    <div class="flex page-header">
+        <h2>Products</h2>
+        <a asp-action="CreateProduct" asp-controller="Products" class="button">New Product</a>
+    </div>
+    <div class="products">
+        @foreach (KeyValuePair<ProductCategory, List<Product>> productCategory in Model)
+        {
+            <div class="product-category">
+                <h3>@Html.DisplayFor(model => productCategory.Key)</h3>
+                @foreach (var product in productCategory.Value)
+                {
+                    <a asp-action="ProductDetails" asp-controller="Products" asp-route-id="@product.Id">
+                        <div class="product">
+                            <span class="product-code">@product.Code</span>
+                            <span class="product-name">@product.Name</span>
+                            <span class="product-price">@product.Price.ToString("C", new CultureInfo("en-CA"))</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>
