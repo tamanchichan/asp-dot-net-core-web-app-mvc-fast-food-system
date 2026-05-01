@@ -382,11 +382,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 if (orderProduct is OrderFoodProduct ofp)
                 {
-                    productCode = ofp.Product.Code;
+                    productCode = $"{ofp.Product.Code}";
+
                     if (ofp.FoodOption.HasValue)
                     {
                         optionCode = ofp.FoodOption.ToString().Substring(0, 1);
-                        productCode += $"{optionCode}";
+                        productCode = $"{ofp.Product.Code}{optionCode}";
 
                         foodOption = ofp.FoodOption.Value.ToString();
                         productNameText = $"{productNameText} {foodOption}";
@@ -400,7 +401,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 #region Space-Between: Code and Product Name
                 // Code x Quantity
-                string codeAndQuantityText = $"{productCode}. x {productQuantity}";
+                string codeAndQuantityText = $"{productCode}.";
+
+                if (orderProduct.Quantity > 1)
+                {
+                    codeAndQuantityText = $"{productCode}. x {productQuantity}";
+                }
+
                 DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, codeWidth, format);
 
                 // Product name
@@ -591,7 +598,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 return (1, 0, code);
             }))
             {
-                string productCode = "";
+                string productCode = orderProduct.Product.Code;
                 string optionCode = "";
                 string foodOption = "";
                 string productNameText = orderProduct.Product.Name;
@@ -599,8 +606,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
                 {
-                    productCode = ofp.Product.Code;
-                    optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                    productCode += ofp.FoodOption.ToString().Substring(0, 1);
                 }
 
                 string codeAndQuantityText =
