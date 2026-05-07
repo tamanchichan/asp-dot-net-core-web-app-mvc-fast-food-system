@@ -104,8 +104,11 @@
         </div>
     </div>
     <div class="print-receipt">
-        <a asp-action="PrintOrder" asp-controller="ThermalPrinter" asp-route-id="@Model.Id" class="print-receipt-button">
-            <i class="fa-solid fa-print"></i>
-        </a>
+        <form asp-action="PrintOrder" asp-controller="ThermalPrinter" asp-route-id="@Model.Id" class="print-order-form">
+            <button type="submit" class="button">
+                <i class="fa-solid fa-print"></i>
+            </button>
+            <partial name="_PrintOrderCheckbox" />
+        </form>
     </div>
 </div>

@@ -18,18 +18,22 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _printer = printer;
         }
 
-        public IResult PrintOrder(Guid id)
+        public IResult PrintOrder(Guid id, bool printOrder, bool printKitchenOrder)
         {
             Order order = _context.Orders
                 .Include(o => o.OrderProducts)
                     .ThenInclude(op => op.Product)
                 .FirstOrDefault(o => o.Id == id);
 
-            _printer.PrintReceiptUSB(order);
-            
-            Thread.Sleep(1000);
+            if (printOrder)
+            {
+                _printer.PrintReceiptUSB(order);
+            }
 
-            _printer.PrintReceiptKitchenUSB(order);
+            if (printKitchenOrder)
+            {
+                _printer.PrintReceiptKitchenUSB(order);
+            }
 
             return Results.NoContent();
         }

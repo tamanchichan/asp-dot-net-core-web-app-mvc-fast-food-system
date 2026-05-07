@@ -68,6 +68,11 @@
     justify-content: right;
 }
 
-::deep .print-receipt-button {
+::deep .print-order-form {
+    display: flex;
+    gap: 10px;
+}
+
+::deep .print-order-form i {
     font-size: 30px;
 }

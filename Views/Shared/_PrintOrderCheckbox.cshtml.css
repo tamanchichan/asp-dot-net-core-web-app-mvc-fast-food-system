@@ -1,0 +1,9 @@
+﻿.print-order-checkbox {
+    display: grid;
+    justify-content: right;
+}
+
+.print-order-checkbox input {
+    appearance: auto;
+    width: auto;
+}

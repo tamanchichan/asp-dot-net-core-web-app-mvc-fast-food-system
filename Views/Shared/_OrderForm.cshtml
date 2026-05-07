@@ -124,5 +124,6 @@
         <div class="flex submit-order-button">
             <button onclick="@ViewData["OrderFormButtonOnClick"]" type="@ViewData["OrderFormButtonType"]" class="button" disabled="@(quantity == 0)">@ViewData["OrderFormSubmitButtonTitle"]</button>
         </div>
+        <partial name="_PrintOrderCheckbox" />
     </form>
 </div>

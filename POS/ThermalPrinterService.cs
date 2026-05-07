@@ -374,7 +374,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 return (1, 0, code);
             }))
             {
-                string productCode = "";
+                string productCode = orderProduct.Product.Code;
                 string optionCode = "";
                 string foodOption = "";
                 string productNameText = orderProduct.Product.Name;
@@ -382,8 +382,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 if (orderProduct is OrderFoodProduct ofp)
                 {
-                    productCode = $"{ofp.Product.Code}";
-
                     if (ofp.FoodOption.HasValue)
                     {
                         optionCode = ofp.FoodOption.ToString().Substring(0, 1);
