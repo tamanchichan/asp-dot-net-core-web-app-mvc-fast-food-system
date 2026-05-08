@@ -275,44 +275,52 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             #region Fonts
             // Fonts
             // Dine-In | Take-Out | Delivery
-            Font orderTypeFont = new Font("Arial", 16, FontStyle.Bold);
+            Font orderTypeFont = new Font("Arial", 14, FontStyle.Bold);
 
             // (Customer Address)
-            Font orderCustomerAddressFont = new Font("Arial", 16, FontStyle.Regular);
+            Font orderCustomerAddressFont = new Font("Arial", 14, FontStyle.Regular);
 
             // yyyy-MM-dd
-            Font orderReadyTimeDateFont = new Font("Arial", 14, FontStyle.Regular);
+            Font orderReadyTimeDateFont = new Font("Arial", 12, FontStyle.Regular);
 
             // hh-mm
-            Font orderReadyTimeFont = new Font("Arial", 16, FontStyle.Bold);
+            Font orderReadyTimeFont = new Font("Arial", 12, FontStyle.Bold);
 
             // Order nº: 1001
-            Font orderNumberFont = new Font("Arial", 16, FontStyle.Regular);
+            Font orderNumberFont = new Font("Arial", 12, FontStyle.Regular);
 
             // (123-456-7890)
-            Font orderCustomerPhoneNumberFont = new Font("Arial", 16, FontStyle.Regular);
+            Font orderCustomerPhoneNumberFont = new Font("Arial", 12, FontStyle.Regular);
 
             // Code. x Quantity - Product
-            Font orderProductFont = new Font("Arial", 16, FontStyle.Regular);
+            Font orderProductFont = new Font("Arial", 12, FontStyle.Regular);
 
             // $0.00
-            Font orderProductTotalPriceFont = new Font("Arial", 16, FontStyle.Bold);
+            Font orderProductTotalPriceFont = new Font("Arial", 12, FontStyle.Bold);
 
             // (INSTRUCTIONS)
-            Font orderProductInstructionsFont = new Font("Arial", 14, FontStyle.Regular);
+            Font orderProductInstructionsFont = new Font("Arial", 10, FontStyle.Regular);
 
             // *OBSERVATIONS*
-            Font orderObservationsFont = new Font("Arial", 16, FontStyle.Bold);
+            Font orderObservationsFont = new Font("Arial", 12, FontStyle.Bold);
             
             // $0.00
-            Font orderPriceFont = new Font("Arial", 16, FontStyle.Bold);
+            Font orderPriceFont = new Font("Arial", 12, FontStyle.Bold);
             #endregion
 
             #region POS Header
             // Order Type: Dine-In | Take-Out | Delivery
             string orderTypeText = OrderTypeExtensions.GetName(order.Type);
-            yPos += DrawTextBlock(graphics, orderTypeText, orderTypeFont, xPos, yPos, widthPos, format);
-            
+            float orderTypeHeight = 0;
+            orderTypeHeight = DrawTextBlock(graphics, orderTypeText, orderTypeFont, xPos, yPos, halfWidthPos, format);
+
+            // Date: (yyyy-MM-dd)
+            string dateText = order.ReadyTime.ToString("yyyy-MM-dd");
+            float dateHeight = 0;
+            dateHeight = DrawTextBlock(graphics, dateText, orderReadyTimeDateFont, xPos, yPos, widthPos, rightAlign);
+
+            yPos += Math.Max(orderTypeHeight, dateHeight);
+
             // Customer's Address: (123 Main St)
             if (order.Type == Enums.OrderType.Delivery)
             {
@@ -326,21 +334,19 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             yPos += 5;
 
             #region Space-Between: (Date and Time)
-            // Date: (yyyy-MM-dd)
-            string dateText = order.ReadyTime.ToString("yyyy-MM-dd");
-            DrawTextBlock(graphics, dateText, orderReadyTimeDateFont, xPos, yPos, halfWidthPos, format);
-
-            // Time: (hh-mm) // right-aligned
-            string timeText = order.ReadyTime.ToString("t");
-            DrawTextBlock(graphics, timeText, orderReadyTimeFont, xPos, yPos, widthPos, rightAlign);
-
-            // Move down based on taller text (date or time)
-            yPos += Math.Max(orderReadyTimeDateFont.GetHeight(graphics), orderReadyTimeFont.GetHeight(graphics)) + 5;
-            #endregion
-
             // Order nº: 1001
             string orderNumberText = $"Order nº: {order.Number}";
-            yPos += DrawTextBlock(graphics, orderNumberText, orderNumberFont, xPos, yPos, widthPos, format);
+            float orderNumberHeight = 0;
+            orderNumberHeight = DrawTextBlock(graphics, orderNumberText, orderNumberFont, xPos, yPos, halfWidthPos, format);
+
+            // Time: (hh-mm) // right-aligned
+            string orderTimeText = order.ReadyTime.ToString("t");
+            float orderTimeHeight = 0;
+            orderTimeHeight = DrawTextBlock(graphics, orderTimeText, orderReadyTimeFont, xPos, yPos, widthPos, rightAlign);
+
+            // Move down based on taller text (date or time)
+            yPos += Math.Max(orderNumberHeight, orderTimeHeight);
+            #endregion
 
             // Customer's phone number: (123-456-7890)
             if (!string.IsNullOrEmpty(order.CustomerPhoneNumber))
@@ -399,43 +405,36 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 #region Space-Between: Code and Product Name
                 // Code x Quantity
-                string codeAndQuantityText = $"{productCode}.";
+                productCode += ".";
+                string codeAndQuantityText = $"{productCode}";
+                float codeAndQuantityHeight = 0;
 
                 if (orderProduct.Quantity > 1)
                 {
-                    codeAndQuantityText = $"{productCode}. x {productQuantity}";
+                    codeAndQuantityText = $"{productCode} x {productQuantity}";
                 }
 
-                DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, codeWidth, format);
+                codeAndQuantityHeight = DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, codeWidth, format);
 
                 // Product name
-                float productNameHeight = DrawTextBlock(graphics, productNameText, orderProductFont, xPos + codeWidth, yPos, nameWidth, format);
+                float productNameHeight = 0;
+                productNameHeight = DrawTextBlock(graphics, productNameText, orderProductFont, xPos + codeWidth, yPos, nameWidth, format);
 
                 // Move down based on taller text (productNameHeight or orderItemFont)
-                yPos += Math.Max(productNameHeight, orderProductFont.GetHeight(graphics));
+                yPos += Math.Max(codeAndQuantityHeight, productNameHeight);
                 #endregion
 
                 #region Space-Between: Instructions and Price
                 // Instructions
-                string orderProductInstructionsText = "";
-                //float orderProductInstructionsWidth = 150;
-
-                float orderProductInstructionsHeight = 0;
-
                 if (!string.IsNullOrEmpty(orderProduct.Instructions))
                 {
-                    orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
-                    orderProductInstructionsHeight = DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, halfWidthPos, format);
+                    string orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
+                    yPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, widthPos, format);
                 }
-
-                //float orderProductTotalPriceWidth = widthPos - orderProductInstructionsWidth;
 
                 // Product's total price: $0.00 (right-aligned)
                 string orderItemTotalPrice = orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"));
-                DrawTextBlock(graphics, orderItemTotalPrice, orderProductTotalPriceFont, xPos, yPos, widthPos, rightAlign);
-
-                // Move down based on taller text (instructions or price)
-                yPos += Math.Max(orderProductInstructionsHeight, orderProductTotalPriceFont.GetHeight(graphics));
+                yPos += DrawTextBlock(graphics, orderItemTotalPrice, orderProductTotalPriceFont, xPos, yPos, widthPos, rightAlign);
                 #endregion
 
                 // Separator
@@ -579,7 +578,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
             #region Items
             // Code. x Quantity
-            foreach (OrderProduct orderProduct in order.OrderProducts.OrderBy(item =>
+            int middle = (order.OrderProducts.Count + 1) / 2;
+            float leftYPos = yPos;
+            float rightYPos = yPos;
+
+            List<OrderProduct> orderProducts = order.OrderProducts.OrderBy(item =>
             {
                 string code = item.Product.Code;
                 int i = 0;
@@ -594,57 +597,185 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 }
 
                 return (1, 0, code);
-            }))
+            }).ToList();
+
+            List<OrderProduct> leftSide = orderProducts.Take(middle).ToList();
+            List<OrderProduct> rightSide = orderProducts.Skip(middle).ToList();
+
+            foreach (OrderProduct orderProductL in  leftSide)
             {
-                string productCode = orderProduct.Product.Code;
+                string productCode = orderProductL.Product.Code;
                 string optionCode = "";
-                string foodOption = "";
-                string productNameText = orderProduct.Product.Name;
-                string productQuantity = orderProduct.Quantity.ToString();
+                string productNameText = orderProductL.Product.Name;
+                string productQuantity = orderProductL.Quantity.ToString();
 
-                if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
+                if (orderProductL is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
                 {
-                    productCode += ofp.FoodOption.ToString().Substring(0, 1);
+                    optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                    productCode = $"{ofp.Product.Code}{optionCode}";
                 }
 
-                string codeAndQuantityText =
-                    $"{productCode}{optionCode}.";
+                productCode += ".";
+                string codeAndQuantityText = productCode;
 
-                if (orderProduct.Quantity > 1)
+                if (orderProductL.Quantity > 1)
                 {
-                    codeAndQuantityText = $"{productCode}{optionCode}. x {orderProduct.Quantity}";
+                    codeAndQuantityText = $"{productCode} x {orderProductL.Quantity}";
                 }
 
-                #region Space-Between: Code and Additional Price
-                // Code. x Quantity
-                float codeAndQuantityHeight = DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, halfWidthPos + 50, format);
+                //leftYPos += DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, leftYPos, halfWidthPos, format);
+                SizeF textSize = graphics.MeasureString(
+                    codeAndQuantityText,
+                    orderProductFont
+                );
 
-                // Additional Price: $0.00
-                if (orderProduct.AdditionalPrice != null && orderProduct.AdditionalPrice != 0m)
-                {
-                    string additionalPriceText = orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"));
-                    DrawTextBlock(graphics, additionalPriceText, orderProductAdditionalPriceFont, xPos, yPos, widthPos, rightAlign);
-                }
+                graphics.DrawString(
+                    codeAndQuantityText,
+                    orderProductFont,
+                    Brushes.Black,
+                    new PointF(xPos, leftYPos)
+                );
 
-                yPos += Math.Max(codeAndQuantityHeight, orderProductAdditionalPriceFont.GetHeight(graphics));
-                #endregion
+                leftYPos += textSize.Height;
 
                 // Instructions
-                if (!string.IsNullOrEmpty(orderProduct.Instructions))
+                if (!string.IsNullOrEmpty(orderProductL.Instructions))
                 {
-                    string orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
-                    yPos += DrawTextBlock(graphics,orderProductInstructionsText,orderProductInstructionsFont,xPos,yPos,widthPos,format);
+                    string orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()})";
+                    leftYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, leftYPos, halfWidthPos, format);
                 }
 
                 // Separator
-                using (Pen pen = new Pen(Color.Black, 1))
-                {
-                    yPos += 5;
-                    graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
-                    yPos += 5;
-                }
+                leftYPos += 5;
             }
+
+            foreach (OrderProduct orderProductR in rightSide)
+            {
+                string productCode = orderProductR.Product.Code;
+                string optionCode = "";
+                string productNameText = orderProductR.Product.Name;
+                string productQuantity = orderProductR.Quantity.ToString();
+
+                if (orderProductR is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
+                {
+                    optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+                    productCode = $"{ofp.Product.Code}{optionCode}";
+                }
+
+                // Code x Quantity
+                productCode += ".";
+                string codeAndQuantityText = productCode;
+
+                if (orderProductR.Quantity > 1)
+                {
+                    codeAndQuantityText = $"{productCode} x {orderProductR.Quantity}";
+                }
+
+                // rightYPos += DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                SizeF textSize = graphics.MeasureString(
+                    codeAndQuantityText,
+                    orderProductFont
+                );
+
+                graphics.DrawString(
+                    codeAndQuantityText,
+                    orderProductFont,
+                    Brushes.Black,
+                    new PointF(xPos + halfWidthPos, rightYPos)
+                );
+
+                rightYPos += textSize.Height;
+
+                // Instructions
+                if (!string.IsNullOrEmpty(orderProductR.Instructions))
+                {
+                    string orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()})";
+                    rightYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                }
+
+                // Separator
+                rightYPos += 5;
+            }
+
+            yPos = Math.Max(leftYPos, rightYPos);
+
+            //foreach (OrderProduct orderProduct in order.OrderProducts.OrderBy(item =>
+            //{
+            //    string code = item.Product.Code;
+            //    int i = 0;
+
+            //    while (i < code.Length && char.IsDigit(code[i])) i++;
+
+            //    if (i > 0)
+            //    {
+            //        int number = int.Parse(code.Substring(0, i));
+            //        string letter = code.Substring(i);
+            //        return (0, number, letter);
+            //    }
+
+            //    return (1, 0, code);
+            //}))
+            //{
+            //    string productCode = orderProduct.Product.Code;
+            //    string optionCode = "";
+            //    string productNameText = orderProduct.Product.Name;
+            //    string productQuantity = orderProduct.Quantity.ToString();
+
+            //    if (orderProduct is OrderFoodProduct ofp && ofp.FoodOption.HasValue)
+            //    {
+            //        optionCode = ofp.FoodOption.ToString().Substring(0, 1);
+            //        productCode = $"{ofp.Product.Code}{optionCode}";
+            //    }
+
+            //    #region Space-Between: Code and Additional Price
+            //    // Code x Quantity
+            //    productCode += ".";
+            //    string codeAndQuantityText = productCode;
+
+            //    if (orderProduct.Quantity > 1)
+            //    {
+            //        codeAndQuantityText = $"{productCode} x {orderProduct.Quantity}";
+            //    }
+
+            //    float codeAndQuantityHeight = 0;
+            //    codeAndQuantityHeight = DrawTextBlock(graphics, codeAndQuantityText, orderProductFont, xPos, yPos, halfWidthPos + 50, format);
+
+            //    // Additional Price: $0.00
+            //    float additionalPriceHeight = 0;
+
+            //    if (orderProduct.AdditionalPrice != null && orderProduct.AdditionalPrice != 0m)
+            //    {
+            //        string additionalPriceText = orderProduct.AdditionalPrice.ToString("C", new CultureInfo("en-CA"));
+
+            //        additionalPriceHeight = DrawTextBlock(graphics, additionalPriceText, orderProductAdditionalPriceFont, xPos, yPos, widthPos, rightAlign);
+            //    }
+
+            //    yPos += Math.Max(codeAndQuantityHeight, additionalPriceHeight);
+            //    #endregion
+
+            //    // Instructions
+            //    if (!string.IsNullOrEmpty(orderProduct.Instructions))
+            //    {
+            //        string orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
+            //        yPos += DrawTextBlock(graphics,orderProductInstructionsText,orderProductInstructionsFont,xPos,yPos,widthPos,format);
+            //    }
+
+            //    // Separator
+            //    using (Pen pen = new Pen(Color.Black, 1))
+            //    {
+            //        yPos += 5;
+            //        graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
+            //        yPos += 5;
+            //    }
+            //}
             #endregion
+
+            // Separator
+            using (Pen pen = new Pen(Color.Black, 1))
+            {
+                graphics.DrawLine(pen, xPos, yPos, xPos + widthPos, yPos);
+                yPos += 5;
+            }
 
             #region Order Summary
             if (order.AdditionalCharge != null && order.AdditionalCharge != 0m)
