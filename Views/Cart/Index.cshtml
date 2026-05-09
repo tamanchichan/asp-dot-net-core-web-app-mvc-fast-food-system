@@ -26,10 +26,16 @@
 
 <partial name="_AddProductInput" />
 <div class="container cart-page">
-    <div class="clear-cart">
-        <a asp-action="ClearCartProducts" asp-controller="Cart">
-            <i class="fa-solid fa-trash"></i>
-        </a>
+    <div class="page-header">
+        <div class="cart-product-quantity flex">
+            <h3>Items: @Model.CartProducts.Count()</h3>
+            <h3>Quantity: @Model.Quantity</h3>
+        </div>
+        <div class="clear-cart">
+            <a asp-action="ClearCartProducts" asp-controller="Cart">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </div>
     </div>
     <partial name="_ProductItemsFields" model="Model.CartProducts" />
     <partial name="_OrderForm" />

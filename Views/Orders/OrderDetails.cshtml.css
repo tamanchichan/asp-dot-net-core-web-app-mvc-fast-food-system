@@ -8,17 +8,35 @@
     justify-content: space-between;
 }
 
+.customer-details {
+    justify-content: center !important;
+}
+
+.order-number-and-order-ready-date, .order-type-and-order-ready-time {
+    align-items: baseline;
+}
+
 .order-summary {
     margin-top: 45px;
     position: relative;
 }
 
+.order-product-quantity {
+    display: block;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.order-product-quantity h3 {
+    margin: 0px;
+}
+
 .observations {
     border: 1px solid #000;
     border-radius: 5px;
+    margin-bottom: 15px;
     padding: 10px 20px;
-    position: absolute;
-    width: 250px;
+    width: min-content;
 }
 
 .observations h3 {
@@ -30,6 +48,7 @@
     color: #ff1212;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    margin: 0px;
 }
 
 .order-summary-price {

@@ -5,7 +5,8 @@
 
     ViewData["OrderFormAction"] = "EditOrder";
     ViewData["OrderFormController"] = "Orders";
-    
+    ViewData["OrderFormId"] = "orderFormOrder";
+
     ViewData["ReadyDateOnly"] = Model.ReadyTime.ToString("yyyy-MM-dd");
     ViewData["ReadyTimeOnly"] = Model.ReadyTime.ToString("HH:mm");
 
@@ -16,6 +17,7 @@
 }
 
 @using System.Globalization
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
@@ -29,15 +31,38 @@
             <i class="fa-solid fa-ban"></i>
         </a>
     </div>
-    <div class="flex">
+    <div class="flex customer-details">
         <h2>
-            Order nº: @Model.Number
-            @if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
+            Customer:
+            @if (!String.IsNullOrEmpty(Model.CustomerName))
             {
-                <span>(@Model.CustomerPhoneNumber)</span>
+                @($"{Model.CustomerName} | {Model.CustomerPhoneNumber}")
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
+                {
+                    @Model.CustomerPhoneNumber
+                }
             }
         </h2>
-        <h2>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h2>
+    </div>
+    <div class="flex order-type-and-order-ready-date">
+        <h3>@Html.DisplayFor(m => @Model.Type)</h3>
+        @if (Model.Type == OrderType.Delivery)
+        {
+            <div class="order-customer-address">
+                @if (!String.IsNullOrEmpty(Model.CustomerAddress))
+                {
+                    <h4>(@(Model.CustomerAddress))</h4>
+                }
+            </div>
+        }
+        <h3><span class="order-ready-date">@Model.ReadyTime.ToString("yyyy-MM-dd")</span></h3>
+    </div>
+    <div class="flex order-number-and-order-ready-time">
+        <h3>Order nº: @Model.Number</h3>
+        <h3>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h3>
     </div>
     <partial name="_ProductItemsFields" model="Model.OrderProducts" />
     <partial name="_OrderForm" />
@@ -45,6 +70,7 @@
 
 @section Scripts {
     <script src="~/js/Views/Shared/_OrderForm.js"></script>
+    <script src="~/js/orderFormDetails.js"></script>
     <script src="~/js/additionalPriceModal.js"></script>
     <script type="module">
         import { incrementProductQuantity, decrementProductQuantity } from "/js/Views/Shared/_ProductItemsFields.js";

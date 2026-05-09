@@ -1,4 +1,8 @@
-﻿.clear-cart {
+﻿.cart-product-quantity {
+    justify-content: space-between;
+}
+
+.clear-cart {
     font-size: 30px;
     position: absolute;
     top: 130px;

@@ -2,6 +2,10 @@
     justify-content: space-between;
 }
 
+.customer-details {
+    justify-content: center !important;
+}
+
 .order-product-template, .order-product {
     display: grid;
     align-items: center;

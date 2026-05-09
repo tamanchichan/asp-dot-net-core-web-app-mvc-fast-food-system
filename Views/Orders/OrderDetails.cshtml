@@ -11,7 +11,7 @@
 @model Order
 
 <div class="container order-details-page">
-    <div class="flex">
+    <div class="flex page-header">
         <div>
             <a asp-action="Index" asp-controller="Orders">
                 <i class="fa-solid fa-arrow-left"></i>
@@ -23,38 +23,57 @@
             </a>
         </div>
     </div>
-    <div class="flex">
+    <div class="flex customer-details">
         <h2>
-            Order nº: @Model.Number
-            @if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
-            {
-                <span>(@Model.CustomerPhoneNumber)</span>
-            }
+            Customer:
+            <a asp-action="CustomerDetails" asp-controller="Customers" asp-route-id="@Model.Customer?.Id">
+                @if (!String.IsNullOrEmpty(Model.CustomerName))
+                {
+                    @($"{Model.CustomerName} | {Model.CustomerPhoneNumber}")
+                }
+                else
+                {
+                    if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
+                    {
+                        @Model.CustomerPhoneNumber
+                    }
+                }
+            </a>
         </h2>
-        <h2>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h2>
     </div>
-    <div class="flex order-type">
+    <div class="flex order-type-and-order-ready-date">
         <h3>@Html.DisplayFor(m => @Model.Type)</h3>
         @if (Model.Type == OrderType.Delivery)
         {
             <div class="order-customer-address">
-                <h4>@($"({Model.CustomerAddress})" ?? "")</h4>
+                @if (!String.IsNullOrEmpty(Model.CustomerAddress))
+                {
+                    <h4>(@(Model.CustomerAddress))</h4>
+                }
             </div>
         }
+        <h3><span class="order-ready-date">@Model.ReadyTime.ToString("yyyy-MM-dd")</span></h3>
+    </div>
+    <div class="flex order-number-and-order-ready-time">
+        <h3>Order nº: @Model.Number</h3>
+        <h3>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h3>
     </div>
     <partial name="_ProductItemsFields" model="Model.OrderProducts.OfType<IProductItem>()" />
     <div class="flex order-summary">
         <div>
-            <h3>Total Items: @Model.Quantity</h3>
+            <div class="order-product-quantity">
+                <h3>Items: @Model.OrderProducts.Count()</h3>
+                <h3>Quantity: @Model.Quantity</h3>
+            </div>
+        </div>
+        <div class="flex order-summary-price">
             @if (!String.IsNullOrEmpty(Model.Observations))
             {
                 <div class="observations">
                     <h3>Observations:</h3>
                     <p>@Model.Observations</p>
-                </div>                
+                </div>
             }
-        </div>
-        <div class="flex order-summary-price">
             @if (Model.AdditionalCharge != null && Model.AdditionalCharge != 0m)
             {
                 <div class="food-total">
