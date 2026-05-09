@@ -481,16 +481,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             }
 
             // Items: x
-            string orderItemsText = $"Items: {order.Quantity}";
-            yPos += DrawTextBlock(graphics, orderItemsText, orderProductFont, xPos, yPos, widthPos, format);
+            #region Space-Between: Items and Subtotal
+            string orderItemsText = $"Items: {order.OrderProducts.Count()}";
+            float orderItemsHeight = DrawTextBlock(graphics, orderItemsText, orderProductFont, xPos, yPos, halfWidthPos, format);
 
             // Subtotal: $0.00
             string orderSubtotalText = $"Subtotal: {order.SubTotalPrice.ToString("C", new CultureInfo("en-CA"))}";
-            yPos += DrawTextBlock(graphics, orderSubtotalText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
+            float orderSubTotalHeight = DrawTextBlock(graphics, orderSubtotalText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
+
+            yPos += Math.Max(orderItemsHeight, orderSubTotalHeight);
+            #endregion
+
+            #region Space-Between: Quantity and Gst
+            // Quantity
+            string orderQuantityText = $"Quantity: {order.Quantity}";
+            float orderQuantityHeight = DrawTextBlock(graphics, orderQuantityText, orderProductFont, xPos, yPos, halfWidthPos, format);
 
             // Gst: $0.00
             string orderGstText = $"GST: {order.Gst.ToString("C", new CultureInfo("en-CA"))}";
-            yPos += DrawTextBlock(graphics, orderGstText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
+            float orderGstHeight = DrawTextBlock(graphics, orderGstText, orderPriceFont, xPos, yPos, widthPos, rightAlign);
+
+            yPos += Math.Max(orderQuantityHeight, orderGstHeight);
+            #endregion
 
             // Pst: $0.00
             string orderPstText = $"PST: {order.Pst.ToString("C", new CultureInfo("en-CA"))}";
