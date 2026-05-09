@@ -594,11 +594,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpGet]
-        public IActionResult RoundNumber(double value, int decimals = 2)
+        public IActionResult RoundNumber(decimal value, int decimals = 2)
         {
-            double rounded = Math.Round(value, decimals);
+            decimal rounded = Math.Round(value, decimals, MidpointRounding.AwayFromZero);
 
-            return Json(new { original = value, rounded = rounded });
+            return Json(new { original = value, rounded });
         }
 
         [HttpPost]
@@ -632,6 +632,36 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 _context.SaveChanges();
 
             }
+
+            return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public IActionResult SetFreeItem(Guid id)
+        {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
+            IProductItem product = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
+
+            if (product == null)
+            {
+                product = _context.OrderProducts.FirstOrDefault(op => op.Id == id);
+            }
+
+            product.Instructions = "FREE";
+            product.IsFreeItem = true;
+            //product.Price = 0m;
+
+            if (product is CartProduct cartProduct)
+            {
+                _context.CartProducts.Update(cartProduct);
+            }
+            else if (product is OrderProduct orderProduct)
+            {
+                _context.OrderProducts.Update(orderProduct);
+            }
+
+            _context.SaveChanges();
 
             return Redirect(returnUrl);
         }
