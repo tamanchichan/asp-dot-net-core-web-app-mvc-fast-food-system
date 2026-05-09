@@ -522,60 +522,87 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         {
             Cart cart = _context.Carts?.FirstOrDefault(c => c.UserId == _userManager.GetUserId(User));
 
-            IProductItem product = _context.CartProducts
+            CartProduct cartProduct = _context.CartProducts
                 .Include(cp => cp.Cart)
                     .ThenInclude(c => c.CartProducts)
                         .ThenInclude(cp => cp.Product)
-                .FirstOrDefault(cp => cp.Id == id) ;
+                .FirstOrDefault(cp => cp.Id == id);
 
-            if (product == null)
+            if (cartProduct == null)
             {
-                product = _context.OrderProducts
+                OrderProduct orderProduct = _context.OrderProducts
                     .Include(op => op.Order)
                         .ThenInclude(o => o.OrderProducts)
                             .ThenInclude(op => op.Product)
                     .FirstOrDefault(op => op.Id == id);
-            }
 
-            if (product == null)
-            {
-                return NotFound();
-            }
+                Order order = _context.Orders.FirstOrDefault(o => o.Id == orderProduct.OrderId);
 
-            product.Quantity -= quantity;
-
-            if (product.Quantity == 0)
-            {
-                if (product is CartProduct cartProduct)
+                if (orderProduct == null)
                 {
-                    _context.CartProducts.Remove(cartProduct);
+                    return NotFound();
                 }
-                else if (product is OrderProduct orderProduct)
+
+                orderProduct.Quantity -= quantity;
+
+                if (orderProduct.Quantity == 0)
                 {
                     _context.OrderProducts.Remove(orderProduct);
-                }
+                    _context.SaveChanges();
 
+                    return Json(new
+                    {
+                        empty = true,
+                        quantity = orderProduct.Quantity,
+                        productTotalPrice = orderProduct.TotalPrice,
+                        subTotalPrice = order.SubTotalPrice,
+                        totalPrice = order.TotalPrice
+                    });
+                }
+                else
+                {
+                    _context.OrderProducts.Update(orderProduct);
+                    _context.SaveChanges();
+
+                    return Json(new
+                    {
+                        quantity = orderProduct.Quantity,
+                        productTotalPrice = orderProduct.TotalPrice,
+                        subTotalPrice = order.SubTotalPrice,
+                        totalPrice = order.TotalPrice
+                    });
+                }
+            }
+
+            cartProduct.Quantity -= quantity;
+
+            if (cartProduct.Quantity == 0)
+            {
+                    _context.CartProducts.Remove(cartProduct);
+                    _context.SaveChanges();
+
+                    return Json(new
+                    {
+                        empty = true,
+                        quantity = cartProduct.Quantity,
+                        productTotalPrice = cartProduct.TotalPrice,
+                        subTotalPrice = cart.SubTotalPrice,
+                        totalPrice = cart.TotalPrice
+                    });
+            }
+            else
+            {
+                _context.CartProducts.Update(cartProduct);
                 _context.SaveChanges();
 
                 return Json(new
                 {
-                    empty = true,
-                    quantity = product.Quantity,
-                    productTotalPrice = product.TotalPrice,
-                    subTotalPrice = cart != null ? cart.SubTotalPrice : ((OrderProduct)product).Order.SubTotalPrice,
-                    totalPrice = cart != null ? cart.TotalPrice : ((OrderProduct)product).Order.TotalPrice
+                    quantity = cartProduct.Quantity,
+                    productTotalPrice = cartProduct.TotalPrice,
+                    subTotalPrice = cart.SubTotalPrice,
+                    totalPrice = cart.TotalPrice
                 });
             }
-
-            _context.SaveChanges();
-
-            return Json(new
-            {
-                quantity = product.Quantity,
-                productTotalPrice = product.TotalPrice,
-                subTotalPrice = cart != null ? cart.SubTotalPrice : ((OrderProduct)product).Order.SubTotalPrice,
-                totalPrice = cart != null ? cart.TotalPrice : ((OrderProduct)product).Order.TotalPrice
-            });
         }
 
         [HttpGet]
