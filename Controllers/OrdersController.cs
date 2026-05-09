@@ -89,7 +89,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             Order order =
                 _context.Orders
                     .Include(o => o.OrderProducts)
-                    .ThenInclude(op => op.Product)
+                        .ThenInclude(op => op.Product)
+                    .Include(o => o.Customer)
                     .Include(o => o.User)
                     .FirstOrDefault(o => o.Id == id);
 
