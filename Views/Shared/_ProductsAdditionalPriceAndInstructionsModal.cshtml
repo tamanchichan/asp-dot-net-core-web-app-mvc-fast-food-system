@@ -22,19 +22,25 @@
 <div class="modal additional-price-and-instructions-modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <form asp-action="EditProductAdditionalPriceAndInstructions"
-              asp-controller="Shared"
-              asp-route-id="@productId"
-              method="post">
-            <div class="flex additional-price">
-                <label for="additionalPrice">Additional Price:</label>
-                <input type="number" step="0.01" name="additionalPrice" id="additionalPrice" value="@additionalPrice" />
-            </div>
-            <div class="flex instructions">
-                <label for="instructions">Instructions:</label>
-                <textarea name="instructions" id="instructions" rows="3">@instructions</textarea>
-            </div>
-            <button type="submit" class="button">Confirm</button>
-        </form>
+        <div class="flex">
+            <form asp-action="EditProductAdditionalPriceAndInstructions"
+                  asp-controller="Shared"
+                  asp-route-id="@productId"
+                  method="post"
+                  class="edit-product-form">
+                <div class="flex additional-price">
+                    <label for="additionalPrice">Additional Price:</label>
+                    <input type="number" step="0.01" name="additionalPrice" id="additionalPrice" value="@additionalPrice" />
+                </div>
+                <div class="flex instructions">
+                    <label for="instructions">Instructions:</label>
+                    <textarea name="instructions" id="instructions" rows="3">@instructions</textarea>
+                </div>
+                <button type="submit" class="button">Confirm</button>
+            </form>
+            <form asp-action="SetFreeItem" asp-controller="Shared" asp-route-id="@productId" method="post" class="set-free-item-form">
+                <button type="submit" class="button">Set as Free Item</button>
+            </form>
+        </div>
     </div>
 </div>

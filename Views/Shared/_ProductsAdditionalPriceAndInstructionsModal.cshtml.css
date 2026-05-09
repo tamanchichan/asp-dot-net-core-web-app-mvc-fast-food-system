@@ -22,3 +22,7 @@
     text-align: right;
     margin-right: 5px;
 }
+
+::deep .set-free-item-form {
+    margin-left: 15px;
+}
