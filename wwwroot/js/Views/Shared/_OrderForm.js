@@ -51,3 +51,7 @@ async function updateTotalPrice() {
 additionalChargeInput.addEventListener("input", updateTotalPrice);
 deliveryFeeInput.addEventListener("input", updateTotalPrice);
 discountInput.addEventListener("input", updateTotalPrice);
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateTotalPrice();
+})
