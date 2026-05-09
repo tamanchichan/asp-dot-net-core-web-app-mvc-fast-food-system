@@ -7,7 +7,7 @@ export function incrementProductQuantity(productId) {
     })
         .then(response => response.json())
         .then(data => {
-            const product= document.querySelector(`.product-item[data-id="${productId}"]`);
+            const product = document.querySelector(`.product-item[data-id="${productId}"]`);
 
             product.querySelector(".product-quantity").textContent = data.quantity;
             product.querySelector(".product-total-price").textContent = data.productTotalPrice.toLocaleString("en-CA", {
