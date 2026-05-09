@@ -5,7 +5,8 @@
 
     ViewData["OrderFormAction"] = "EditOrder";
     ViewData["OrderFormController"] = "Orders";
-
+    
+    ViewData["ReadyDateOnly"] = Model.ReadyTime.ToString("yyyy-MM-dd");
     ViewData["ReadyTimeOnly"] = Model.ReadyTime.ToString("HH:mm");
 
     // ViewData["OrderFormButtonOnClick"] = "handlePlaceOrder()";
