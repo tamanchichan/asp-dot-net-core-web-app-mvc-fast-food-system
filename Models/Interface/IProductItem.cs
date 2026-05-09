@@ -17,11 +17,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
         int Quantity { get; set; }
 
-        string Instructions { get; }
+        string Instructions { get; set; }
 
-        decimal AdditionalPrice { get; }
+        bool IsFreeItem { get; set; }
 
-        decimal Price { get; }
+        decimal AdditionalPrice { get; set; }
+
+        decimal Price { get; set; }
 
         decimal TotalPrice { get; }
 

@@ -44,6 +44,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public string? Instructions { get; set; }
 
+        public bool IsFreeItem { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal AdditionalPrice { get; set; } = 0m;
 
@@ -51,7 +53,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         {
             get
             {
-                return Product.Price;
+                return IsFreeItem ? 0m : Product?.Price ?? 0m;
+            }
+            set
+            {
+                
             }
         }
 
