@@ -4,13 +4,14 @@
     ViewData["SearchForm"] = "SearchCustomer";
     ViewData["SearchId"] = "phoneNumber";
     ViewData["SearchName"] = "phoneNumber";
-    ViewData["SearchPlaceHolder"] = "123-456-7890";
+    ViewData["SearchPlaceholder"] = "123-456-7890";
     ViewData["SearchController"] = "Customers";
 }
 
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.PaginatedList
 
-@model HashSet<Customer>
+@model PaginatedList<Customer>
 
 <div class="container customers-page">
     <partial name="_SearchBar" />
@@ -34,5 +35,26 @@
                 </div>
             </a>
         }
+    </div>
+    <div class="pagination flex">
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageIndex - 1)"
+           class="button previous-page @prevDisabled">
+            Previous
+        </a>
+
+        <span>
+            Page @Model.PageIndex of @Model.TotalPages
+        </span>
+
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageIndex + 1)"
+           class="button next-page @nextDisabled">
+            Next
+        </a>
     </div>
 </div>

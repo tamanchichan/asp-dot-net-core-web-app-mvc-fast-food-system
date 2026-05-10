@@ -4,14 +4,16 @@
     ViewData["SearchForm"] = "SearchOrder";
     ViewData["SearchId"] = "orderNumber";
     ViewData["SearchName"] = "orderNumber";
-    ViewData["SearchPlaceHolder"] = "Order nº";
+    ViewData["SearchPlaceholder"] = "Order nº";
     ViewData["SearchController"] = "Orders";
 }
 
 @using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Models.PaginatedList
 
-@model HashSet<Order>
+@* @model HashSet<Order> *@
+@model PaginatedList<Order>
 
 <div class="container orders-page">
     @if (Model == null)
@@ -52,6 +54,33 @@
                     </div>
                 </a>
             }
+        </div>
+        <div class="pagination flex">
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+            <a 
+                asp-action="Index"
+                asp-route-page="@(Model.PageIndex - 1)"
+                asp-route-date="@ViewBag.SelectedDate.ToString("yyyy-MM-dd")"
+                class="button previous-page @prevDisabled"
+            >
+                Previous
+            </a>
+
+            <span>
+                Page @Model.PageIndex of @Model.TotalPages
+            </span>
+
+            <a
+                asp-action="Index"
+                asp-route-page="@(Model.PageIndex + 1)"
+                asp-route-date="@ViewBag.SelectedDate.ToString("yyyy-MM-dd")"
+                class="button next-page @nextDisabled"
+            >
+                Next
+            </a>
         </div>
     }
 </div>

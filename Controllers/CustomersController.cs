@@ -1,9 +1,11 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.PaginatedList;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -23,11 +25,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            HashSet<Customer> customers = _context.Customers.ToHashSet();
+            page ??= 1;
+            int pageSize = 10;
 
-            return View(customers);
+            IQueryable<Customer> customers = _context.Customers
+                .OrderBy(c => c.PhoneNumber)
+                .AsNoTracking();
+
+            return View(await PaginatedList<Customer>.Create(customers, page ?? 1, pageSize));
         }
 
         [HttpGet]

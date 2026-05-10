@@ -1,12 +1,14 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Models.PaginatedList;
 using asp_dot_net_core_web_app_mvc_fast_food_system.POS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
@@ -28,8 +30,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _printer = printer;
         }
 
-        public IActionResult Index(DateTime? date)
+        public async Task<IActionResult> Index(int? page, DateTime? date)
         {
+            page ??= 1;
+
             if (date == null)
             {
                 date = DateTime.Today;
@@ -38,20 +42,23 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             DateTime startDate = date.Value.Date;
             DateTime endDate = startDate.AddDays(1);
 
-            HashSet<Order> orders = _context.Orders
+            IQueryable<Order> orders = _context.Orders
                 .Include(o => o.OrderProducts)
                 .ThenInclude(op => op.Product)
                 .Include(o => o.User)
                 .Where(o => o.ReadyTime.Date >= startDate && o.ReadyTime < endDate)
                 .Where(o => (bool)!o.IsCanceled)
                 .OrderByDescending(o => o.ReadyTime)
-                .ThenByDescending(o => o.Number)
-                .ToHashSet();
+                    .ThenByDescending(o => (double)o.OrderProducts.Sum(op => op.Price * op.Quantity))
+                .AsNoTracking();
 
             // Pass the current date being filtered/shown to the view
             ViewBag.SelectedDate = date.Value;
 
-            return View(orders);
+            int pageSize = 5;
+
+            //return View(orders);
+            return View(await PaginatedList<Order>.Create(orders, page ?? 1, pageSize));
         }
 
         // GET: /Orders/GetOrdersAt?dateTime=2024-01-01T12:30:00
