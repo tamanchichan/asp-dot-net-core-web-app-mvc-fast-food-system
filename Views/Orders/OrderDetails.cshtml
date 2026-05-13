@@ -62,8 +62,8 @@
     <div class="flex order-summary">
         <div>
             <div class="order-product-quantity">
-                <h3>Items: @Model.OrderProducts.Count()</h3>
-                <h3>Quantity: @Model.Quantity</h3>
+                <h3>Items: <span id="orderItems">@Model.OrderProducts.Count()</span></h3>
+                <h3>Total Items: <span id="orderTotalItems">@Model.Quantity</span></h3>
             </div>
         </div>
         <div class="flex order-summary-price">

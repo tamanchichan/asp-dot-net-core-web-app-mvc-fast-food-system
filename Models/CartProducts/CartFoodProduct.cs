@@ -8,6 +8,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
     public class CartFoodProduct : CartProduct
     {
         private FoodOption? _foodOption;
+
         public FoodOption? FoodOption  // Beef, Chicken, Fish, Mushroom, etc.
         {
             get

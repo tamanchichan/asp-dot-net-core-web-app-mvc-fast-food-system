@@ -232,8 +232,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                         cartProduct = new CartFoodProduct()
                         {
-                            FoodOption = productOption.HasValue ? GetFoodOption((char)productOption) : null,
-                        };                            
+                            FoodOption = productOption.HasValue ? GetFoodOption(productOption.Value) : null,
+                        };
                     }
                 }
                 else if (product is SauceProduct)
@@ -268,7 +268,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             _context.SaveChanges();
 
-            return Redirect(returnUrl);
+            //return Redirect(returnUrl);
+            return Json(cartProduct);
         }
 
         [HttpPost]
@@ -306,6 +307,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             if (order == null)
             {
                 ModelState.AddModelError(string.Empty, "No active order found for the user.");
+
+                return Redirect(returnUrl);
             }
 
             Product product = _context.Products.FirstOrDefault(p => p.Code == productCode);
@@ -420,7 +423,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                         orderProduct = new OrderFoodProduct()
                         {
-                            FoodOption = productOption.HasValue ? GetFoodOption((char)productOption) : null,
+                            FoodOption = productOption.HasValue ? GetFoodOption(productOption.Value) : null,
                         };
                     }
                 }
@@ -461,7 +464,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             _context.SaveChangesAsync();
 
-            return Redirect(returnUrl);
+            //return Redirect(returnUrl);
+            return Json(orderProduct);
         }
 
         [HttpPost]
@@ -495,10 +499,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 return Json(new
                 {
-                    quantity = orderProduct.Quantity,
+                    productQuantity = orderProduct.Quantity,
                     productTotalPrice = orderProduct.TotalPrice,
                     subTotalPrice = orderProduct.Order.SubTotalPrice,
-                    totalPrice = orderProduct.Order.TotalPrice
+                    items = orderProduct.Order.OrderProducts.Count(),
+                    totalItems = orderProduct.Order.Quantity
                 });
             }
             else
@@ -509,10 +514,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 return Json(new
                 {
-                    quantity = cartProduct.Quantity,
+                    productQuantity = cartProduct.Quantity,
                     productTotalPrice = cartProduct.TotalPrice,
                     subTotalPrice = cart.SubTotalPrice,
-                    totalPrice = cart.TotalPrice
+                    items = cart.CartProducts.Count(),
+                    totalItems = cart.Quantity
                 });
             }
         }
@@ -553,10 +559,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     return Json(new
                     {
                         empty = true,
-                        quantity = orderProduct.Quantity,
+                        productQuantity = orderProduct.Quantity,
                         productTotalPrice = orderProduct.TotalPrice,
                         subTotalPrice = order.SubTotalPrice,
-                        totalPrice = order.TotalPrice
                     });
                 }
                 else
@@ -566,10 +571,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                     return Json(new
                     {
-                        quantity = orderProduct.Quantity,
+                        productQuantity = orderProduct.Quantity,
                         productTotalPrice = orderProduct.TotalPrice,
                         subTotalPrice = order.SubTotalPrice,
-                        totalPrice = order.TotalPrice
                     });
                 }
             }
@@ -584,10 +588,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     return Json(new
                     {
                         empty = true,
-                        quantity = cartProduct.Quantity,
+                        productQuantity = cartProduct.Quantity,
                         productTotalPrice = cartProduct.TotalPrice,
                         subTotalPrice = cart.SubTotalPrice,
-                        totalPrice = cart.TotalPrice
                     });
             }
             else
@@ -597,10 +600,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 return Json(new
                 {
-                    quantity = cartProduct.Quantity,
+                    productQuantity = cartProduct.Quantity,
                     productTotalPrice = cartProduct.TotalPrice,
                     subTotalPrice = cart.SubTotalPrice,
-                    totalPrice = cart.TotalPrice
                 });
             }
         }

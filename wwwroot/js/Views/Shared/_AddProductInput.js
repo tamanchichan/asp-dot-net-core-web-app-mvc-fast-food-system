@@ -1,15 +1,35 @@
 ﻿const parent = document.querySelector('.product-items');
-const input = document.getElementById('addProductToCartInput');
+const input = document.getElementById('addProductInput');
 
-export function addProductInput() {
+export function addProductInput(model) {
     const inputValue = input.value.trim();
 
-    fetch(`/Shared/AddProductToCart?input=${inputValue}`, {
-        method: "POST"
-    })
+    let url = `/Shared/AddProductToCart?input=${inputValue}`;
+
+    if (model === "Order") {
+        url = `/Shared/AddProductToOrder?orderId=${orderId}&input=${inputValue}`;
+    }
+
+    fetch(url, { method: "POST" })
         .then(response => response.json())
         .then(data => {
             input.value = "";
+
+            console.log(data);
+
+            const cartItemsQuantity = document.getElementById("cartItems");
+            const orderItemsQuantity = document.getElementById("orderItems");
+            const orderTotalItemsQuantity = document.getElementById("orderTotalItems");
+            const cartTotalItemsQuantity = document.getElementById("cartTotalItems");
+
+            if (cartItemsQuantity && cartTotalItemsQuantity) {
+                cartItemsQuantity.textContent = data.cart.cartProducts.length;
+                cartTotalItemsQuantity.textContent = data.cart.quantity;
+            }
+            else if (orderItemsQuantity && orderTotalItemsQuantity) {
+                orderItemsQuantity.textContent = data.order.orderProducts.length;
+                orderTotalItemsQuantity.textContent = data.order.quantity;
+            }
 
             const existingProduct = document.querySelector(
                 `.product-item[data-id="${data.id}"]`
@@ -17,8 +37,17 @@ export function addProductInput() {
 
             if (existingProduct) {
                 // optional: just increment quantity instead of duplicating
-                const qty = existingProduct.querySelector(".product-quantity");
-                qty.textContent = data.quantity;
+                const productQuantity = existingProduct.querySelector(".product-quantity");
+                productQuantity.textContent = data.quantity;
+
+                const productTotalPrice = existingProduct.querySelector(".product-total-price");
+                productTotalPrice.textContent = data.totalPrice.toLocaleString("en-CA", {
+                    style: "currency",
+                    currency: "CAD"
+                });;
+
+                subTotalPriceElement.dataset.base = data.cart.subTotalPrice;
+                updateTotalPrice();
 
                 return;
             }
@@ -32,25 +61,38 @@ export function addProductInput() {
 
             const productCode = document.createElement("span");
             productCode.classList.add("product-code");
-            productCode.textContent = data.product.code;
+            productCode.textContent = data.code;
 
             const productName = document.createElement("span");
             productName.classList.add("product-name");
-            productName.textContent = data.product.name;
+            productName.textContent = data.name;
+
+            if (data.hasOptions) {
+                productCode.textContent += data.foodOption.substring(0, 1);
+                productName.textContent += ` ${data.foodOption}`;
+            }
 
             const productPrice = document.createElement("span");
             productPrice.classList.add("product-price");
-            productPrice.textContent = data.product.price.toLocaleString("en-CA", {
+            productPrice.textContent = data.price.toLocaleString("en-CA", {
                 style: "currency",
                 currency: "CAD"
             });
 
             const additionalPrice = document.createElement("span");
-            additionalPrice.classList.add("additional-price");
+            additionalPrice.classList.add("product-additional-price");
             additionalPrice.textContent = data.additionalPrice.toLocaleString("en-CA", {
                 style: "currency",
                 currency: "CAD"
             });
+
+            const editProduct = document.createElement("button");
+            editProduct.classList.add("button", "button-additional-price");
+            additionalPrice.appendChild(editProduct);
+
+            const editProductIcon = document.createElement("i");
+            editProductIcon.classList.add("fa-solid", "fa-pen-to-square");
+            editProduct.appendChild(editProductIcon);
 
             const productQuantity = document.createElement("span");
             productQuantity.classList.add("product-quantity");
@@ -90,19 +132,31 @@ export function addProductInput() {
 
             productDiv.appendChild(itemDiv);
 
-            parent.appendChild(productDiv);
+            const firstProduct = parent.querySelector(".product-item");
+
+            if (firstProduct) {
+                parent.insertBefore(productDiv, firstProduct);
+            }
+            else {
+                parent.appendChild(productDiv);
+            }
+
+            if (data.cart?.subTotalPrice != null) {
+                subTotalPriceElement.dataset.base = data.cart.subTotalPrice;
+            }
+            else {
+                subTotalPriceElement.dataset.base = data.order.subTotalPrice;
+            }
+
+            updateTotalPrice();
         }
     );
 }
 
-// This is calling addProductInput, but doesn't call updateTotalPrice; and input seems undefined
 input.addEventListener("keydown", async (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
 
-        await addProductInput();
-        await updateTotalPrice();
-
-        input.value = "";
+        window.addProductInput();
     }
 });

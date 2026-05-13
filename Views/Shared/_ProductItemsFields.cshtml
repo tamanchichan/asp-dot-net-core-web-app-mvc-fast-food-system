@@ -11,7 +11,9 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 
+<link rel="stylesheet" href="~/css/Views/Shared/_ProductItemsFields.css" />
 <div class="product-items">
+    <partial name="_ProductsAdditionalPriceAndInstructionsModal" />
     <div class="product-items-template" style="@(hideButton ?"grid-template-columns: repeat(6, 1fr);" : "")">
         <span class="product-code">Code</span>
         <span class="product-name">Name</span>
@@ -58,7 +60,7 @@
         }
     ))
     {
-        <div class="product-item" data-id="@productItem.Id">
+        <div class="product-item" data-id="@productItem.Id" data-additional-price="@productItem.AdditionalPrice.ToString(CultureInfo.InvariantCulture)" data-instructions="@productItem.Instructions">
             <div class="item" style="@(hideButton ? "grid-template-columns: repeat(6, 1fr);" : "")">
                 @* @if (
                     productItem.Category == ProductCategory.Beverages ||
@@ -133,19 +135,13 @@
                     @if (hideButton != true)
                     {
                         <button class="button button-additional-price"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <partial name="_ProductsAdditionalPriceAndInstructionsModal" model="productItem" />
+                        @* <partial name="_ProductsAdditionalPriceAndInstructionsModal" model="productItem" /> *@
                     }
                 </span>
                 <span class="product-quantity">@productItem.Quantity</span>
                 <span class="product-total-price">@productItem.TotalPrice.ToString("C", new CultureInfo("en-CA"))</span>
                 @if (hideButton != true)
                 {
-                    @* <a asp-action="IncrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")" class="button product-increment">
-                        +
-                    </a>
-                    <a asp-action="DecrementProduct" asp-controller="Cart" asp-route-id="@productItem.Id" style="@(hideButton ? "display:none;" : "")" class="button product-decrement">
-                        -
-                    </a> *@
                     <button class="button product-increment" style="@(hideButton ? "display: none;" : "null")" onclick="incrementProductQuantity('@productItem.Id')" type="button">+</button>
                     <button class="button product-decrement" style="@(hideButton ? "display: none;" : "null")" onclick="decrementProductQuantity('@productItem.Id')" type="button">-</button>
                 }

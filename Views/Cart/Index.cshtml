@@ -1,10 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Cart Page";
 
-    ViewData["OrderFormAction"] = "PlaceCartOrder";
-    ViewData["OrderFormController"] = "Cart";
-    ViewData["OrderFormId"] = "orderFormCart";
-
     ViewData["OrderFormButtonOnClick"] = "handlePlaceOrder()";
     ViewData["OrderFormButtonType"] = "button";
 
@@ -22,14 +18,16 @@
 
 @model Cart
 
-@* <link rel="stylesheet" href="~/css/Views/Shared/_ProductItemsFields.css" /> *@
-
-<partial name="_AddProductInput" />
 <div class="container cart-page">
+    <div class="form">
+        @* <form asp-action="AddProductToCart" asp-controller="Cart" method="post"> *@
+            <partial name="_AddProductInput" />
+        @* </form> *@
+    </div>
     <div class="page-header">
         <div class="cart-product-quantity flex">
-            <h3>Items: @Model.CartProducts.Count()</h3>
-            <h3>Quantity: @Model.Quantity</h3>
+            <h3>Items: <span id="cartItems" data-cart-items="@Model.CartProducts.Count()">@Model.CartProducts.Count()</span></h3>
+            <h3>Total Items: <span id="cartTotalItems">@Model.Quantity</span></h3>
         </div>
         <div class="clear-cart">
             <a asp-action="ClearCartProducts" asp-controller="Cart">
@@ -38,7 +36,12 @@
         </div>
     </div>
     <partial name="_ProductItemsFields" model="Model.CartProducts" />
-    <partial name="_OrderForm" />
+    <div class="form">
+        <form asp-action="PlaceCartOrder" asp-controller="Cart" method="post" id="orderFormCart">
+            <partial name="_OrderForm" />
+            <partial name="_PrintOrderCheckbox" />
+        </form>
+    </div>
 </div>
 
 @section Scripts {
@@ -47,18 +50,13 @@
     <script src="~/js/orderFormDetails.js"></script>
     <script type="module">
         import { incrementProductQuantity, decrementProductQuantity } from "/js/Views/Shared/_ProductItemsFields.js";
-
         window.incrementProductQuantity = incrementProductQuantity;
         window.decrementProductQuantity = decrementProductQuantity;
-    </script>
-    @* <script type="module">
-        import { addProductInput } from "/js/Views/Shared/_AddProductInput.js";
 
-        window.addProductInput = addProductInput;
-    </script> *@
-    <script type="module">
         import { handlePlaceOrder } from "/js/Views/Shared/_FreeOrderProduct.js";
-
         window.handlePlaceOrder = handlePlaceOrder;
+
+        import { addProductInput } from "/js/Views/Shared/_AddProductInput.js";
+        window.addProductInput = () => addProductInput("Cart");
     </script>
 }

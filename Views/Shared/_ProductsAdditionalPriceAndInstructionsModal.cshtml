@@ -22,12 +22,9 @@
 <div class="modal additional-price-and-instructions-modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
+
         <div class="flex">
-            <form asp-action="EditProductAdditionalPriceAndInstructions"
-                  asp-controller="Shared"
-                  asp-route-id="@productId"
-                  method="post"
-                  class="edit-product-form">
+            <form method="post" class="edit-product-form" id="editProductForm">
                 <div class="flex additional-price">
                     <label for="additionalPrice">Additional Price:</label>
                     <input type="number" step="0.01" name="additionalPrice" id="additionalPrice" value="@additionalPrice" />
@@ -38,7 +35,8 @@
                 </div>
                 <button type="submit" class="button">Confirm</button>
             </form>
-            <form asp-action="SetFreeItem" asp-controller="Shared" asp-route-id="@productId" method="post" class="set-free-item-form">
+
+            <form asp-action="SetFreeItem" asp-controller="Shared" asp-route-id="@productId" method="post" class="set-free-item-form" id="setFreeItemForm">
                 <button type="submit" class="button">Set as Free Item</button>
             </form>
         </div>

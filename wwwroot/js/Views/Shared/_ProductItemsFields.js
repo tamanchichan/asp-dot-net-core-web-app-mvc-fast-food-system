@@ -9,21 +9,28 @@ export function incrementProductQuantity(productId) {
         .then(data => {
             const product = document.querySelector(`.product-item[data-id="${productId}"]`);
 
-            product.querySelector(".product-quantity").textContent = data.quantity;
+            product.querySelector(".product-quantity").textContent = data.productQuantity;
             product.querySelector(".product-total-price").textContent = data.productTotalPrice.toLocaleString("en-CA", {
                 style: "currency",
                 currency: "CAD"
             });
 
-            subTotal.textContent = data.subTotalPrice.toLocaleString("en-CA", {
-                style: "currency",
-                currency: "CAD"
-            });
+            const cartItemsQuantity = document.getElementById("cartItems");
+            const orderItemsQuantity = document.getElementById("orderItems");
+            const orderTotalItemsQuantity = document.getElementById("orderTotalItems");
+            const cartTotalItemsQuantity = document.getElementById("cartTotalItems");
 
-            totalPrice.textContent = data.totalPrice.toLocaleString("en-CA", {
-                style: "currency",
-                currency: "CAD"
-            });
+            if (cartItemsQuantity && cartTotalItemsQuantity) {
+                cartItemsQuantity.textContent = data.cart.cartProducts.length;
+                cartTotalItemsQuantity.textContent = data.cart.quantity;
+            }
+            else if (orderItemsQuantity && orderTotalItemsQuantity) {
+                orderItemsQuantity.textContent = data.order.orderProducts.length;
+                orderTotalItemsQuantity.textContent = data.order.quantity;
+            }
+
+            subTotalPriceElement.dataset.base = data.subTotalPrice;
+            updateTotalPrice();
         })
 };
 
@@ -42,7 +49,7 @@ export function decrementProductQuantity(productId) {
                 product.remove();
             }
             else {
-                product.querySelector(".product-quantity").textContent = data.quantity;
+                product.querySelector(".product-quantity").textContent = data.productQuantity;
 
                 product.querySelector(".product-total-price").textContent = data.productTotalPrice.toLocaleString("en-CA", {
                     style: "currency",
@@ -51,14 +58,21 @@ export function decrementProductQuantity(productId) {
 
             }
 
-            subTotal.textContent = data.subTotalPrice.toLocaleString("en-CA", {
-                style: "currency",
-                currency: "CAD"
-            });
+            const cartItemsQuantity = document.getElementById("cartItems");
+            const orderItemsQuantity = document.getElementById("orderItems");
+            const orderTotalItemsQuantity = document.getElementById("orderTotalItems");
+            const cartTotalItemsQuantity = document.getElementById("cartTotalItems");
 
-            totalPrice.textContent = data.totalPrice.toLocaleString("en-CA", {
-                style: "currency",
-                currency: "CAD"
-            });
+            if (cartItemsQuantity && cartTotalItemsQuantity) {
+                cartItemsQuantity.textContent = data.items
+                cartTotalItemsQuantity.textContent = data.totalItems
+            }
+            else if (orderItemsQuantity && orderTotalItemsQuantity) {
+                orderItemsQuantity.textContent = data.order.items;
+                orderTotalItemsQuantity.textContent = data.totalItems;
+            }
+
+            subTotalPriceElement.dataset.base = data.subTotalPrice;
+            updateTotalPrice();
         })
 };

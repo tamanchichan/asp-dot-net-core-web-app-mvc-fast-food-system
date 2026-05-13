@@ -3,10 +3,6 @@
 @{
     ViewData["Title"] = "Edit Order";
 
-    ViewData["OrderFormAction"] = "EditOrder";
-    ViewData["OrderFormController"] = "Orders";
-    ViewData["OrderFormId"] = "orderFormOrder";
-
     ViewData["ReadyDateOnly"] = Model.ReadyTime.ToString("yyyy-MM-dd");
     ViewData["ReadyTimeOnly"] = Model.ReadyTime.ToString("HH:mm");
 
@@ -21,31 +17,20 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
-<partial name="_AddProductInput" />
 <div class="container edit-order-page">
-    <div class="header flex">
+    <div class="form">
+        @* <form asp-action="AddProductToOrder" asp-controller="Orders" asp-route-id="@Model.Id" method="post"> *@
+            <input type="hidden" id="orderId" value="@Model.Id" />
+            <partial name="_AddProductInput" model="@Model" />
+        @* </form> *@
+    </div>
+    <div class="page-header flex">
         <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@Model.Id">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         <a asp-action="CancelOrder" asp-controller="Orders" asp-route-id="@Model.Id">
             <i class="fa-solid fa-ban"></i>
         </a>
-    </div>
-    <div class="flex customer-details">
-        <h2>
-            Customer:
-            @if (!String.IsNullOrEmpty(Model.CustomerName))
-            {
-                @($"{Model.CustomerName} | {Model.CustomerPhoneNumber}")
-            }
-            else
-            {
-                if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
-                {
-                    @Model.CustomerPhoneNumber
-                }
-            }
-        </h2>
     </div>
     <div class="flex order-type-and-order-ready-date">
         <h3>@Html.DisplayFor(m => @Model.Type)</h3>
@@ -64,8 +49,16 @@
         <h3>Order nº: @Model.Number</h3>
         <h3>Ready at: <span class="order-ready-time">@Model.ReadyTime.ToString("t")</span></h3>
     </div>
+    <div class="order-product-quantity flex">
+        <h3>Items: <span id="orderItems">@Model.OrderProducts.Count()</span></h3>
+        <h3>Total Items: <span id="orderTotalItems">@Model.Quantity</span></h3>
+    </div>
     <partial name="_ProductItemsFields" model="Model.OrderProducts" />
-    <partial name="_OrderForm" />
+    <div class="form">
+        <form asp-action="EditOrder" asp-controller="Orders" asp-route-id="@Model.Id" method="post"id="orderFormOrder">
+            <partial name="_OrderForm"/>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
@@ -74,8 +67,12 @@
     <script src="~/js/additionalPriceModal.js"></script>
     <script type="module">
         import { incrementProductQuantity, decrementProductQuantity } from "/js/Views/Shared/_ProductItemsFields.js";
-
         window.incrementProductQuantity = incrementProductQuantity;
         window.decrementProductQuantity = decrementProductQuantity;
+
+        import { addProductInput } from "/js/Views/Shared/_AddProductInput.js";
+        window.addProductInput = () => addProductInput("Order");
+
+        window.orderId = "@Model.Id";
     </script>
 }

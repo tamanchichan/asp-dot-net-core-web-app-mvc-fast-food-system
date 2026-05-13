@@ -37,7 +37,6 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
 <div class="order-form">
-    <form asp-action=@ViewData["OrderFormAction"] asp-controller=@ViewData["OrderFormController"] method="post" autocomplete="off" id="@ViewData["OrderFormId"]">
         <partial name="_FreeOrderProduct" />
         <div class="flex order-type">
             <div>
@@ -56,7 +55,6 @@
                 <label for="delivery">Delivery</label>
             </div>
         </div>
-
         <div class="flex observations">
             <label for="observations">Observations:</label>
             <textarea name="observations" id="observations" rows="3">@observations</textarea>
@@ -124,8 +122,6 @@
         <div class="flex submit-order-button">
             <button onclick="@ViewData["OrderFormButtonOnClick"]" type="@ViewData["OrderFormButtonType"]" class="button" disabled="@(quantity == 0)">@ViewData["OrderFormSubmitButtonTitle"]</button>
         </div>
-        <partial name="_PrintOrderCheckbox" />
-    </form>
 </div>
 
 <script>

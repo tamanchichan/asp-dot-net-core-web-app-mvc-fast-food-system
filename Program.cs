@@ -50,6 +50,14 @@ builder.Services.Configure<JsonOptions>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter()
+        );
+    });
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
