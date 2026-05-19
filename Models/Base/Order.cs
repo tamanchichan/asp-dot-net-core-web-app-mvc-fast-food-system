@@ -75,7 +75,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         {
             get
             {
-                return Math.Round(SubTotalPrice * 0.07m, 2);
+                return Math.Round(SubTotalPrice * 0.07m, 2, MidpointRounding.AwayFromZero);
             }
         }
 
