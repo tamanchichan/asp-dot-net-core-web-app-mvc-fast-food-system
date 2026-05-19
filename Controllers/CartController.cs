@@ -44,14 +44,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             if (cart == null)
             {
-                ModelState.AddModelError(string.Empty, "Cart not found for the current user. Contact support.");
-                return View();
-            }
-
-            if (!cart.CartProducts.Any())
-            {
-                ModelState.AddModelError(string.Empty, "Cart is empty. Add products to continue.");
-                return View(cart);
+                return NotFound();
             }
 
             return View(cart);
