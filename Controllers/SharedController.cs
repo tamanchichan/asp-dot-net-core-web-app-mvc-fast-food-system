@@ -232,8 +232,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     {
                         if (product.HasOptions && productOption == null)
                         {
-                            TempData["ErrorMessage"] = "Please select an option for this product.";
-                            return Redirect(returnUrl);
+                            string errorMessage = "Please select an option for this product.";
+
+                            return Json(new
+                            {
+                                error = true,
+                                message = errorMessage
+                            });
                         }
 
                         cartProduct = new CartFoodProduct()
