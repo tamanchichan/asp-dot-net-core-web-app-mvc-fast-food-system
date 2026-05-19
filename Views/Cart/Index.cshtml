@@ -30,9 +30,9 @@
             <h3>Total Items: <span id="cartTotalItems">@Model.Quantity</span></h3>
         </div>
         <div class="clear-cart">
-            <a asp-action="ClearCartProducts" asp-controller="Cart">
+            <button class="clear-cart-button" type="button" onclick="clearCartProducts()">
                 <i class="fa-solid fa-trash"></i>
-            </a>
+            </button>
         </div>
     </div>
     <partial name="_ProductItemsFields" model="Model.CartProducts" />
@@ -58,5 +58,8 @@
 
         import { addProductInput } from "/js/Views/Shared/_AddProductInput.js";
         window.addProductInput = () => addProductInput("Cart");
+
+        import { clearCartProducts } from "/js/Views/Cart/Index.js";
+        window.clearCartProducts = clearCartProducts;
     </script>
 }

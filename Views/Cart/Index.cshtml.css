@@ -2,11 +2,11 @@
     justify-content: space-between;
 }
 
-.clear-cart {
+.clear-cart-button {
     font-size: 30px;
     position: absolute;
-    top: 130px;
-    right: 90px;
+    top: 150px;
+    right: 150px;
 }
 
 .fa-trash {
