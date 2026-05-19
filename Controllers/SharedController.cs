@@ -5,6 +5,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using System.Globalization;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
+    [Authorize]
     public class SharedController : Controller
     {
         private readonly FastFoodSystemDbContext _context;

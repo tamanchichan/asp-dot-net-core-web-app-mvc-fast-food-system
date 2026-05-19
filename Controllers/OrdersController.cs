@@ -3,6 +3,7 @@ using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.PaginatedList;
 using asp_dot_net_core_web_app_mvc_fast_food_system.POS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly ILogger<HomeController> _logger;
