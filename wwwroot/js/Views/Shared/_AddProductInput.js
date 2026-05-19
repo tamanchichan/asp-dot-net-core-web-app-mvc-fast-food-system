@@ -1,5 +1,6 @@
 ﻿const parent = document.querySelector('.product-items');
 const input = document.getElementById('addProductInput');
+const tempData = document.querySelector(".temp-data");
 
 export function addProductInput(model) {
     const inputValue = input.value.trim();
@@ -15,7 +16,13 @@ export function addProductInput(model) {
         .then(data => {
             input.value = "";
 
-            console.log(data);
+            if (data.error) {
+                tempData.innerText = data.message
+
+                return setTimeout(() => {
+                    tempData.innerText = "";
+                }, 3000);
+            }
 
             const cartItemsQuantity = document.getElementById("cartItems");
             const orderItemsQuantity = document.getElementById("orderItems");
@@ -68,8 +75,8 @@ export function addProductInput(model) {
             productName.textContent = data.name;
 
             if (data.hasOptions) {
-                productCode.textContent += data.foodOption.substring(0, 1);
-                productName.textContent += ` ${data.foodOption}`;
+                productCode.textContent += data.foodOption?.substring(0, 1) ?? "";
+                productName.textContent += ` ${data.foodOption ?? ""}`;
             }
 
             const productPrice = document.createElement("span");
@@ -89,6 +96,10 @@ export function addProductInput(model) {
             const editProduct = document.createElement("button");
             editProduct.classList.add("button", "button-additional-price");
             additionalPrice.appendChild(editProduct);
+
+            editProduct.addEventListener("click", () => {
+                openEditProductModal(data);
+            });
 
             const editProductIcon = document.createElement("i");
             editProductIcon.classList.add("fa-solid", "fa-pen-to-square");

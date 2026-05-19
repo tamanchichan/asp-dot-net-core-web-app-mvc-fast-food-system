@@ -86,16 +86,20 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             decimal additionalPrice = 0m;
             string instructions = null;
 
-            if (input.Contains("*") || input.Contains("x"))
+            if (input.Contains("*") || input.Contains("X"))
             {
-                string[] parts = input.Split(new char[] { '*', 'x' });
+                string[] parts = input.Split(new char[] { '*', 'X' });
                 code = parts[0];
 
                 if (string.IsNullOrEmpty(parts[1]))
                 {
-                    TempData["ErrorMessage"] = "Quantity must be entered";
+                    string errorMessage = "Quantity must be entered";
 
-                    return Redirect(returnUrl);
+                    return Json(new
+                    {
+                        error = true,
+                        message = errorMessage
+                    });
                 }
 
                 quantity = int.Parse(parts[1]);
@@ -127,21 +131,23 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             if (product == null)
             {
                 productCode = code.Substring(0, lastIndex);
-                productOption = code[lastIndex];
 
                 product = _context.Products.FirstOrDefault(p => p.Code == productCode);
 
                 if (product == null)
                 {
-                    // if productCode not found, assume it is sauce product
-                    product = _context.Products.FirstOrDefault(p => p.Code == "SAUCE");
+                    ModelState.AddModelError(string.Empty, "Invalid code. Please double-check the code entered");
 
-                    if (product == null)
+                    return Json(new
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid code. Please double-check the code entered");
+                        error = true,
+                        message = $"{code} not found."
+                    });
+                }
 
-                        return Redirect(returnUrl);
-                    }
+                if (product.HasOptions)
+                {
+                    productOption = code[lastIndex];
                 }
             }
 
@@ -283,10 +289,22 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             decimal additionalPrice = 0m;
             string instructions = null;
 
-            if (input.Contains("*") || input.Contains("x"))
+            if (input.Contains("*") || input.Contains("X"))
             {
-                string[] parts = input.Split(new char[] { '*', 'x' });
+                string[] parts = input.Split(new char[] { '*', 'X' });
                 code = parts[0];
+
+                if (string.IsNullOrEmpty(parts[1]))
+                {
+                    string errorMessage = "Quantity must be entered";
+
+                    return Json(new
+                    {
+                        error = true,
+                        message = errorMessage
+                    });
+                }
+
                 quantity = int.Parse(parts[1]);
             }
             else
@@ -318,21 +336,23 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             if (product == null)
             {
                 productCode = code.Substring(0, lastIndex);
-                productOption = code[lastIndex];
 
                 product = _context.Products.FirstOrDefault(p => p.Code == productCode);
 
                 if (product == null)
                 {
-                    // if productCode not found, assume it is sauce product
-                    product = _context.Products.FirstOrDefault(p => p.Code == "SAUCE");
+                    string errorMessage = "Invalid code. Please double-check the code entered";
 
-                    if (product == null)
+                    return Json(new
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid code. Please double-check the code entered");
+                        error = true,
+                        message = errorMessage
+                    });
+                }
 
-                        return Redirect(returnUrl);
-                    }
+                if (product.HasOptions)
+                {
+                    productOption = code[lastIndex];
                 }
             }
 
@@ -499,6 +519,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 return Json(new
                 {
+                    id = orderProduct.Id,
+                    instructions = orderProduct.Instructions,
+                    additionalPrice = orderProduct.AdditionalPrice,
                     productQuantity = orderProduct.Quantity,
                     productTotalPrice = orderProduct.TotalPrice,
                     subTotalPrice = orderProduct.Order.SubTotalPrice,
@@ -514,6 +537,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 return Json(new
                 {
+                    id = cartProduct.Id,
+                    instructions = cartProduct.Instructions,
+                    additionalPrice = cartProduct.AdditionalPrice,
                     productQuantity = cartProduct.Quantity,
                     productTotalPrice = cartProduct.TotalPrice,
                     subTotalPrice = cart.SubTotalPrice,
@@ -558,10 +584,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                     return Json(new
                     {
-                        empty = true,
+                        removed = true,
+                        id = orderProduct.Id,
+                        instructions = orderProduct.Instructions,
+                        additionalPrice = orderProduct.AdditionalPrice,
                         productQuantity = orderProduct.Quantity,
                         productTotalPrice = orderProduct.TotalPrice,
                         subTotalPrice = order.SubTotalPrice,
+                        items = order.OrderProducts.Count(),
+                        totalItems = order.Quantity
                     });
                 }
                 else
@@ -571,9 +602,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                     return Json(new
                     {
+                        id = orderProduct.Id,
+                        instructions = orderProduct.Instructions,
+                        additionalPrice = orderProduct.AdditionalPrice,
                         productQuantity = orderProduct.Quantity,
                         productTotalPrice = orderProduct.TotalPrice,
                         subTotalPrice = order.SubTotalPrice,
+                        items = order.OrderProducts.Count(),
+                        totalItems = order.Quantity
                     });
                 }
             }
@@ -587,10 +623,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                     return Json(new
                     {
-                        empty = true,
+                        removed = true,
+                        id = cartProduct.Id,
+                        instructions = cartProduct.Instructions,
+                        additionalPrice = cartProduct.AdditionalPrice,
                         productQuantity = cartProduct.Quantity,
                         productTotalPrice = cartProduct.TotalPrice,
                         subTotalPrice = cart.SubTotalPrice,
+                        items = cart.CartProducts.Count(),
+                        totalItems = cart.Quantity
                     });
             }
             else
@@ -600,9 +641,14 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
                 return Json(new
                 {
+                    id = cartProduct.Id,
+                    instructions = cartProduct.Instructions,
+                    additionalPrice = cartProduct.AdditionalPrice,
                     productQuantity = cartProduct.Quantity,
                     productTotalPrice = cartProduct.TotalPrice,
                     subTotalPrice = cart.SubTotalPrice,
+                    items = cart.CartProducts.Count(),
+                    totalItems = cart.Quantity
                 });
             }
         }
