@@ -494,7 +494,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
             #region Space-Between: Quantity and Gst
             // Quantity
-            string orderQuantityText = $"Quantity: {order.Quantity}";
+            string orderQuantityText = $"Total Items: {order.Quantity}";
             float orderQuantityHeight = DrawTextBlock(graphics, orderQuantityText, orderProductFont, xPos, yPos, halfWidthPos, format);
 
             // Gst: $0.00
