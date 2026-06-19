@@ -655,7 +655,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     string orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()})";
                     
-                    if (orderProductL.AdditionalPrice != null || orderProductL.AdditionalPrice != 0m)
+                    if (orderProductL.AdditionalPrice != null && orderProductL.AdditionalPrice != 0m)
                     {
                         orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()} - {orderProductL.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
                     }
@@ -709,7 +709,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     string orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()})";
 
-                    if (orderProductR.AdditionalPrice != null || orderProductR.AdditionalPrice != 0m)
+                    if (orderProductR.AdditionalPrice != null && orderProductR.AdditionalPrice != 0m)
                     {
                         orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()} - {orderProductR.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
                     }
