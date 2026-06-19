@@ -654,6 +654,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 if (!string.IsNullOrEmpty(orderProductL.Instructions))
                 {
                     string orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()})";
+                    
+                    if (orderProductL.AdditionalPrice != null || orderProductL.AdditionalPrice != 0m)
+                    {
+                        orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()} - {orderProductL.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
+                    }
+
                     leftYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, leftYPos, halfWidthPos, format);
                 }
 
@@ -702,6 +708,12 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 if (!string.IsNullOrEmpty(orderProductR.Instructions))
                 {
                     string orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()})";
+
+                    if (orderProductR.AdditionalPrice != null || orderProductR.AdditionalPrice != 0m)
+                    {
+                        orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()} - {orderProductR.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
+                    }
+
                     rightYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
                 }
 
@@ -813,6 +825,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             {
                 string orderObservationsText = $"*{order.Observations.ToUpper()}*";
                 yPos += DrawTextBlock(graphics, orderObservationsText, orderObservationsFont, xPos, yPos, widthPos, format);
+
+                // Separator
+                yPos += 5;
+                graphics.DrawLine(new Pen(Color.Black, 1), xPos, yPos, xPos + widthPos, yPos);
+                yPos += 5;
             }
 
             // Order Type: Dine-In | Take-Out | Delivery
