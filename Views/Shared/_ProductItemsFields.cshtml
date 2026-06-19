@@ -13,7 +13,8 @@
 
 <link rel="stylesheet" href="~/css/Views/Shared/_ProductItemsFields.css" />
 <div class="product-items">
-    <partial name="_ProductsAdditionalPriceAndInstructionsModal" />
+    @* Moved to Cart's Index view and Order's EditOrder view *@
+    @* <partial name="_ProductsAdditionalPriceAndInstructionsModal" /> *@
     <div class="product-items-template" style="@(hideButton ?"grid-template-columns: repeat(6, 1fr);" : "")">
         <span class="product-code">Code</span>
         <span class="product-name">Name</span>

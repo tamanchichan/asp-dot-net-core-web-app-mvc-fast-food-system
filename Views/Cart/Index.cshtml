@@ -19,6 +19,7 @@
 @model Cart
 
 <div class="container cart-page">
+    <partial name="_ProductsAdditionalPriceAndInstructionsModal" />
     <div class="form">
         @* <form asp-action="AddProductToCart" asp-controller="Cart" method="post"> *@
             <partial name="_AddProductInput" />

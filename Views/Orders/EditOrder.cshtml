@@ -18,6 +18,7 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
 <div class="container edit-order-page">
+    <partial name="_ProductsAdditionalPriceAndInstructionsModal" />
     <div class="form">
         @* <form asp-action="AddProductToOrder" asp-controller="Orders" asp-route-id="@Model.Id" method="post"> *@
             <input type="hidden" id="orderId" value="@Model.Id" />
