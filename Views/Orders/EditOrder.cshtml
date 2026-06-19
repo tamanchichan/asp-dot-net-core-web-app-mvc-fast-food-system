@@ -29,9 +29,12 @@
         <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@Model.Id">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        <a asp-action="CancelOrder" asp-controller="Orders" asp-route-id="@Model.Id">
-            <i class="fa-solid fa-ban"></i>
-        </a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="CancelOrder" asp-controller="Orders" asp-route-id="@Model.Id">
+                <i class="fa-solid fa-ban"></i>
+            </a>
+        }
     </div>
     <div class="flex order-type-and-order-ready-date">
         <h3>@Html.DisplayFor(m => @Model.Type)</h3>

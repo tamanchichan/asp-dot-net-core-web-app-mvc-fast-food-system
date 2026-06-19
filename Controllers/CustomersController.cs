@@ -173,5 +173,21 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return RedirectToAction("CustomerDetails", new { id = customer.Id });
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteCustomer(Guid id)
+        {
+            Customer customer = _context.Customers.FirstOrDefault(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }

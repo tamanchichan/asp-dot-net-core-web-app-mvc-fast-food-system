@@ -237,6 +237,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return RedirectToAction("ProductDetails", new { id = product.Id });
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(Guid id)
         {
             Product product = _context.Products.FirstOrDefault(p => p.Id == id);

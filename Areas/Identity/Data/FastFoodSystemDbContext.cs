@@ -48,6 +48,12 @@ public class FastFoodSystemDbContext : IdentityDbContext<SystemUser>
             .WithMany()
             .HasForeignKey(op => op.ProductId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<Order>()
+            .HasOne(o => o.Customer)
+            .WithMany(c => c.Orders)
+            .HasForeignKey(o => o.CustomerId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 
     public DbSet<Cart> Carts { get; set; } = default!;

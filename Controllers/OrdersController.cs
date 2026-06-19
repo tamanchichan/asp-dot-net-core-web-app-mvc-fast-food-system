@@ -232,6 +232,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return Redirect(returnUrl);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CancelOrder(Guid id)
         {
             Order order = _context.Orders

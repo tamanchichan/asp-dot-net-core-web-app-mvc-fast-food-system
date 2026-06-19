@@ -50,6 +50,10 @@
     right: 10px;
 }
 
-.fa-arrow-left {
+.fa-arrow-left, .fa-trash-can, .fa-ban {
     font-size: 30px;
+}
+
+.fa-ban {
+    color: #f00;
 }

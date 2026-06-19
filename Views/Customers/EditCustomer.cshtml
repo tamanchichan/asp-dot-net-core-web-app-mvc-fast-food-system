@@ -8,9 +8,17 @@
 
 <div class="container edit-customer-page">
     <div class="page-header">
-        <a asp-action="CustomerDetails" asp-route-id="@Model.Id">
-            <i class="fa-solid fa-arrow-left"></i>
-        </a>
+        <div class="flex">
+            <a asp-action="CustomerDetails" asp-route-id="@Model.Id">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="DeleteCustomer" asp-route-id="@Model.Id">
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            }
+        </div>
         <h2>Edit Customer</h2>
     </div>
     <div class="edit-customer">
