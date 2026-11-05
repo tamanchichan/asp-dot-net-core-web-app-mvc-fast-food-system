@@ -267,6 +267,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 cartProduct.Cart = cart;
                 cartProduct.ProductId = product.Id;
                 cartProduct.Product = product;
+                cartProduct.Price = product.Price;
                 cartProduct.AdditionalPrice = 0m;
                 cartProduct.Quantity = (int)quantity;
 
@@ -477,6 +478,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 orderProduct.Price = product.Price;
                 orderProduct.Category = product.Category;
                 orderProduct.HasOptions = product.HasOptions;
+                orderProduct.Price = product.Price;
                 orderProduct.AdditionalPrice = 0m;
                 orderProduct.Quantity = (int)quantity;
 

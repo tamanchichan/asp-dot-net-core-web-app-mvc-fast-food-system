@@ -102,7 +102,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         AdditionalPrice = additionalPrice ?? 0m,
                         FoodOption = foodOption,
                         FoodSize = foodSize,
-                        Quantity = 1
+                        Quantity = 1,
+                        Price = product.Price
                     };
                 }
                 else if (product is BeverageProduct)
@@ -116,7 +117,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Instructions = instructions,
                         AdditionalPrice = additionalPrice ?? 0m,
                         BeverageOption = beverageOption,
-                        Quantity = 1
+                        Quantity = 1,
+                        Price = product.Price
                     };
                 }
                 else if (product is SauceProduct)
@@ -130,7 +132,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Instructions = instructions,
                         AdditionalPrice = additionalPrice ?? 0m,
                         SauceOption = sauceOption,
-                        Quantity = 1
+                        Quantity = 1,
+                        Price = product.Price
                     };
                 }
 
@@ -328,7 +331,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartFoodProduct.Quantity,
                         Instructions = cartFoodProduct.Instructions,
                         AdditionalPrice = cartFoodProduct.AdditionalPrice,
-                        Price = cartProduct.Price,
+                        Price = cartFoodProduct.Price,
                         Category = cartFoodProduct.Category,
                         HasOptions = cartFoodProduct.HasOptions
                     };
@@ -350,7 +353,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartBeverageProduct.Quantity,
                         Instructions = cartBeverageProduct.Instructions,
                         AdditionalPrice = cartBeverageProduct.AdditionalPrice,
-                        Price = cartProduct.Price,
+                        Price = cartBeverageProduct.Price,
                         Category = cartBeverageProduct.Category,
                         HasOptions = cartBeverageProduct.HasOptions
                     };
@@ -371,7 +374,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartExtraProduct.Quantity,
                         Instructions = cartExtraProduct.Instructions,
                         AdditionalPrice = cartExtraProduct.AdditionalPrice,
-                        Price = cartProduct.Price,
+                        Price = cartExtraProduct.Price,
                         Category = cartExtraProduct.Category,
                         HasOptions = cartExtraProduct.HasOptions
                     };
@@ -393,7 +396,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Quantity = cartSauceProduct.Quantity,
                         Instructions = cartSauceProduct.Instructions,
                         AdditionalPrice = cartSauceProduct.AdditionalPrice,
-                        Price = cartProduct.Price,
+                        Price = cartSauceProduct.Price,
                         Category = cartSauceProduct.Category,
                         HasOptions = cartSauceProduct.HasOptions
                     };
