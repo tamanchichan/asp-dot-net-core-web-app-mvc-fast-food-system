@@ -267,6 +267,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 FormatFlags = StringFormatFlags.LineLimit
             };
 
+            StringFormat middleAlign = new StringFormat
+            {
+                Alignment = StringAlignment.Center
+            };
+
             StringFormat rightAlign = new StringFormat
             {
                 Alignment = StringAlignment.Far
@@ -274,6 +279,19 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
             #region Fonts
             // Fonts
+
+            // Restaurant Name
+            Font restaurantNameFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // Restaurant Tel
+            Font restaurantTelFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // Restaurant Open Hours
+            Font restaurantOpenHoursFont = new Font("Arial", 14, FontStyle.Regular);
+
+            // Restaurant Closed Horus
+            Font restaurantClosedhoursFont = new Font("Arial", 14, FontStyle.Regular);
+
             // Dine-In | Take-Out | Delivery
             Font orderTypeFont = new Font("Arial", 14, FontStyle.Bold);
 
@@ -288,6 +306,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
             // Order nº: 1001
             Font orderNumberFont = new Font("Arial", 12, FontStyle.Regular);
+
+            // (Customer Name)
+            Font orderCustomerNameFont = new Font("Arial", 12, FontStyle.Regular);
 
             // (123-456-7890)
             Font orderCustomerPhoneNumberFont = new Font("Arial", 12, FontStyle.Regular);
@@ -309,14 +330,31 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             #endregion
 
             #region POS Header
+            
+            // Restaurant Info
+            string restaurantName = "SingYun Restaurant";
+            float restaurantNameHeight = 0;
+            yPos += DrawTextBlock(graphics, restaurantName, restaurantNameFont, xPos, yPos, widthPos, middleAlign);
+
+            string restaurantTel = "(204)231-4054";
+            yPos += DrawTextBlock(graphics, restaurantTel, restaurantTelFont, xPos, yPos, widthPos, middleAlign);
+
+            string restaurantOpenHours = "Mon to Sun: 3:30pm - 9pm";
+            yPos += DrawTextBlock(graphics, restaurantOpenHours, restaurantOpenHoursFont, xPos, yPos, widthPos, middleAlign);
+
+            string restaurantClosedHours = "Closed on Wednesday";
+            yPos += DrawTextBlock(graphics, restaurantClosedHours, restaurantClosedhoursFont, xPos, yPos, widthPos, middleAlign);
+
+            yPos += 15;
+
             // Order Type: Dine-In | Take-Out | Delivery
             string orderTypeText = OrderTypeExtensions.GetName(order.Type);
-            float orderTypeHeight = 0;
+            float orderTypeHeight = yPos;
             orderTypeHeight = DrawTextBlock(graphics, orderTypeText, orderTypeFont, xPos, yPos, halfWidthPos, format);
 
             // Date: (yyyy-MM-dd)
             string dateText = order.ReadyTime.ToString("yyyy-MM-dd");
-            float dateHeight = 0;
+            float dateHeight = yPos;
             dateHeight = DrawTextBlock(graphics, dateText, orderReadyTimeDateFont, xPos, yPos, widthPos, rightAlign);
 
             yPos += Math.Max(orderTypeHeight, dateHeight);
@@ -348,10 +386,17 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             yPos += Math.Max(orderNumberHeight, orderTimeHeight);
             #endregion
 
+            // Customer's name: (John Doe)
+            if (!string.IsNullOrEmpty(order.CustomerName))
+            {
+                string customerNameText = $"Customer: {order.CustomerName}";
+                yPos += DrawTextBlock(graphics, customerNameText, orderCustomerNameFont, xPos, yPos, widthPos, format);
+            }
+
             // Customer's phone number: (123-456-7890)
             if (!string.IsNullOrEmpty(order.CustomerPhoneNumber))
             {
-                string customerPhoneNumberText = $"({order.CustomerPhoneNumber})";
+                string customerPhoneNumberText = $"Phone/Tel: {order.CustomerPhoneNumber}";
                 yPos += DrawTextBlock(graphics, customerPhoneNumberText, orderCustomerPhoneNumberFont, xPos, yPos, widthPos, format);
             }
             #endregion
