@@ -41,8 +41,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
             FoodSize? size,
             int quantity,
             string? instructions,
-            decimal? additionalPrice
-        ) : base(orderId, order, productId, product, quantity, instructions, additionalPrice)
+            decimal? additionalPrice,
+            decimal price) : base(orderId, order, productId, product, quantity, instructions, additionalPrice, price)
         {
             _foodOption = option;
             _foodSize = size;

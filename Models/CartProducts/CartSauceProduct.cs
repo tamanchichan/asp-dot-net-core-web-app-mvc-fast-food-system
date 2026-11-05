@@ -33,8 +33,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             SauceOption? option,
             int quantity,
             string? instructions,
-            decimal? aditionalPrice) : base(cartId, cart, productId, product, quantity, instructions, aditionalPrice
-        )
+            decimal? aditionalPrice,
+            decimal price) : base(cartId, cart, productId, product, quantity, instructions, aditionalPrice, price)
         {
             _sauceOption = option;
         }

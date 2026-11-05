@@ -29,15 +29,18 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
         [Column(TypeName = "decimal(18,2)")]
         public decimal AdditionalPrice { get; set; } = 0m;
 
+        private decimal _price;
+
         public decimal Price
         {
             get
             {
-                return IsFreeItem ? 0m : Product?.Price ?? 0m;
+                //return IsFreeItem ? 0m : Product?.Price ?? 0m;
+                return IsFreeItem ? 0m : _price;
             }
             set
             {
-
+                _price = value;
             }
         }
 
@@ -64,7 +67,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             int quantity,
             string?
             instructions,
-            decimal? additionalPrice
+            decimal? additionalPrice,
+            decimal price
         )
         {
             OrderId = orderId;
@@ -74,6 +78,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Quantity = quantity;
             Instructions = instructions;
             AdditionalPrice = additionalPrice ?? 0;
+            Price = price;
         }
     }
 }

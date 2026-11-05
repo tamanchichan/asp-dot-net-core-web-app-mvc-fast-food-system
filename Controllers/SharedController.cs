@@ -732,7 +732,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             product.Instructions = "FREE";
             product.IsFreeItem = true;
-            //product.Price = 0m;
+            product.Price = 0m;
 
             if (product is CartProduct cartProduct)
             {
