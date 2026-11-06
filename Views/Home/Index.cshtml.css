@@ -28,3 +28,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+@media screen and (max-width: 720px) {
+    .products {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}

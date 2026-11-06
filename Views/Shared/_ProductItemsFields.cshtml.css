@@ -60,3 +60,17 @@
 ::deep .product-increment:hover, ::deep .product-decrement:hover {
     color: #fff;
 }
+
+@media screen and (max-width: 720px) {
+    .product-items {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .product-items-template,
+    .product-item {
+        width: 100%;
+        min-width: 720px;
+        grid-template-columns: repeat(6, minmax(0, 1fr)) 50px 50px;
+    }
+}

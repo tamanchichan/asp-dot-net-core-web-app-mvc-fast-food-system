@@ -78,3 +78,13 @@
     opacity: 0.5;
     cursor: default;
 }
+
+@media screen and (max-width: 720px) {
+    .orders-filter-date input {
+        background-color: transparent;
+    }
+
+    .orders-filter-display {
+        text-align: center;
+    }
+}

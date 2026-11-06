@@ -1,16 +1,21 @@
-﻿.cart-product-quantity {
-    justify-content: space-between;
-}
-
-.clear-cart-button {
-    font-size: 30px;
-    position: absolute;
-    top: 150px;
-    right: 150px;
-}
-
-.fa-trash {
+﻿.center {
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center .form {
+    display: flex;
+    margin-right: 15px;
+}
+
+.center .clear-cart-button {
+    font-size: 30px;
+    background-color: transparent;
+}
+
+.cart-product-quantity {
+    justify-content: space-between;
 }
 
 .cart-page input, .cart-page textarea {
@@ -68,4 +73,8 @@
     align-items: center;
     justify-content: right;
     margin: 10px 0px;
+}
+
+@media screen and (max-width: 720px) {
+
 }

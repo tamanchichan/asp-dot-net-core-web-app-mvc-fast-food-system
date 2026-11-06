@@ -54,3 +54,9 @@ input, textarea {
     border: 1px solid #000;
     text-align: center;
 }
+
+@media screen and (max-width: 720px) {
+    .order-type {
+        text-align: center;
+    }
+}

@@ -1,12 +1,20 @@
 ﻿<div class="container header flex">
-    <nav class="flex">
-        <ul class="flex">
+    <button class="hamburguer-button">&#9776;</button>
+    <nav class="flex header-menu">
+        <ul class="flex menu-list">
             <a asp-action="Index" asp-controller="Home"><li>Home</li></a>
             <a asp-action="Index" asp-controller="Cart"><li>Cart</li></a>
             <a asp-action="Index" asp-controller="Orders"><li>Orders</li></a>
             <a asp-action="Index" asp-controller="Customers"><li>Customers</li></a>
             <a asp-action="Index" asp-controller="Products"><li>Products</li></a>
         </ul>
-    <partial name="_LoginPartial" /> @* Update _LoginPartial's View *@
+        <partial name="_LoginPartial" /> @* Update _LoginPartial's View *@
     </nav>
 </div>
+
+<script>
+    document.querySelector(".hamburguer-button").addEventListener("click", () => {
+        document.querySelector(".menu-list").classList.toggle("active");
+        document.querySelector(".hamburguer-button").classList.toggle("active");
+    })
+</script>
