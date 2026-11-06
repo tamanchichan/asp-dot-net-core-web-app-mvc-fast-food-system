@@ -336,12 +336,15 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             float restaurantNameHeight = 0;
             yPos += DrawTextBlock(graphics, restaurantName, restaurantNameFont, xPos, yPos, widthPos, middleAlign);
 
+            // Restaurant Tel
             string restaurantTel = "(204)231-4054";
             yPos += DrawTextBlock(graphics, restaurantTel, restaurantTelFont, xPos, yPos, widthPos, middleAlign);
 
+            // Restaurant Open Hours
             string restaurantOpenHours = "Mon to Sun: 3:30pm - 9pm";
             yPos += DrawTextBlock(graphics, restaurantOpenHours, restaurantOpenHoursFont, xPos, yPos, widthPos, middleAlign);
-
+            
+            // Restaurant Closed Hours
             string restaurantClosedHours = "Closed on Wednesday";
             yPos += DrawTextBlock(graphics, restaurantClosedHours, restaurantClosedhoursFont, xPos, yPos, widthPos, middleAlign);
 
