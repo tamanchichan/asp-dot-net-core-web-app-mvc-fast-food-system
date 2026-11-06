@@ -10,7 +10,7 @@
 
 @model Order
 
-<div class="container order-details-page">
+<div class="container order-details-page @(Model.IsCanceled == true ? "order-canceled" : "")">
     <div class="flex page-header">
         <div>
             <a asp-action="Index" asp-controller="Orders">

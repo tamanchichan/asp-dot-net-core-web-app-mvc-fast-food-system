@@ -32,7 +32,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             _printer = printer;
         }
 
-        public async Task<IActionResult> Index(int? page, DateTime? date)
+        public async Task<IActionResult> Index(int? page, DateTime? date, string? orderFilter)
         {
             page ??= 1;
 
@@ -41,21 +41,43 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 date = DateTime.Today;
             }
 
+            if (orderFilter == null)
+            {
+                orderFilter = "allOrders";
+            }
+
             DateTime startDate = date.Value.Date;
             DateTime endDate = startDate.AddDays(1);
 
             IQueryable<Order> orders = _context.Orders
                 .Include(o => o.OrderProducts)
-                .ThenInclude(op => op.Product)
+                    .ThenInclude(op => op.Product)
                 .Include(o => o.User)
-                .Where(o => o.ReadyTime.Date >= startDate && o.ReadyTime < endDate)
-                .Where(o => (bool)!o.IsCanceled)
+                .Where(o => o.ReadyTime.Date >= startDate && o.ReadyTime < endDate);
+
+            // Filter orders
+            if (orderFilter == "allOrders")
+            {
+
+            }
+            else if (orderFilter == "activeOrders")
+            {
+                orders = orders.Where(o => o.IsCanceled != true);
+            }
+            else if (orderFilter == "canceledOrders")
+            {
+                orders = orders.Where(o => o.IsCanceled == true);
+            }
+                //.Where(o => (bool)!o.IsCanceled)
+
+            orders = orders
                 .OrderByDescending(o => o.ReadyTime)
                     .ThenByDescending(o => (double)o.OrderProducts.Sum(op => op.Price * op.Quantity))
                 .AsNoTracking();
 
             // Pass the current date being filtered/shown to the view
             ViewBag.SelectedDate = date.Value;
+            ViewBag.OrderFilter = orderFilter;
 
             int pageSize = 5;
 

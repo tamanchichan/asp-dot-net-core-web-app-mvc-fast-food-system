@@ -12,6 +12,32 @@
     justify-content: center !important;
 }
 
+.order-canceled {
+/*    background-color: #f8d7da;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    opacity: 0.75;
+    position: relative;
+    text-align: center;*/
+    
+    position: relative
+}
+
+.order-canceled::after{
+    content: "order canceled";
+    color: #dc3545;
+    font-weight: bold;
+    font-size: 50px;
+    letter-spacing: 2.5px;
+    opacity: 0.5;
+    text-transform: uppercase;
+
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: rotate(-45deg);
+}
+
 .order-number-and-order-ready-date, .order-type-and-order-ready-time {
     align-items: baseline;
 }
