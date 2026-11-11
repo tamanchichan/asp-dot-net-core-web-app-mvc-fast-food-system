@@ -6,11 +6,12 @@
     height: 100px;
     align-items: center;
     justify-content: center;
-    position: relative;
+/*    position: relative;*/
 }
 
 .header-menu {
     min-height: 100px;
+    width: 100%;
 }
 
 .header nav ul {
@@ -61,5 +62,9 @@
         left: 0px;
         
         z-index: 1;
+    }
+
+    .header-menu {
+        justify-content: right;
     }
 }

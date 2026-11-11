@@ -160,16 +160,14 @@ if (orderFormCart == null) {
     orderFormCart = document.getElementById("orderFormOrder");
 }
 
-orderFormCart.addEventListener("submit", () => {
-    //localStorage.removeItem("orderType");
-    //localStorage.removeItem("observations");
-    //localStorage.removeItem("customerName");
-    //localStorage.removeItem("customerPhoneNumber");
-    //localStorage.removeItem("customerAddress");
-    //localStorage.removeItem("additionalCharge");
-    //localStorage.removeItem("deliveryFee");
-    //localStorage.removeItem("discount");
-    //localStorage.removeItem("readyDateOnly");
-    //localStorage.removeItem("readyTimeOnly");
+const tempData = document.querySelector(".temp-data");
+
+if (tempData) {
+    setTimeout(() => {
+            tempData.innerText = "";
+    }, 3000);
+}
+
+orderFormCart.addEventListener("onsubmit", () => {
     localStorage.clear();
-})
+});

@@ -1,10 +1,15 @@
 ﻿.page-header {
+    align-items: center;
     justify-content: space-between;
     padding-bottom: 15px;
 }
 
 .page-header h2 {
     margin-bottom: 0px;
+}
+
+::deep .create-button {
+    text-align: center;
 }
 
 .customers-list-template, .customer-list {
@@ -36,4 +41,10 @@
     pointer-events: none;
     opacity: 0.5;
     cursor: default;
+}
+
+@media screen and (max-width: 720px) {
+    .customers-list-template {
+        font-size: 20px;
+    }
 }

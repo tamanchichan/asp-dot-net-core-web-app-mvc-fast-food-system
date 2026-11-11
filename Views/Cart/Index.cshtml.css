@@ -5,8 +5,10 @@
 }
 
 .center .form {
-    display: flex;
+/*    display: flex;*/
     margin-right: 15px;
+
+    position: relative;
 }
 
 .center .clear-cart-button {
