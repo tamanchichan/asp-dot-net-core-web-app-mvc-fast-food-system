@@ -686,8 +686,13 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string instructions)
+        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions)
         {
+            if (instructions != null)
+            {
+                instructions = instructions.ToUpper().Trim();
+            }
+
             string returnUrl = Request.Headers["Referer"].ToString();
 
             CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);

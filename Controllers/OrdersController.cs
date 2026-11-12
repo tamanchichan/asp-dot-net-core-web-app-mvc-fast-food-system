@@ -152,6 +152,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         [HttpPost]
         public IActionResult EditOrder(Guid id, Guid? customerId, string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateOnly readyDateOnly, TimeOnly readyTimeOnly, string? additionalCharge, string? deliveryFee, string? discount)
         {
+            if (observations != null)
+            {
+                observations = observations.ToUpper().Trim();
+            }
+
             Order order = _context.Orders
                 .Include(o => o.OrderProducts)
                 .ThenInclude(op => op.Product)

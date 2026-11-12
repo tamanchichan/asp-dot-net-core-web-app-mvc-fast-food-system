@@ -98,7 +98,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Cart = cart,
                         ProductId = product.Id,
                         Product = product,
-                        Instructions = instructions,
+                        Instructions = instructions.Trim(),
                         AdditionalPrice = additionalPrice ?? 0m,
                         FoodOption = foodOption,
                         FoodSize = foodSize,
@@ -114,7 +114,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Cart = cart,
                         ProductId = product.Id,
                         Product = product,
-                        Instructions = instructions,
+                        Instructions = instructions.Trim(),
                         AdditionalPrice = additionalPrice ?? 0m,
                         BeverageOption = beverageOption,
                         Quantity = 1,
@@ -129,7 +129,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         Cart = cart,
                         ProductId = product.Id,
                         Product = product,
-                        Instructions = instructions,
+                        Instructions = instructions.Trim(),
                         AdditionalPrice = additionalPrice ?? 0m,
                         SauceOption = sauceOption,
                         Quantity = 1,
@@ -283,6 +283,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         [HttpPost]
         public async Task<IActionResult> PlaceCartOrder(string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateOnly readyDateOnly, TimeOnly readyTimeOnly, string? additionalCharge, string? deliveryFee, string? discount, string? freeOrderProductCode, bool printOrder, bool printKitchenOrder)
         {
+            if (observations != null)
+            {
+                observations = observations.ToUpper().Trim();
+            }
+
             Cart cart = _context.Carts
                 .Include(c => c.CartProducts)
                 .ThenInclude(cp => cp.Product)
