@@ -149,9 +149,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             return View(order);
         }
 
-        // Add orderProducts editing later
         [HttpPost]
-        public IActionResult EditOrder(Guid id, Guid? customerId, Customer? customer, string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateOnly readyDateOnly, TimeOnly readyTimeOnly, string? additionalCharge, string? deliveryFee, string? discount)
+        public IActionResult EditOrder(Guid id, Guid? customerId, string? customerName, string? customerPhoneNumber, string? customerAddress, OrderType orderType, string? observations, DateOnly readyDateOnly, TimeOnly readyTimeOnly, string? additionalCharge, string? deliveryFee, string? discount)
         {
             Order order = _context.Orders
                 .Include(o => o.OrderProducts)
@@ -159,19 +158,35 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 .Include(o => o.User)
                 .FirstOrDefault(o => o.Id == id);
 
-            if (order == null) NotFound();
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            Customer customer = _context.Customers.FirstOrDefault(c => c.Id == customerId);
 
             if (customer == null && !(String.IsNullOrEmpty(customerPhoneNumber)))
             {
-                customer = new Customer()
+                customer = _context.Customers.FirstOrDefault(c => c.PhoneNumber == customerPhoneNumber);
+
+                if (customer == null)
                 {
-                    Name = customerName,
-                    PhoneNumber = customerPhoneNumber,
-                    Address = customerAddress
-                };
+                    customer = new Customer()
+                    {
+                        Name = customerName,
+                        PhoneNumber = customerPhoneNumber,
+                        Address = customerAddress
+                    };
+
+                    _context.Customers.Add(customer);
+                }
 
                 customer.Orders.Add(order);
                 order.Customer = customer;
+            }
+            else if (customer != null && String.IsNullOrEmpty(customerPhoneNumber))
+            {
+                customer.Orders.Remove(order);
             }
 
             order.CustomerName = customerName;

@@ -19,11 +19,11 @@
 
 <div class="container edit-order-page">
     <partial name="_ProductsAdditionalPriceAndInstructionsModal" />
-    <div class="form">
-        @* <form asp-action="AddProductToOrder" asp-controller="Orders" asp-route-id="@Model.Id" method="post"> *@
+    <div class="center">
+        <div class="form">
             <input type="hidden" id="orderId" value="@Model.Id" />
             <partial name="_AddProductInput" model="@Model" />
-        @* </form> *@
+        </div>
     </div>
     <div class="page-header flex">
         <a asp-action="OrderDetails" asp-controller="Orders" asp-route-id="@Model.Id">

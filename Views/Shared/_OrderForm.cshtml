@@ -1,6 +1,7 @@
 ﻿@{
     OrderType selectedOrderType = OrderType.TakeAway;
     string observations = "";
+    string customerId = "";
     string customerName = "";
     string customerPhoneNumber = "";
     string customerAddress = "";
@@ -16,6 +17,7 @@
     {
         selectedOrderType = order.Type;
         observations = order.Observations ?? "";
+        customerId = order.CustomerId.ToString() ?? "";
         customerName = order.CustomerName ?? "";
         customerPhoneNumber = order.CustomerPhoneNumber ?? "";
         customerAddress = order.CustomerAddress ?? "";
@@ -58,6 +60,9 @@
         <div class="flex observations">
             <label for="observations">Observations:</label>
             <textarea name="observations" id="observations" rows="3">@observations</textarea>
+        </div>
+        <div>
+            <input type="hidden" id="customerId" name="customerId" value="@customerId" />
         </div>
         <div class="flex customer-name">
             <label for="customerName">Customer:</label>

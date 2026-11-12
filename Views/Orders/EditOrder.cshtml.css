@@ -1,8 +1,16 @@
-﻿.edit-order-page .flex {
-    justify-content: space-between;
+﻿.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.center .form {
+    position: relative
+}
 
+.edit-order-page .flex {
+    justify-content: space-between;
+}
 
 .order-product-template, .order-product {
     display: grid;
