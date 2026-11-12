@@ -9,8 +9,21 @@
 }
 
 .customer-details {
-    justify-content: center !important;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+    margin-bottom: 15px;
+    padding-bottom: 15px;
 }
+
+.customer-details h2 {
+    margin-bottom: 0 !important;
+    width: 100%;
+}
+
+.customer-details .flex {
+    justify-content: space-between;
+}
+
 
 .order-canceled {
 /*    background-color: #f8d7da;

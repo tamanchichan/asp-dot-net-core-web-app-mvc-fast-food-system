@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Order Details";
     ViewData["HideButton"] = true;
+
+    string customerName = Model.CustomerName;
+    string customerPhoneNumber = Model.CustomerPhoneNumber;
 }
 
 @using System.Globalization
@@ -25,19 +28,11 @@
     </div>
     <div class="flex customer-details">
         <h2>
-            Customer:
             <a asp-action="CustomerDetails" asp-controller="Customers" asp-route-id="@Model.Customer?.Id">
-                @if (!String.IsNullOrEmpty(Model.CustomerName))
-                {
-                    @($"{Model.CustomerName} | {Model.CustomerPhoneNumber}")
-                }
-                else
-                {
-                    if (!String.IsNullOrEmpty(Model.CustomerPhoneNumber))
-                    {
-                        @Model.CustomerPhoneNumber
-                    }
-                }
+                <div class="flex">
+                    <div>Customer: @customerName</div>
+                    <div>Tel/Phone: @customerPhoneNumber</div>
+                </div> 
             </a>
         </h2>
     </div>
