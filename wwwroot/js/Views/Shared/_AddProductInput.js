@@ -2,8 +2,8 @@
 const input = document.getElementById('addProductInput');
 const tempData = document.querySelector(".temp-data");
 
-export function addProductInput(model) {
-    const inputValue = input.value.trim();
+export function addProductInput(model, productCode = null) {
+    const inputValue = productCode ?? input.value.trim();
 
     let url = `/Shared/AddProductToCart?input=${inputValue}`;
 
@@ -164,9 +164,43 @@ export function addProductInput(model) {
     );
 }
 
+const productsResultDiv = document.querySelector(".products-result");
+
+input.addEventListener("input", async () => {
+    const value = input.value;
+
+    if (value.length <= 0) {
+        productsResultDiv.innerHTML = "";
+        return;
+    }
+
+    productsResultDiv.innerHTML = "";
+
+    const response = await fetch(`/Products/SearchProductsByName?name=${value}`);
+    const products = await response.json();
+
+
+    products.forEach((product) => {
+        const div = document.createElement("div");
+        div.classList.add("product-result");
+
+        div.textContent = `${product.code}. ${product.name}`;
+
+        productsResultDiv.appendChild(div);
+
+        div.addEventListener("click", () => {
+            window.addProductInput(product.code);
+
+            productsResultDiv.innerHTML = "";
+        });
+    });
+});
+
 input.addEventListener("keydown", async (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
+
+        productsResultDiv.innerHTML = "";
 
         window.addProductInput();
     }

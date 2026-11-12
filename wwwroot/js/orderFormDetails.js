@@ -38,28 +38,29 @@ if (localStorage.getItem("customerName")) {
 }
 
 // Customer Phone Number
-const customersPhoneNumberDiv = document.querySelector(".customers-phone-number");
+const customersPhoneNumberResultDiv = document.querySelector(".customers-phone-number-result");
 const customerPhoneNumberInput = document.getElementById("customerPhoneNumber");
 customerPhoneNumberInput.addEventListener("input", async () => {
     const value = customerPhoneNumberInput.value;
     localStorage.setItem("customerPhoneNumber", value);
 
     if (value.length < 3) {
-        customersPhoneNumberDiv.hidden = true;
-        customersPhoneNumberDiv.innerHTML = "";
+        customersPhoneNumberResultDiv.hidden = true;
+        customersPhoneNumberResultDiv.innerHTML = "";
         return;
     }
 
     const response = await fetch(`/Shared/SearchCustomers?phoneNumber=${value}`);
     const customers = await response.json();
 
-    customersPhoneNumberDiv.innerHTML = "";
-    customersPhoneNumberDiv.hidden = customers.length === 0;
+    customersPhoneNumberResultDiv.innerHTML = "";
+    customersPhoneNumberResultDiv.hidden = customers.length === 0;
 
     customers.forEach((customer) => {
         const div = document.createElement("div");
-        div.style.border = "1px solid #000";
-        div.style.cursor = "pointer";
+
+        div.classList.add("customer-result")
+
         div.textContent = customer.phoneNumber;
 
         div.addEventListener("click", () => {
@@ -78,11 +79,11 @@ customerPhoneNumberInput.addEventListener("input", async () => {
                 localStorage.setItem("customerAddress", customer.address);
             }
 
-            customersPhoneNumberDiv.innerHTML = "";
-            customersPhoneNumberDiv.hidden = true;
+            customersPhoneNumberResultDiv.innerHTML = "";
+            customersPhoneNumberResultDiv.hidden = true;
         });
 
-        customersPhoneNumberDiv.appendChild(div);
+        customersPhoneNumberResultDiv.appendChild(div);
     });
 });
 

@@ -39,14 +39,23 @@ input, textarea {
     position: relative;
 }
 
-.customers-phone-number {
+.customers-phone-number-result {
     background-color: #fff;
     display: block;
     position: absolute;
-    top: 35px;
+    top: 36px;
     right: 0px;
     text-align: center;
     width: 200px;
+}
+
+::deep .customer-result {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+::deep .customer-result:hover {
+    background-color: #e5e5e5;
 }
 
 #additionalCharge, #deliveryFee, #discount {

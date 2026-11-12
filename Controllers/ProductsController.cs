@@ -252,5 +252,21 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult SearchProductsByName(string name)
+        {
+            var products = _context.Products
+                .Where(p => p.Name.ToUpper().Contains(name.ToUpper()))
+                .OrderBy(o => o.Code)
+                .Select(p => new
+                {
+                    p.Code,
+                    p.Name,
+                    p.Price
+                }).ToList();
+
+            return Json(products);
+        }
     }
 }

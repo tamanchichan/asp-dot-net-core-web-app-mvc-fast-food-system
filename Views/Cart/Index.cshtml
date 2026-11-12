@@ -60,7 +60,7 @@
         window.handlePlaceOrder = handlePlaceOrder;
 
         import { addProductInput } from "/js/Views/Shared/_AddProductInput.js";
-        window.addProductInput = () => addProductInput("Cart");
+        window.addProductInput = (productCode = null) => addProductInput("Cart", productCode);
 
         import { clearCartProducts } from "/js/Views/Cart/Index.js";
         window.clearCartProducts = clearCartProducts;
