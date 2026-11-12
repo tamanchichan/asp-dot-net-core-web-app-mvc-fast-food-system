@@ -169,6 +169,6 @@ if (tempData) {
     }, 3000);
 }
 
-orderFormCart.addEventListener("onsubmit", () => {
+orderFormCart.addEventListener("submit", () => {
     localStorage.clear();
 });
