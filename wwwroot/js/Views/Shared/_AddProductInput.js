@@ -169,7 +169,7 @@ const productsResultDiv = document.querySelector(".products-result");
 input.addEventListener("input", async () => {
     const value = input.value;
 
-    if (value.length <= 0) {
+    if (value.length <= 2) {
         productsResultDiv.innerHTML = "";
         return;
     }
