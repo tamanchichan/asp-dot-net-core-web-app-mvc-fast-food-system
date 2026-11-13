@@ -32,9 +32,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts
             SauceProduct product,
             SauceOption? option,
             int quantity,
-            string? instructions,
+            string? instruction,
+            List<string>? instructions,
             decimal? aditionalPrice,
-            decimal price) : base(orderId, order, productId, product, quantity, instructions, aditionalPrice, price)
+            decimal price) : base(orderId, order, productId, product, quantity, instruction, instructions, aditionalPrice, price)
         {
             _sauceOption = option;
         }

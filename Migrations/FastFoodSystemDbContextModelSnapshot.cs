@@ -280,6 +280,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.PrimitiveCollection<string>("Options")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
@@ -446,6 +449,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("Options")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OrderId")

@@ -27,9 +27,11 @@
 }
 
 .product-instructions {
+/*    
     bottom: 0px;
     left: 15px;
     position: absolute;
+*/
     font-weight: 200;
     margin-left: 45px;
     text-transform: uppercase;
@@ -59,6 +61,16 @@
 
 ::deep .product-increment:hover, ::deep .product-decrement:hover {
     color: #fff;
+}
+
+.product-options ul {
+    list-style: disc;
+}
+
+.product-option {
+    font-weight: 200;
+    margin-left: 45px;
+    text-transform: uppercase;
 }
 
 @media screen and (max-width: 720px) {

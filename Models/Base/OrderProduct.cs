@@ -24,6 +24,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
         public string? Instructions { get; set; }
 
+        public List<string>? Options { get; set; } = new List<string>();
+
         public bool IsFreeItem { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
@@ -65,8 +67,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             Guid productId,
             Product product,
             int quantity,
-            string?
-            instructions,
+            string? instruction,
+            List<string>? options,
             decimal? additionalPrice,
             decimal price
         )
@@ -76,7 +78,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
             ProductId = productId;
             Product = product;
             Quantity = quantity;
-            Instructions = instructions;
+            Instructions = instruction;
+            Options = options;
             AdditionalPrice = additionalPrice ?? 0;
             Price = price;
         }

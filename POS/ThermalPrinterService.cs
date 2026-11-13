@@ -322,6 +322,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             // (INSTRUCTIONS)
             Font orderProductInstructionsFont = new Font("Arial", 10, FontStyle.Regular);
 
+            // - Options
+            Font orderProductOptionsFont = new Font("Arial", 10, FontStyle.Regular);
+
             // *OBSERVATIONS*
             Font orderObservationsFont = new Font("Arial", 12, FontStyle.Bold);
             
@@ -480,6 +483,17 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                     yPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, widthPos, format);
                 }
 
+                // - Options
+                if (orderProduct.Options != null && orderProduct.Options.Count > 0)
+                {
+                    foreach (string option in orderProduct.Options)
+                    {
+                        string orderProductOptionsText = $"- {option.ToUpper().Trim()}";
+
+                        yPos += DrawTextBlock(graphics, orderProductOptionsText, orderProductOptionsFont, xPos, yPos, widthPos, format);
+                    }
+                }
+
                 // Product's total price: $0.00 (right-aligned)
                 string orderItemTotalPrice = orderProduct.TotalPrice.ToString("C", new CultureInfo("en-CA"));
                 yPos += DrawTextBlock(graphics, orderItemTotalPrice, orderProductTotalPriceFont, xPos, yPos, widthPos, rightAlign);
@@ -609,6 +623,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             // (INSTRUCTIONS)
             Font orderProductInstructionsFont = new Font("Arial", 18, FontStyle.Regular);
 
+            // - OPTIONS
+            Font orderProductOptionsFont = new Font("Arial", 16, FontStyle.Bold);
+
             // *OBSERVATIONS*
             Font orderObservationsFont = new Font("Arial", 18, FontStyle.Bold);
 
@@ -711,6 +728,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                     leftYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, leftYPos, halfWidthPos, format);
                 }
 
+                // Options
+                if (orderProductL.Options != null && orderProductL.Options.Count > 0)
+                {
+                    foreach (string option in orderProductL.Options)
+                    {
+                        string optionText = $"- {OptionsExtensions.GetOptionsDisplayName(option)}";
+                        leftYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos, leftYPos, halfWidthPos, format);
+                    }
+                }
+
                 // Separator
                 leftYPos += 5;
             }
@@ -763,6 +790,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                     }
 
                     rightYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                }
+
+                // Options
+                if (orderProductR.Options != null && orderProductR.Options.Count > 0)
+                {
+                    foreach (string option in orderProductR.Options)
+                    {
+                        string optionText = $"({OptionsExtensions.GetOptionsDisplayName(option)})";
+                        rightYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                    }
                 }
 
                 // Separator
@@ -871,7 +908,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             // Observations:
             if (!string.IsNullOrEmpty(order.Observations))
             {
-                string orderObservationsText = $"*{order.Observations.ToUpper()}*";
+                //string orderObservationsText = $"*{order.Observations.ToUpper()}*";
+                string orderObservationsText = $"*{OptionsExtensions.GetObservationTranslation(order.Observations)}*";
                 yPos += DrawTextBlock(graphics, orderObservationsText, orderObservationsFont, xPos, yPos, widthPos, format);
 
                 // Separator

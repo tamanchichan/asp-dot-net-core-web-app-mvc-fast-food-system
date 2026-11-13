@@ -86,7 +86,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             string code;
             int quantity;
             decimal additionalPrice = 0m;
-            string instructions = null;
+            string instruction = null;
 
             if (input.Contains("*") || input.Contains("X"))
             {
@@ -163,7 +163,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                             cp.ProductId == product.Id &&
                             //cp.BeverageOption == (productOption.HasValue ? GetBeverageOption(productOption.Value) : null) && // Create GetBeverageOption function (?)
                             cp.AdditionalPrice == additionalPrice &&
-                            cp.Instructions == instructions
+                            cp.Instructions == instruction
                     );
             }
             else if (product is ExtraProduct)
@@ -175,7 +175,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                         cp =>
                             cp.ProductId == product.Id &&
                             cp.AdditionalPrice == additionalPrice &&
-                            cp.Instructions == instructions
+                            cp.Instructions == instruction
                     );
             }
             else if (product is FoodProduct)
@@ -188,7 +188,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                             cp.ProductId == product.Id &&
                             cp.FoodOption == (productOption.HasValue ? GetFoodOption(productOption.Value) : null) &&
                             cp.AdditionalPrice == additionalPrice &&
-                            cp.Instructions == instructions
+                            cp.Instructions == instruction
                     );
             }
             else if (product is SauceProduct)
@@ -201,7 +201,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                             cp.ProductId == product.Id &&
                             cp.SauceOption == GetSauceOption(input) &&
                             cp.AdditionalPrice == additionalPrice &&
-                            cp.Instructions == instructions
+                            cp.Instructions == instruction
                     );
             }
 
@@ -686,7 +686,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions)
+        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<Options>? onSideOptions, List<Options>? onTopOptions, List<Options>? extraOptions, List<Options>? lessOptions, List<Options>? noOptions, List<Options>? onlyOptions)
         {
             if (instructions != null)
             {
@@ -709,6 +709,43 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 orderProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
                 orderProduct.Instructions = instructions;
 
+                List<string> options = new List<string>();
+
+                if (onSideOptions != null)
+                {
+                    options.AddRange(onSideOptions.Select(o => $"{o} ON SIDE"));
+                }
+
+                if (onTopOptions != null)
+                {
+                    options.AddRange(onTopOptions.Select(o => $"{o} ON TOP"));
+                }
+
+                if (extraOptions != null)
+                {
+                    options.AddRange(extraOptions.Select(o => $"EXTRA {o}"));
+                }
+
+                if (lessOptions != null)
+                {
+                    options.AddRange(lessOptions.Select(o => $"LESS {o}"));
+                }
+
+                if (noOptions!= null)
+                {
+                    options.AddRange(noOptions.Select(o => $"NO {o}"));
+                }
+
+                if (onlyOptions != null)
+                {
+                    options.AddRange(onlyOptions.Select(o => $"ONLY {o}"));
+                }
+
+                orderProduct.Options = options
+                    .Select(option => option.ToUpper().Trim())
+                    .Distinct()
+                    .ToList();
+
                 _context.OrderProducts.Update(orderProduct);
                 _context.SaveChanges();
             }
@@ -717,9 +754,45 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 cartProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
                 cartProduct.Instructions = instructions;
 
+                List<string> options = new List<string>();
+
+                if (onSideOptions != null)
+                {
+                    options.AddRange(onSideOptions.Select(o => $"{o} ON SIDE"));
+                }
+
+                if (onTopOptions != null)
+                {
+                    options.AddRange(onTopOptions.Select(o => $"{o} ON TOP"));
+                }
+
+                if (extraOptions != null)
+                {
+                    options.AddRange(extraOptions.Select(o => $"EXTRA {o}"));
+                }
+
+                if (lessOptions != null)
+                {
+                    options.AddRange(lessOptions.Select(o => $"LESS {o}"));
+                }
+
+                if (noOptions != null)
+                {
+                    options.AddRange(noOptions.Select(o => $"NO {o}"));
+                }
+
+                if (onlyOptions != null)
+                {
+                    options.AddRange(onlyOptions.Select(o => $"ONLY {o}"));
+                }
+
+                cartProduct.Options = options
+                    .Select(option => option.ToUpper().Trim())
+                    .Distinct()
+                    .ToList();
+
                 _context.CartProducts.Update(cartProduct);
                 _context.SaveChanges();
-
             }
 
             return Redirect(returnUrl);

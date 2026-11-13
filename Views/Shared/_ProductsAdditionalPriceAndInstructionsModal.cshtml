@@ -1,22 +1,29 @@
 ﻿@using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
+
 @{
+    #region This does not work, I am getting these values from additionalPriceModal.js
     Guid productId = Guid.Empty;
     string additionalPrice = "";
     string instructions = "";
+    List<string> options = [];
 
     if (Model is CartProduct product)
     {
         productId = product.Id;
         additionalPrice = (product.AdditionalPrice != 0m) ? product.AdditionalPrice.ToString("0.##", CultureInfo.InvariantCulture) : "";
         instructions = product.Instructions ?? "";
+        options = product.Options ?? [];
     }
     else if (Model is OrderProduct orderProduct)
     {
         productId = orderProduct.Id;
         additionalPrice = (orderProduct.AdditionalPrice != 0m) ? orderProduct.AdditionalPrice.ToString("0.##", CultureInfo.InvariantCulture) : "";
         instructions = orderProduct.Instructions ?? "";
+        options = orderProduct.Options ?? [];
     }
+    #endregion
 }
 
 <div class="modal additional-price-and-instructions-modal">
@@ -32,6 +39,73 @@
                 <div class="flex instructions">
                     <label for="instructions">Instructions:</label>
                     <textarea name="instructions" id="instructions" rows="3">@instructions</textarea>
+                </div>
+                <div class="flex options-checkbox">
+                    <div class="options on-side-options">
+                        <h3>On Side</h3>
+                            @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="onSideOptions" id="onSide_@option.ToString()" value="@option.ToString()" />
+                                <label for="onSide_@option.ToString()">@option.ToString()</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="options on-top-options">
+                        <h3>On Top</h3>
+                        @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="onTopOptions" id="onTop_@option.ToString()" value="@option.ToString()"" />
+                                <label for="onTop_@option.ToString()">@option.ToString()</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="options extra-options">
+                        <h3>Extra</h3>
+                        @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="extraOptions" id="extra_@option.ToString()" value="@option.ToString()" />
+                                <label for="extra_@option.ToString()">@option.ToString()</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="options less-options">
+                        <h3>Less</h3>
+                        @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="lessOptions" id="less_@option.ToString()" value="@option.ToString()" />
+                                <label for="less_@option.ToString()">@option.ToString()</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="options no-options">
+                        <h3>No</h3>
+                        @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="noOptions" id="no_@option.ToString()" value="@option.ToString()" />
+                                <label for="no_@option.ToString()">@option.ToString()</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="options only-options">
+                        <h3>Only</h3>
+                        @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="onlyOptions" id="only_@option.ToString()" value="@option.ToString()" />
+                                <label for="only_@option.ToString()">@option.ToString()</label>
+                            </div>
+                        }
+                    </div>
                 </div>
                 <button type="submit" class="button">Confirm</button>
             </form>

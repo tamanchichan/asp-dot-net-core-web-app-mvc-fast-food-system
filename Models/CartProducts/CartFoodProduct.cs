@@ -41,9 +41,10 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts
             FoodOption? option,
             FoodSize? size,
             int quantity,
-            string? instructions,
+            string? instruction,
+            List<string>? instructions,
             decimal? additionalPrice,
-            decimal price) : base(cartId, cart, productId, product, quantity, instructions, additionalPrice, price)
+            decimal price) : base(cartId, cart, productId, product, quantity, instruction, instructions, additionalPrice, price)
         {
             _foodOption = option;
             _foodSize = size;

@@ -79,7 +79,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             ViewBag.SelectedDate = date.Value;
             ViewBag.OrderFilter = orderFilter;
 
-            int pageSize = 5;
+            int pageSize = 10;
 
             //return View(orders);
             return View(await PaginatedList<Order>.Create(orders, page ?? 1, pageSize));

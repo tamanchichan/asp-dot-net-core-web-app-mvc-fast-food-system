@@ -61,7 +61,7 @@
         }
     ))
     {
-        <div class="product-item" data-id="@productItem.Id" data-additional-price="@productItem.AdditionalPrice.ToString(CultureInfo.InvariantCulture)" data-instructions="@productItem.Instructions">
+        <div class="product-item" data-id="@productItem.Id" data-additional-price="@productItem.AdditionalPrice.ToString(CultureInfo.InvariantCulture)" data-instructions="@productItem.Instructions" data-options="@System.Text.Json.JsonSerializer.Serialize(productItem.Options ?? new List<string>())">
             <div class="item" style="@(hideButton ? "grid-template-columns: repeat(6, 1fr);" : "")">
                 @{
                     string optionCode = "";
@@ -126,7 +126,18 @@
             @if (!string.IsNullOrEmpty(productItem.Instructions))
             {
                 <div class="product-instructions">
-                    @productItem.Instructions
+                    <span>@productItem.Instructions</span>
+                </div>
+            }
+            @if (productItem.Options != null && productItem.Options.Count > 0)
+            {
+                <div class="product-options">
+                    <ul>
+                        @foreach (var option in productItem.Options)
+                        {
+                            <li class="product-option">@option</li>
+                        }
+                    </ul>
                 </div>
             }
         </div>

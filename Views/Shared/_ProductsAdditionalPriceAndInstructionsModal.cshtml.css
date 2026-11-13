@@ -1,7 +1,18 @@
 ﻿input, textarea {
+    appearance: auto;
     border: 1px solid #000;
     border-radius: 5px;
     padding: 10px 15px;
+}
+
+.modal {
+    overflow: auto;
+}
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    width: min(100% - 30px, 1080px);
 }
 
 .additional-price input {
@@ -24,5 +35,23 @@
 }
 
 ::deep .set-free-item-form {
-    margin-left: 15px;
+    position: absolute;
+    right: 15px;
+}
+
+.options-checkbox {
+    margin-bottom: 15px;
+}
+
+.options h3 {
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.option {
+    border-left: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 2.5px 5px;
 }

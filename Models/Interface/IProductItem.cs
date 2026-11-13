@@ -17,7 +17,9 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 
         int Quantity { get; set; }
 
-        string Instructions { get; set; }
+        string? Instructions { get; set; }
+
+        List<string> Options { get; set; }
 
         bool IsFreeItem { get; set; }
 
