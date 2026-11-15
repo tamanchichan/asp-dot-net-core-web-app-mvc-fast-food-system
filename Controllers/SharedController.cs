@@ -686,7 +686,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<Options>? onSideOptions, List<Options>? onTopOptions, List<Options>? extraOptions, List<Options>? lessOptions, List<Options>? noOptions, List<Options>? onlyOptions)
+        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<Options>? onSideOptions, List<Options>? onTopOptions, List<Options>? extraOptions, List<Options>? lessOptions, List<Options>? addOptions, List<Options>? noOptions, List<Options>? onlyOptions)
         {
             if (instructions != null)
             {
@@ -729,6 +729,11 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 if (lessOptions != null)
                 {
                     options.AddRange(lessOptions.Select(o => $"LESS {o}"));
+                }
+
+                if (addOptions != null)
+                {
+                    options.AddRange(addOptions.Select(o => $"ADD {o}"));
                 }
 
                 if (noOptions!= null)

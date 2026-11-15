@@ -126,7 +126,19 @@
             @if (!string.IsNullOrEmpty(productItem.Instructions))
             {
                 <div class="product-instructions">
-                    <span>@productItem.Instructions</span>
+                    <ul>
+                        @{
+                            string[] instructions = productItem.Instructions.Split(
+                                new[] { "\r\n", "\n", "\r" },
+                                StringSplitOptions.None
+                            );
+                        
+                            foreach(string instruction in instructions)
+                            {
+                                <li>@instruction</li>
+                            }                            
+                        }
+                    </ul>
                 </div>
             }
             @if (productItem.Options != null && productItem.Options.Count > 0)

@@ -27,7 +27,7 @@
 }
 
 .product-instructions {
-/*    
+    /*    
     bottom: 0px;
     left: 15px;
     position: absolute;
@@ -35,6 +35,10 @@
     font-weight: 200;
     margin-left: 45px;
     text-transform: uppercase;
+}
+
+.product-instructions ul {
+    list-style: disc;
 }
 
 .button-additional-price {

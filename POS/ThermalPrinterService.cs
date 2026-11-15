@@ -256,6 +256,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
         private void PrintReceiptPage(Graphics graphics, Order order)
         {
+            #region Format
             float yPos = 0;
             float xPos = 0;
             float widthPos = graphics.VisibleClipBounds.Width - 5;
@@ -276,6 +277,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             {
                 Alignment = StringAlignment.Far
             };
+            #endregion
 
             #region Fonts
             // Fonts
@@ -479,8 +481,16 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 // Instructions
                 if (!string.IsNullOrEmpty(orderProduct.Instructions))
                 {
-                    string orderProductInstructionsText = $"({orderProduct.Instructions.ToUpper()})";
-                    yPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, widthPos, format);
+                    string[] lines = orderProduct.Instructions.Split(
+                        new[] { "\r\n", "\n", "\r" },
+                        StringSplitOptions.None
+                    );
+
+                    foreach (string line in lines)
+                    {
+                        string orderProductInstructionsText = $"- {line}";
+                        yPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, yPos, widthPos, format);
+                    }
                 }
 
                 // - Options
@@ -617,7 +627,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             // Code. x Quantity
             Font orderProductFont = new Font("Arial", 22, FontStyle.Regular);
 
-            // $0.00
+            //OrderProduct's Additional Price (+$0.00)
             Font orderProductAdditionalPriceFont = new Font("Arial", 16, FontStyle.Bold);
 
             // (INSTRUCTIONS)
@@ -715,17 +725,30 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 leftYPos += textSize.Height;
 
+                // OrderProduct's Additional Price
+                if (orderProductL.AdditionalPrice != null && orderProductL.AdditionalPrice != 0m)
+                {
+                    string orderProductAdditionalPriceText = $"(+{orderProductL.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
+
+                    leftYPos += DrawTextBlock(graphics, orderProductAdditionalPriceText, orderProductAdditionalPriceFont, xPos, leftYPos, halfWidthPos, format);
+                }
+
                 // Instructions
                 if (!string.IsNullOrEmpty(orderProductL.Instructions))
                 {
-                    string orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()})";
-                    
-                    if (orderProductL.AdditionalPrice != null && orderProductL.AdditionalPrice != 0m)
-                    {
-                        orderProductInstructionsText = $"({orderProductL.Instructions.ToUpper()} - {orderProductL.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
-                    }
+                    string[] lines = orderProductL.Instructions.Split(
+                        new[] { "\r\n", "\n", "\r" },
+                        StringSplitOptions.None
+                    );
 
-                    leftYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, leftYPos, halfWidthPos, format);
+                    foreach (string line in lines)
+                    {
+                        string orderProductInstructionsText = $"- {line}";
+
+                        orderProductInstructionsText = orderProductInstructionsText.GetTextAreaTranslation();
+
+                        leftYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, leftYPos, halfWidthPos, format);
+                    }
                 }
 
                 // Options
@@ -733,7 +756,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     foreach (string option in orderProductL.Options)
                     {
-                        string optionText = $"- {OptionsExtensions.GetOptionsDisplayName(option)}";
+                        string optionText = $"- {option.GetOptionsTranslation()}";
                         leftYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos, leftYPos, halfWidthPos, format);
                     }
                 }
@@ -779,17 +802,28 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
 
                 rightYPos += textSize.Height;
 
+                // OrderProduct's Additional Price
+                if (orderProductR.AdditionalPrice != null && orderProductR.AdditionalPrice != 0m)
+                {
+                    string orderProductAdditionalPriceText = $"(+{orderProductR.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
+
+                    rightYPos += DrawTextBlock(graphics, orderProductAdditionalPriceText, orderProductAdditionalPriceFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                }
+
                 // Instructions
                 if (!string.IsNullOrEmpty(orderProductR.Instructions))
                 {
-                    string orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()})";
+                    string[] lines = orderProductR.Instructions.Split(
+                        new[] { "\r\n", "\n", "\r" },
+                        StringSplitOptions.None
+                    );
 
-                    if (orderProductR.AdditionalPrice != null && orderProductR.AdditionalPrice != 0m)
+                    foreach (string line in lines)
                     {
-                        orderProductInstructionsText = $"({orderProductR.Instructions.ToUpper()} - {orderProductR.AdditionalPrice.ToString("C", new CultureInfo("en-CA"))})";
-                    }
+                        string orderProductInstructionsText = $"- {line}";
 
-                    rightYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                        rightYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
+                    }
                 }
 
                 // Options
@@ -797,7 +831,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     foreach (string option in orderProductR.Options)
                     {
-                        string optionText = $"({OptionsExtensions.GetOptionsDisplayName(option)})";
+                        string optionText = $"({option.GetOptionsTranslation()})";
                         rightYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
                     }
                 }
@@ -909,7 +943,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             if (!string.IsNullOrEmpty(order.Observations))
             {
                 //string orderObservationsText = $"*{order.Observations.ToUpper()}*";
-                string orderObservationsText = $"*{OptionsExtensions.GetObservationTranslation(order.Observations)}*";
+                string orderObservationsText = $"*{order.Observations.GetTextAreaTranslation()}*";
                 yPos += DrawTextBlock(graphics, orderObservationsText, orderObservationsFont, xPos, yPos, widthPos, format);
 
                 // Separator

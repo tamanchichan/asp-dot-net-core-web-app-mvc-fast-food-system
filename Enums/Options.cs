@@ -2,50 +2,53 @@
 
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
 {
-    // ON SIDE // ON TOP // EXTRA // LESS // NO // ONLY
+    // ON SIDE // ON TOP // EXTRA // LESS // ADD // NO // ONLY
     public enum Options
     {
-        [Display(Name = "汁")]
+        [Display(Name = "Sauce")]
         Sauce,
 
-        [Display(Name ="辣")]
+        [Display(Name ="Spicy")]
         Spicy,
 
         [Display(Name = "MSG")]
         Msg,
-        [Display(Name = "糖")]
+        [Display(Name = "Sugar")]
         Sugar,
-        [Display(Name = "盐")]
+        [Display(Name = "Salt")]
         Salt,
-        [Display(Name = "油")]
+        [Display(Name = "Soy Sauce")]
+        SoySauce,
+
+        [Display(Name = "Oil")]
         Oil,
 
-        [Display(Name = "洋葱")]
+        [Display(Name = "Onions")]
         Onions,
-        [Display(Name = "椒")]
+        [Display(Name = "Peppers")]
         Peppers,
-        [Display(Name = "蒜")]
+        [Display(Name = "Garlic")]
         Garlic,
-        [Display(Name = "葱")]
+        [Display(Name = "Green Onions")]
         GreenOnions,
-        [Display(Name = "姜")]
+        [Display(Name = "Ginger")]
         Ginger,
 
-        [Display(Name = "牛肉")]
+        [Display(Name = "Beef")]
         Beef,
-        [Display(Name = "鸡肉")]
+        [Display(Name = "Chicken")]
         Chicken,
-        [Display(Name = "鱼")]
+        [Display(Name = "Fish")]
         Fish,
-        [Display(Name = "蘑菇")]
+        [Display(Name = "Mushroom")]
         Mushroom,
-        [Display(Name = "猪肉")]
+        [Display(Name = "Pork")]
         Pork,
-        [Display(Name = "虾")]
+        [Display(Name = "Shrimp")]
         Shrimp,
-        [Display(Name = "豆腐")]
+        [Display(Name = "Tofu")]
         Tofu,
-        [Display(Name = "菜")]
+        [Display(Name = "Vegetables")]
         Vegetables,
     }
 }

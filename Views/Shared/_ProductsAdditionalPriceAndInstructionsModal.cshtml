@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Enums
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers
 
 @{
     #region This does not work, I am getting these values from additionalPriceModal.js
@@ -41,70 +42,95 @@
                     <textarea name="instructions" id="instructions" rows="3">@instructions</textarea>
                 </div>
                 <div class="flex options-checkbox">
-                    <div class="options on-side-options">
+                    <div class="on-side-options">
                         <h3>On Side</h3>
-                            @foreach (Enum option in Enum.GetValues<Options>())
+                        <div class="options">
+                        @foreach (Enum option in Enum.GetValues<Options>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onSideOptions" id="onSide_@option.ToString()" value="@option.ToString()" />
-                                <label for="onSide_@option.ToString()">@option.ToString()</label>
+                                <label for="onSide_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
                     </div>
 
-                    <div class="options on-top-options">
+                    <div class="on-top-options">
                         <h3>On Top</h3>
+                        <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onTopOptions" id="onTop_@option.ToString()" value="@option.ToString()"" />
-                                <label for="onTop_@option.ToString()">@option.ToString()</label>
+                                <label for="onTop_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
                     </div>
 
-                    <div class="options extra-options">
+                    <div classoptions extra-options">
                         <h3>Extra</h3>
+                        <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="extraOptions" id="extra_@option.ToString()" value="@option.ToString()" />
-                                <label for="extra_@option.ToString()">@option.ToString()</label>
+                                <label for="extra_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
                     </div>
 
-                    <div class="options less-options">
+                    <div classoptions less-options">
                         <h3>Less</h3>
+                        <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="lessOptions" id="less_@option.ToString()" value="@option.ToString()" />
-                                <label for="less_@option.ToString()">@option.ToString()</label>
+                                <label for="less_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
                     </div>
 
-                    <div class="options no-options">
+                    <div classoptions add-options">
+                        <h3>Add</h3>
+                        <div class="options">
+                        @foreach (Enum option in Enum.GetValues<Options>())
+                        {
+                            <div class="option">
+                                <input type="checkbox" name="addOptions" id="add_@option.ToString()" value="@option.ToString()" />
+                                <label for="add_@option.ToString()">@option.GetDisplayName()</label>
+                            </div>
+                        }
+                        </div>
+                    </div>
+
+                    <div class="no-options">
                         <h3>No</h3>
+                        <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="noOptions" id="no_@option.ToString()" value="@option.ToString()" />
-                                <label for="no_@option.ToString()">@option.ToString()</label>
+                                <label for="no_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
                     </div>
 
-                    <div class="options only-options">
+                    <div classoptions only-options">
                         <h3>Only</h3>
+                        <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onlyOptions" id="only_@option.ToString()" value="@option.ToString()" />
-                                <label for="only_@option.ToString()">@option.ToString()</label>
+                                <label for="only_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="button">Confirm</button>
