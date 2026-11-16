@@ -6,6 +6,9 @@
         {
             // Instructions
             { "FREE", "送" },
+
+            { "TRAY", "盘" },
+
             { "ADD", "加" },
             { "EXTRA", "额外" },
             { "VERY", "很" },
@@ -14,7 +17,7 @@
             { "NO", "不要" },
             { "NOT", "不要" },
             { "ON TOP", "在上面" },
-            { "ON SIDE", "另放" },
+            { "ON SIDE", "分开" },
 
             // Seasonings
             { "BLACKPEPPER", "胡椒" },
