@@ -42,7 +42,7 @@
                     <textarea name="instructions" id="instructions" rows="3">@instructions</textarea>
                 </div>
                 <div class="flex options-checkbox">
-                    <div class="on-side-options">
+                    <div class="on-side-options checkbox-field">
                         <h3>On Side</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
@@ -55,7 +55,7 @@
                         </div>
                     </div>
 
-                    <div class="on-top-options">
+                    <div class="on-top-options checkbox-field">
                         <h3>On Top</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
@@ -68,7 +68,7 @@
                         </div>
                     </div>
 
-                    <div classoptions extra-options">
+                    <div class="extra-options checkbox-field">
                         <h3>Extra</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
@@ -81,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div classoptions less-options">
+                    <div class="less-options checkbox-field">
                         <h3>Less</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
@@ -94,7 +94,7 @@
                         </div>
                     </div>
 
-                    <div classoptions add-options">
+                    <div class="add-options checkbox-field">
                         <h3>Add</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
@@ -107,7 +107,7 @@
                         </div>
                     </div>
 
-                    <div class="no-options">
+                    <div class="no-options checkbox-field">
                         <h3>No</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div classoptions only-options">
+                    <div class="only-options checkbox-field">
                         <h3>Only</h3>
                         <div class="options">
                         @foreach (Enum option in Enum.GetValues<Options>())
