@@ -831,7 +831,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     foreach (string option in orderProductR.Options)
                     {
-                        string optionText = $"({option.GetOptionsTranslation()})";
+                        string optionText = $"- {option.GetOptionsTranslation()}";
                         rightYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
                     }
                 }
