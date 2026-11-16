@@ -45,7 +45,7 @@
                     <div class="on-side-options checkbox-field">
                         <h3>On Side</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<OnSideOptions>())
+                        @foreach (Enum option in Enum.GetValues<OnSideInstructions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onSideOptions" id="onSide_@option.ToString()" value="@option.ToString()" />
@@ -58,7 +58,7 @@
                     <div class="extra-options checkbox-field">
                         <h3>Extra</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<ExtraOptions>())
+                        @foreach (Enum option in Enum.GetValues<ExtraInstructions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="extraOptions" id="extra_@option.ToString()" value="@option.ToString()" />
@@ -71,7 +71,7 @@
                     <div class="less-options checkbox-field">
                         <h3>Less</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<LessOptions>())
+                        @foreach (Enum option in Enum.GetValues<LessInstructions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="lessOptions" id="less_@option.ToString()" value="@option.ToString()" />
@@ -84,7 +84,7 @@
                     <div class="add-options checkbox-field">
                         <h3>Add</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<AddOptions>())
+                        @foreach (Enum option in Enum.GetValues<AddInstructions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="addOptions" id="add_@option.ToString()" value="@option.ToString()" />
@@ -97,7 +97,7 @@
                     <div class="remove-options checkbox-field">
                         <h3>No</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<RemoveOptions>())
+                        @foreach (Enum option in Enum.GetValues<RemoveInstructions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="removeOptions" id="remove_@option.ToString()" value="@option.ToString()" />
@@ -110,7 +110,7 @@
                     <div class="only-options checkbox-field">
                         <h3>Only</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<OnlyOptions>())
+                        @foreach (Enum option in Enum.GetValues<OnlyInstructions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onlyOptions" id="only_@option.ToString()" value="@option.ToString()" />
@@ -123,7 +123,7 @@
                     <div class="sauce-options checkbox-field">
                         <h3>Sauce</h3>
                         <div class="options">
-                            @foreach (Enum option in Enum.GetValues<SauceOptions>())
+                            @foreach (Enum option in Enum.GetValues<SauceInstructions>())
                             {
                                 <div class="option">
                                     <input type="checkbox" name="sauceOptions" id="sauce_@option.ToString()" value="@option.ToString()"  />
@@ -136,7 +136,7 @@
                     <div class="size-options checkbox-field">
                         <h3>Size</h3>
                         <div class="options">
-                            @foreach (Enum option in Enum.GetValues<SizeOptions>())
+                            @foreach (Enum option in Enum.GetValues<SizeInstructions>())
                             {
                                 <div class="option">
                                     <input type="checkbox" name="sizeOptions" id="size_@option.ToString()" value="@option.ToString()" />
