@@ -431,7 +431,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                     Code = product.Code,
                     Name = product.Name,
                     Quantity = 1,
-                    Instructions = "Free",
+                    Instructions = "FREE",
                     Price = 0m,
                     IsFreeItem = true,
                     Category = product.Category,
