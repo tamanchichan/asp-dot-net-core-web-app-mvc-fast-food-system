@@ -4,7 +4,8 @@
     {
         public static readonly Dictionary<string, string> Translations = new Dictionary<string, string>()
         {
-            // instructions
+            // Instructions
+            { "FREE", "送" },
             { "ADD", "加" },
             { "EXTRA", "额外" },
             { "VERY", "很" },
@@ -15,25 +16,32 @@
             { "ON TOP", "在上面" },
             { "ON SIDE", "另放" },
 
-            { "SAUCE", "汁" },
-
-            { "SPICY", "辣" },
-
-            // seasoning
+            // Seasonings
+            { "BLACKPEPPER", "胡椒" },
             { "MSG", "MSG" },
             { "SUGAR", "糖" },
             { "SALT", "盐" },
-
+            { "SALTANDPEPPER", "椒盐" },
             { "OIL", "油" },
+            { "SAUCE", "汁" },
+            { "SOY SAUCE", "酱油" },
+            { "SOYSAUCE", "酱油" },
+            { "SPICY", "辣" },
 
-            // ingredients
+            // Ingredients
+            { "ALMONDS", "杏仁" },
+            { "BLACK PEPPER", "胡椒" },
             { "GARLIC", "蒜" },
             { "GINGER", "姜" },
+            { "GREENONIONS", "葱" },
             { "GREEN ONIONS", "葱" },
+            { "NUTS", "坚果" },
             { "ONIONS", "洋葱" },
             { "PEPPERS", "椒" },
+            { "SESAMESEED", "芝麻" },
+            { "SESAME SEED", "芝麻" },
 
-            // proteins
+            // Proteins
             { "BEEF", "牛肉" },
             { "CHICKEN", "鸡肉" },
             { "FISH", "鱼" },
@@ -42,35 +50,30 @@
             { "SHRIMP", "虾" },
             { "TOFU", "豆腐" },
             { "VEGETABLES", "菜" },
-        };
 
-        public static readonly Dictionary<string, string> Options = new Dictionary<string, string>
-        {
-            { "Sauce", "汁" },
+            // Sauces
+            { "BGS", "BGS" },
+            { "CS", "咖喱汁" },
+            { "CURRYSAUCE", "咖喱汁" },
+            { "CURRY SAUCE", "咖喱汁" },
+            { "HGS", "HGS" },
+            { "HHGS", "HHGS" },
+            { "HLS", "HLS" },
+            { "KUNGPAOSAUCE", "宮保汁" },
+            { "KUNGPAO SAUCE", "宮保汁" },
+            { "KUNG PAO SAUCE", "宮保汁" },
+            { "SATAYSAUCE", "沙爹汁" },
+            { "SATAY SAUCE", "沙爹汁" },
+            { "SZECHUANSAUCE", "四川汁" },
+            { "SZECHUAN SAUCE", "四川汁" },
+            { "SESAMESAUCE", "芝麻汁" },
+            { "SESAME SAUCE", "芝麻汁" },
+            { "SSS", "SSS" },
 
-            { "Spicy", "辣" },
-            
-            { "Msg", "MSG" },
-            { "Sugar", "糖" },
-            { "Salt", "盐" },
-            { "SoySauce", "酱油" },
-            
-            { "Oil", "油" },
-            
-            { "Garlic", "蒜" },
-            { "Ginger", "姜" },
-            { "GreenOnions", "葱" },
-            { "Onions", "洋葱" },
-            { "Peppers", "椒" },
-
-            { "Beef", "牛肉" },
-            { "Chicken", "鸡肉" },
-            { "Fish", "鱼" },
-            { "Mushroom", "蘑菇" },
-            { "Pork", "猪肉" },
-            { "Shrimp", "虾" },
-            { "Tofu", "豆腐" },
-            { "Vegetables", "菜" }
+            // Sizes
+            { "SMALL", "小" },
+            { "MEDIUM", "中" },
+            { "LARGE", "大" },
         };
     }
 }

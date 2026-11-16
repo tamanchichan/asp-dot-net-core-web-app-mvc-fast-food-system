@@ -686,14 +686,56 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<Options>? onSideOptions, List<Options>? onTopOptions, List<Options>? extraOptions, List<Options>? lessOptions, List<Options>? addOptions, List<Options>? noOptions, List<Options>? onlyOptions)
+        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<OnSideOptions>? onSideOptions, List<ExtraOptions>? extraOptions, List<LessOptions>? lessOptions, List<AddOptions>? addOptions, List<RemoveOptions>? removeOptions, List<OnlyOptions>? onlyOptions, List<SauceOptions>? sauceOptions, List<SizeOptions> sizeOptions)
         {
+            string returnUrl = Request.Headers["Referer"].ToString();
+
             if (instructions != null)
             {
                 instructions = instructions.ToUpper().Trim();
             }
 
-            string returnUrl = Request.Headers["Referer"].ToString();
+            List<string> options = new List<string>();
+
+            if (onSideOptions != null)
+            {
+                options.AddRange(onSideOptions.Select(o => $"{o} ON SIDE"));
+            }
+
+            if (extraOptions != null)
+            {
+                options.AddRange(extraOptions.Select(o => $"EXTRA {o}"));
+            }
+
+            if (lessOptions != null)
+            {
+                options.AddRange(lessOptions.Select(o => $"LESS {o}"));
+            }
+
+            if (addOptions != null)
+            {
+                options.AddRange(addOptions.Select(o => $"ADD {o}"));
+            }
+
+            if (removeOptions != null)
+            {
+                options.AddRange(removeOptions.Select(o => $"NO {o}"));
+            }
+
+            if (onlyOptions != null)
+            {
+                options.AddRange(onlyOptions.Select(o => $"ONLY {o}"));
+            }
+
+            if (sauceOptions != null)
+            {
+                options.AddRange(sauceOptions.Select(o => $"ADD {o}"));
+            }
+
+            if (sizeOptions != null)
+            {
+                options.AddRange(sizeOptions.Select(o => $"{o}"));
+            }
 
             CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
 
@@ -709,43 +751,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
                 orderProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
                 orderProduct.Instructions = instructions;
 
-                List<string> options = new List<string>();
-
-                if (onSideOptions != null)
-                {
-                    options.AddRange(onSideOptions.Select(o => $"{o} ON SIDE"));
-                }
-
-                if (onTopOptions != null)
-                {
-                    options.AddRange(onTopOptions.Select(o => $"{o} ON TOP"));
-                }
-
-                if (extraOptions != null)
-                {
-                    options.AddRange(extraOptions.Select(o => $"EXTRA {o}"));
-                }
-
-                if (lessOptions != null)
-                {
-                    options.AddRange(lessOptions.Select(o => $"LESS {o}"));
-                }
-
-                if (addOptions != null)
-                {
-                    options.AddRange(addOptions.Select(o => $"ADD {o}"));
-                }
-
-                if (noOptions!= null)
-                {
-                    options.AddRange(noOptions.Select(o => $"NO {o}"));
-                }
-
-                if (onlyOptions != null)
-                {
-                    options.AddRange(onlyOptions.Select(o => $"ONLY {o}"));
-                }
-
                 orderProduct.Options = options
                     .Select(option => option.ToUpper().Trim())
                     .Distinct()
@@ -758,38 +763,6 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
             {
                 cartProduct.AdditionalPrice = string.IsNullOrEmpty(additionalPrice) ? 0m : decimal.Parse(additionalPrice.Replace(",", "."), CultureInfo.InvariantCulture);
                 cartProduct.Instructions = instructions;
-
-                List<string> options = new List<string>();
-
-                if (onSideOptions != null)
-                {
-                    options.AddRange(onSideOptions.Select(o => $"{o} ON SIDE"));
-                }
-
-                if (onTopOptions != null)
-                {
-                    options.AddRange(onTopOptions.Select(o => $"{o} ON TOP"));
-                }
-
-                if (extraOptions != null)
-                {
-                    options.AddRange(extraOptions.Select(o => $"EXTRA {o}"));
-                }
-
-                if (lessOptions != null)
-                {
-                    options.AddRange(lessOptions.Select(o => $"LESS {o}"));
-                }
-
-                if (noOptions != null)
-                {
-                    options.AddRange(noOptions.Select(o => $"NO {o}"));
-                }
-
-                if (onlyOptions != null)
-                {
-                    options.AddRange(onlyOptions.Select(o => $"ONLY {o}"));
-                }
 
                 cartProduct.Options = options
                     .Select(option => option.ToUpper().Trim())

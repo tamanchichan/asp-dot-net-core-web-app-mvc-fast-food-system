@@ -745,7 +745,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                     {
                         string orderProductInstructionsText = $"- {line}";
 
-                        orderProductInstructionsText = orderProductInstructionsText.GetTextAreaTranslation();
+                        orderProductInstructionsText = orderProductInstructionsText.GetTranslation();
 
                         leftYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos, leftYPos, halfWidthPos, format);
                     }
@@ -756,7 +756,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     foreach (string option in orderProductL.Options)
                     {
-                        string optionText = $"- {option.GetOptionsTranslation()}";
+                        string optionText = $"- {option.GetTranslation()}";
                         leftYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos, leftYPos, halfWidthPos, format);
                     }
                 }
@@ -831,7 +831,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                 {
                     foreach (string option in orderProductR.Options)
                     {
-                        string optionText = $"- {option.GetOptionsTranslation()}";
+                        string optionText = $"- {option.GetTranslation()}";
                         rightYPos += DrawTextBlock(graphics, optionText, orderProductOptionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
                     }
                 }
@@ -943,7 +943,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
             if (!string.IsNullOrEmpty(order.Observations))
             {
                 //string orderObservationsText = $"*{order.Observations.ToUpper()}*";
-                string orderObservationsText = $"*{order.Observations.GetTextAreaTranslation()}*";
+                string orderObservationsText = $"*{order.Observations.GetTranslation()}*";
                 yPos += DrawTextBlock(graphics, orderObservationsText, orderObservationsFont, xPos, yPos, widthPos, format);
 
                 // Separator

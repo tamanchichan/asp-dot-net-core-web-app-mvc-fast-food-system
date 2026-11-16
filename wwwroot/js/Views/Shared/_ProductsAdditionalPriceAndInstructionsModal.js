@@ -53,10 +53,6 @@ function openEditProductModal(product) {
                 formattedOption = `${option} ON SIDE`;
                 break;
 
-            case "onTopOptions":
-                formattedOption = `${option} ON TOP`;
-                break;
-
             case "extraOptions":
                 formattedOption = `EXTRA ${option}`;
                 break;
@@ -65,13 +61,24 @@ function openEditProductModal(product) {
                 formattedOption = `LESS ${option}`;
                 break;
 
+            case "addOptions":
+                formattedOption = `ADD ${option}`;
+                break;
+
+            case "removeOptions":
+                formattedOption = `NO ${option}`;
+                break;
+
             case "onlyOptions":
                 formattedOption = `ONLY ${option}`;
                 break;
 
-            case "noOptions":
-                formattedOption = `NO ${option}`;
+            case "sauceOptions":
+                formattedOption = `ADD ${option}`;
                 break;
+
+            case "sizeOptions":
+                formattedOption = `${option}`
         }
 
         checkbox.checked = product.options.some(

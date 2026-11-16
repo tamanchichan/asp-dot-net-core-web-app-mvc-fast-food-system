@@ -45,7 +45,7 @@
                     <div class="on-side-options checkbox-field">
                         <h3>On Side</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
+                        @foreach (Enum option in Enum.GetValues<OnSideOptions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onSideOptions" id="onSide_@option.ToString()" value="@option.ToString()" />
@@ -55,23 +55,10 @@
                         </div>
                     </div>
 
-                    <div class="on-top-options checkbox-field">
-                        <h3>On Top</h3>
-                        <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
-                        {
-                            <div class="option">
-                                <input type="checkbox" name="onTopOptions" id="onTop_@option.ToString()" value="@option.ToString()"" />
-                                <label for="onTop_@option.ToString()">@option.GetDisplayName()</label>
-                            </div>
-                        }
-                        </div>
-                    </div>
-
                     <div class="extra-options checkbox-field">
                         <h3>Extra</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
+                        @foreach (Enum option in Enum.GetValues<ExtraOptions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="extraOptions" id="extra_@option.ToString()" value="@option.ToString()" />
@@ -84,7 +71,7 @@
                     <div class="less-options checkbox-field">
                         <h3>Less</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
+                        @foreach (Enum option in Enum.GetValues<LessOptions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="lessOptions" id="less_@option.ToString()" value="@option.ToString()" />
@@ -97,7 +84,7 @@
                     <div class="add-options checkbox-field">
                         <h3>Add</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
+                        @foreach (Enum option in Enum.GetValues<AddOptions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="addOptions" id="add_@option.ToString()" value="@option.ToString()" />
@@ -107,14 +94,14 @@
                         </div>
                     </div>
 
-                    <div class="no-options checkbox-field">
+                    <div class="remove-options checkbox-field">
                         <h3>No</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
+                        @foreach (Enum option in Enum.GetValues<RemoveOptions>())
                         {
                             <div class="option">
-                                <input type="checkbox" name="noOptions" id="no_@option.ToString()" value="@option.ToString()" />
-                                <label for="no_@option.ToString()">@option.GetDisplayName()</label>
+                                <input type="checkbox" name="removeOptions" id="remove_@option.ToString()" value="@option.ToString()" />
+                                <label for="remove_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
                         </div>
@@ -123,13 +110,39 @@
                     <div class="only-options checkbox-field">
                         <h3>Only</h3>
                         <div class="options">
-                        @foreach (Enum option in Enum.GetValues<Options>())
+                        @foreach (Enum option in Enum.GetValues<OnlyOptions>())
                         {
                             <div class="option">
                                 <input type="checkbox" name="onlyOptions" id="only_@option.ToString()" value="@option.ToString()" />
                                 <label for="only_@option.ToString()">@option.GetDisplayName()</label>
                             </div>
                         }
+                        </div>
+                    </div>
+
+                    <div class="sauce-options checkbox-field">
+                        <h3>Sauce</h3>
+                        <div class="options">
+                            @foreach (Enum option in Enum.GetValues<SauceOptions>())
+                            {
+                                <div class="option">
+                                    <input type="checkbox" name="sauceOptions" id="sauce_@option.ToString()" value="@option.ToString()"  />
+                                    <label for="sauce_@option.ToString()">@option.GetDisplayName()</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="size-options checkbox-field">
+                        <h3>Size</h3>
+                        <div class="options">
+                            @foreach (Enum option in Enum.GetValues<SizeOptions>())
+                            {
+                                <div class="option">
+                                    <input type="checkbox" name="sizeOptions" id="size_@option.ToString()" value="@option.ToString()" />
+                                    <label for="size_@option.ToString()">@option.GetDisplayName()</label>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
