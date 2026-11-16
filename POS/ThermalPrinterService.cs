@@ -822,6 +822,8 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.POS
                     {
                         string orderProductInstructionsText = $"- {line}";
 
+                        orderProductInstructionsText = orderProductInstructionsText.GetTranslation();
+
                         rightYPos += DrawTextBlock(graphics, orderProductInstructionsText, orderProductInstructionsFont, xPos + halfWidthPos, rightYPos, halfWidthPos, format);
                     }
                 }
