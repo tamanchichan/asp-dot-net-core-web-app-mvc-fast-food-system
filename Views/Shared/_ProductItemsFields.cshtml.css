@@ -68,6 +68,12 @@
         overflow-x: auto;
     }
 
+    .product-items-template span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .product-items-template,
     ::deep .product-item {
         grid-template-columns: repeat(6, minmax(0, 1fr)) 50px 50px;
