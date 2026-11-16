@@ -32,8 +32,4 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\css\Views\Shared\_ProductItemsFields.css" />
-  </ItemGroup>
-
 </Project>
