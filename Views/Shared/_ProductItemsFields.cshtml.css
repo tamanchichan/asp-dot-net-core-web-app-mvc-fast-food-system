@@ -1,4 +1,4 @@
-﻿.product-items-template, .item {
+﻿.product-items-template, ::deep .item {
     display: grid;
     align-items: center; /* center items vertically (y-position) */
     gap: 10px;
@@ -14,7 +14,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-.product-item {
+::deep .product-item {
     border-bottom: 1px solid rgba(128, 128, 128, 0.25);
     min-height: 70px;
     position: relative;
@@ -27,11 +27,6 @@
 }
 
 .product-instructions {
-    /*    
-    bottom: 0px;
-    left: 15px;
-    position: absolute;
-*/
     font-weight: 200;
     margin-left: 45px;
     text-transform: uppercase;
@@ -84,7 +79,7 @@
     }
 
     .product-items-template,
-    .product-item {
+    ::deep .product-item {
         width: 100%;
         min-width: 720px;
         grid-template-columns: repeat(6, minmax(0, 1fr)) 50px 50px;
