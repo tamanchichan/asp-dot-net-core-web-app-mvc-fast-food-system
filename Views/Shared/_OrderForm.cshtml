@@ -1,4 +1,6 @@
 ﻿@{
+    string isEditOrder = "false";
+
     OrderType selectedOrderType = OrderType.TakeAway;
     string observations = "";
     string customerId = "";
@@ -15,6 +17,8 @@
 
     if (Model is Order order)
     {
+        isEditOrder = "true";
+
         selectedOrderType = order.Type;
         observations = order.Observations ?? "";
         customerId = order.CustomerId.ToString() ?? "";
@@ -39,6 +43,7 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base
 
 <div class="order-form">
+        <input type="hidden" id="isEditOrder" name="isEditOrder" value="@isEditOrder" />
         <partial name="_FreeOrderProduct" />
         <div class="flex order-type">
             <div>
