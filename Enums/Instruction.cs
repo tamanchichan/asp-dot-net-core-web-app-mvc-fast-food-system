@@ -3,7 +3,7 @@
 namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
 {
     // ON SIDE // EXTRA // LESS // ADD // REMOVE // ONLY // SAUCE // SIZE
-    public enum Options
+    public enum Instruction
     {
         // Seasonings
         [Display(Name = "Black Pepper")]
@@ -88,7 +88,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Large
     }
 
-    public enum OnSideOptions
+    public enum OnSideInstructions
     {
         // Seasonings
         [Display(Name = "Black Pepper")]
@@ -143,7 +143,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Vegetables,
     }
 
-    public enum ExtraOptions
+    public enum ExtraInstructions
     {
         // Seasonings
         [Display(Name = "Black Pepper")]
@@ -198,7 +198,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Vegetables,
     }
 
-    public enum LessOptions
+    public enum LessInstructions
     {
         // Seasonings
         [Display(Name = "Black Pepper")]
@@ -253,7 +253,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Vegetables,
     }
 
-    public enum AddOptions
+    public enum AddInstructions
     {
         // Seasonings
         [Display(Name = "Black Pepper")]
@@ -308,7 +308,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Vegetables,
     }
 
-    public enum RemoveOptions
+    public enum RemoveInstructions
     {
         // Seasonings
         [Display(Name = "Black Pepper")]
@@ -363,7 +363,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Vegetables,
     }
 
-    public enum OnlyOptions
+    public enum OnlyInstructions
     {
         [Display(Name = "Beef")]
         Beef,
@@ -383,7 +383,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Vegetables,
     }
 
-    public enum SauceOptions
+    public enum SauceInstructions
     {
         [Display(Name = "BGS")]
         Bgs,
@@ -409,7 +409,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Enums
         Sss,
     }
 
-    public enum SizeOptions
+    public enum SizeInstructions
     {
         [Display(Name = "Small")]
         Small,

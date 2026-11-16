@@ -686,7 +686,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<OnSideOptions>? onSideOptions, List<ExtraOptions>? extraOptions, List<LessOptions>? lessOptions, List<AddOptions>? addOptions, List<RemoveOptions>? removeOptions, List<OnlyOptions>? onlyOptions, List<SauceOptions>? sauceOptions, List<SizeOptions> sizeOptions)
+        public IActionResult EditProductAdditionalPriceAndInstructions(Guid id, string additionalPrice, string? instructions, List<OnSideInstructions>? onSideOptions, List<ExtraInstructions>? extraOptions, List<LessInstructions>? lessOptions, List<AddInstructions>? addOptions, List<RemoveInstructions>? removeOptions, List<OnlyInstructions>? onlyOptions, List<SauceInstructions>? sauceOptions, List<SizeInstructions> sizeOptions)
         {
             string returnUrl = Request.Headers["Referer"].ToString();
 
