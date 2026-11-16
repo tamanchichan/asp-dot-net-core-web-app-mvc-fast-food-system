@@ -1,5 +1,6 @@
 ﻿using asp_dot_net_core_web_app_mvc_fast_food_system.Areas.Identity.Data;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Enums;
+using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Base;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface;
@@ -699,42 +700,42 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             if (onSideOptions != null)
             {
-                options.AddRange(onSideOptions.Select(o => $"{o} ON SIDE"));
+                options.AddRange(onSideOptions.Select(o => $"{o.GetDisplayName()} ON SIDE"));
             }
 
             if (extraOptions != null)
             {
-                options.AddRange(extraOptions.Select(o => $"EXTRA {o}"));
+                options.AddRange(extraOptions.Select(o => $"EXTRA {o.GetDisplayName()}"));
             }
 
             if (lessOptions != null)
             {
-                options.AddRange(lessOptions.Select(o => $"LESS {o}"));
+                options.AddRange(lessOptions.Select(o => $"LESS {o.GetDisplayName()}"));
             }
 
             if (addOptions != null)
             {
-                options.AddRange(addOptions.Select(o => $"ADD {o}"));
+                options.AddRange(addOptions.Select(o => $"ADD {o.GetDisplayName()}"));
             }
 
             if (removeOptions != null)
             {
-                options.AddRange(removeOptions.Select(o => $"NO {o}"));
+                options.AddRange(removeOptions.Select(o => $"NO {o.GetDisplayName()}"));
             }
 
             if (onlyOptions != null)
             {
-                options.AddRange(onlyOptions.Select(o => $"ONLY {o}"));
+                options.AddRange(onlyOptions.Select(o => $"ONLY {o.GetDisplayName()}"));
             }
 
             if (sauceOptions != null)
             {
-                options.AddRange(sauceOptions.Select(o => $"{o}"));
+                options.AddRange(sauceOptions.Select(o => $"{o.GetDisplayName()}"));
             }
 
             if (sizeOptions != null)
             {
-                options.AddRange(sizeOptions.Select(o => $"{o}"));
+                options.AddRange(sizeOptions.Select(o => $"{o.GetDisplayName()}"));
             }
 
             CartProduct cartProduct = _context.CartProducts.FirstOrDefault(cp => cp.Id == id);
