@@ -729,7 +729,7 @@ namespace asp_dot_net_core_web_app_mvc_fast_food_system.Controllers
 
             if (sauceOptions != null)
             {
-                options.AddRange(sauceOptions.Select(o => $"ADD {o}"));
+                options.AddRange(sauceOptions.Select(o => $"{o}"));
             }
 
             if (sizeOptions != null)

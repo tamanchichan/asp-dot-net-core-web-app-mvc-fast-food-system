@@ -74,7 +74,7 @@ function openEditProductModal(product) {
                 break;
 
             case "sauceOptions":
-                formattedOption = `ADD ${option}`;
+                formattedOption = `${option}`;
                 break;
 
             case "sizeOptions":
