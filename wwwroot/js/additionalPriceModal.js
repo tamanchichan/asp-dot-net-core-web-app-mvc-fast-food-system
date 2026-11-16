@@ -1,12 +1,11 @@
-﻿const openModalButtons = document.querySelectorAll(".button-additional-price");
-const modal = document.querySelector(".additional-price-and-instructions-modal");
+﻿const modal = document.querySelector(".additional-price-and-instructions-modal");
+const openModalButtons = document.querySelectorAll(".button-additional-price");
+const closeButton = modal.querySelector(".close-modal");
 
+// Open modal
 openModalButtons.forEach(button => {
-    const closeButton = modal.querySelector(".close-modal");
-
     button.onclick = () => {
         const productItem = button.closest(".product-item");
-        console.log("data-options:", productItem.dataset.options);
 
         openEditProductModal({
             id: productItem.dataset.id,
@@ -16,18 +15,20 @@ openModalButtons.forEach(button => {
         });
 
     };
-
-    closeButton.onclick = () => {
-        modal.style.display = "none";
-    }
-
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
 });
 
+// Close modal
+closeButton.onclick = () => {
+    modal.style.display = "none";
+}
+
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+// Close modal when clicking outside the modal content
 function openEditProductModal(product) {
 
     const editForm = document.getElementById("editProductForm");
