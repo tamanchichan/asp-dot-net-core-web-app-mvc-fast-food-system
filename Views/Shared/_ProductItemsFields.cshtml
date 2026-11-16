@@ -10,6 +10,7 @@
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.CartProducts;
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.Interface
 @using asp_dot_net_core_web_app_mvc_fast_food_system.Models.OrderProducts;
+@using asp_dot_net_core_web_app_mvc_fast_food_system.Helpers;
 
 <link rel="stylesheet" href="~/css/Views/Shared/_ProductItemsFields.css" />
 <div class="product-items">
@@ -123,35 +124,35 @@
                     <button class="button product-decrement" style="@(hideButton ? "display: none;" : "null")" onclick="decrementProductQuantity('@productItem.Id')" type="button">-</button>
                 }
             </div>
-            @if (!string.IsNullOrEmpty(productItem.Instructions))
-            {
-                <div class="product-instructions">
-                    <ul>
-                        @{
-                            string[] instructions = productItem.Instructions.Split(
-                                new[] { "\r\n", "\n", "\r" },
-                                StringSplitOptions.None
-                            );
+            <div class="product-instructions">
+                @if (!string.IsNullOrEmpty(productItem.Instructions))
+                {
+                        <ul>
+                            @{
+                                string[] instructions = productItem.Instructions.Split(
+                                    new[] { "\r\n", "\n", "\r" },
+                                    StringSplitOptions.None
+                                );
                         
-                            foreach(string instruction in instructions)
+                                foreach(string instruction in instructions)
+                                {
+                                    <li title="@instruction.GetTranslation()">@instruction</li>
+                                }                            
+                            }
+                        </ul>
+                }
+            </div>
+            <div class="product-options">
+                @if (productItem.Options != null && productItem.Options.Count > 0)
+                {
+                        <ul>
+                            @foreach (var option in productItem.Options)
                             {
-                                <li>@instruction</li>
-                            }                            
-                        }
-                    </ul>
-                </div>
-            }
-            @if (productItem.Options != null && productItem.Options.Count > 0)
-            {
-                <div class="product-options">
-                    <ul>
-                        @foreach (var option in productItem.Options)
-                        {
-                            <li class="product-option">@option</li>
-                        }
-                    </ul>
-                </div>
-            }
+                                <li class="product-option" title="@option.GetTranslation()">@option</li>
+                            }
+                        </ul>
+                }
+            </div>
         </div>
     }
 </div>

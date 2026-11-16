@@ -20,23 +20,13 @@
     position: relative;
 }
 
-.product-additional-price {
+::deep .product-additional-price {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.product-instructions {
-    font-weight: 200;
-    margin-left: 45px;
-    text-transform: uppercase;
-}
-
-.product-instructions ul {
-    list-style: disc;
-}
-
-.button-additional-price {
+::deep .button-additional-price {
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
@@ -62,14 +52,14 @@
     color: #fff;
 }
 
-.product-options ul {
-    list-style: disc;
+::deep .product-instructions, .product-options {
+    font-weight: 200;
+    text-transform: uppercase;
+    margin-left: 45px;
 }
 
-.product-option {
-    font-weight: 200;
-    margin-left: 45px;
-    text-transform: uppercase;
+::deep .product-instructions ul, .product-options ul {
+    list-style: disc;
 }
 
 @media screen and (max-width: 720px) {
