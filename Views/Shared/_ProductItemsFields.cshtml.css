@@ -80,8 +80,8 @@
 
     .product-items-template,
     ::deep .product-item {
-        width: 100%;
-        min-width: 720px;
         grid-template-columns: repeat(6, minmax(0, 1fr)) 50px 50px;
+        min-width: 720px;
+        width: 100%;
     }
 }

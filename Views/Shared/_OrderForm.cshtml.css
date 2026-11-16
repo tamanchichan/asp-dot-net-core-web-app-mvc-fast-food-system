@@ -6,7 +6,7 @@
 
 input, textarea {
     border: 1px solid #000;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 7.5px 15px;
     margin-left: 5px;
     font-size: 15px;
@@ -67,5 +67,9 @@ input, textarea {
 @media screen and (max-width: 720px) {
     .order-type {
         text-align: center;
+    }
+
+    .order-type {
+        text-wrap: nowrap;
     }
 }
